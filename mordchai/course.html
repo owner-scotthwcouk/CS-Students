@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Support Foundation - Course Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cadbury: {
+                            50: '#f4f2f9',
+                            100: '#e9e4f2',
+                            200: '#d3c9e6',
+                            300: '#bdaed9',
+                            400: '#9179be',
+                            500: '#6543a3',
+                            600: '#482683', /* Core Cadbury Purple */
+                            700: '#3a1e69',
+                            800: '#2e1854',
+                            900: '#261445',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom styling for printable workbook */
+        @media print {
+            .no-print { display: none !important; }
+            .print-break-inside-avoid { break-inside: avoid; }
+            body { background-color: white; }
+            input[type="text"] { border-bottom: 1px solid black; background: transparent; }
+        }
+        .tab-active { border-bottom-width: 4px; border-color: #482683; color: #482683; font-weight: 600; }
+        .tab-inactive { color: #64748b; border-bottom-width: 4px; border-color: transparent; }
+        .tab-inactive:hover { color: #334155; border-color: #cbd5e1; }
+        
+        /* Smooth transitions */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-cadbury-600 text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-laptop-medical text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-900 leading-tight">IT Support Foundation</h1>
+                        <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Tutor: Scott &bull; Student: Mordechai</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <button onclick="switchTab('syllabus')" id="tab-syllabus" class="tab-active h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Course Syllabus</span>
+                    </button>
+                    <button onclick="switchTab('workbook')" id="tab-workbook" class="tab-inactive h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Interactive Workbook</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- SYLLABUS SECTION -->
+        <section id="section-syllabus" class="fade-in block">
+            
+            <div class="bg-gradient-to-r from-cadbury-600 to-cadbury-800 rounded-2xl p-8 sm:p-12 text-white shadow-lg mb-10 relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">12-Lesson Practical Course Outline</h2>
+                    <p class="text-cadbury-100 text-lg leading-relaxed mb-6">
+                        Welcome to your IT Support training! This course is designed to bridge the gap between basic computer knowledge and the practical skills needed for an entry-level IT support or helpdesk role. 
+                        This curriculum incorporates core concepts from Cisco Networking Essentials alongside crucial Windows troubleshooting skills.
+                    </p>
+                    <div class="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 text-sm font-medium">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>Each lesson is 60 minutes</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-network-wired absolute -bottom-10 -right-10 text-9xl text-white opacity-10"></i>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Lesson 1 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
+                    <div class="w-10 h-10 rounded-full bg-cadbury-100 text-cadbury-600 flex items-center justify-center font-bold mb-4">1</div>
+                    <h3 class="text-lg font-bold mb-2">Intro to IT Support & Windows</h3>
+                    <p class="text-sm text-slate-600 mb-4">What a helpdesk tech does. Navigating the modern Windows interface, Settings vs. Control Panel, and File Explorer mastery.</p>
+                    <div class="text-xs font-semibold text-cadbury-600 uppercase tracking-wide">Hands-on: Workspace & Specs</div>
+                </div>
+
+                <!-- Lesson 2 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold mb-4">2</div>
+                    <h3 class="text-lg font-bold mb-2">Windows Architecture & Admin Tools</h3>
+                    <p class="text-sm text-slate-600 mb-4">Going "under the hood." Task Manager, Resource Monitor, services, and identifying performance bottlenecks.</p>
+                    <div class="text-xs font-semibold text-purple-600 uppercase tracking-wide">Hands-on: Performance Tracking</div>
+                </div>
+
+                <!-- Lesson 3 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
+                    <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold mb-4">3</div>
+                    <h3 class="text-lg font-bold mb-2">Filesystems & Storage Management</h3>
+                    <p class="text-sm text-slate-600 mb-4">How Windows organizes data. Managing drives, partitions, and securing files using complex NTFS permissions.</p>
+                    <div class="text-xs font-semibold text-red-600 uppercase tracking-wide">Hands-on: Network Shares & Security</div>
+                </div>
+
+                <!-- Lesson 4 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
+                    <div class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold mb-4">4</div>
+                    <h3 class="text-lg font-bold mb-2">Troubleshooting & Event Viewer</h3>
+                    <p class="text-sm text-slate-600 mb-4">The IT troubleshooting methodology. Using Windows Event Viewer—the "flight recorder" of your PC—to diagnose crashes.</p>
+                    <div class="text-xs font-semibold text-orange-600 uppercase tracking-wide">Hands-on: Error Code Hunting</div>
+                </div>
+
+                <!-- Lesson 5 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold mb-4">5</div>
+                    <h3 class="text-lg font-bold mb-2">Boot Issues & Recovery</h3>
+                    <p class="text-sm text-slate-600 mb-4">What to do when Windows won't start. The boot process, Advanced Startup, Safe Mode, and command-line repairs.</p>
+                    <div class="text-xs font-semibold text-emerald-600 uppercase tracking-wide">Hands-on: Safe Mode & SFC Scans</div>
+                </div>
+
+                <!-- Lesson 6 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
+                    <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center font-bold mb-4">6</div>
+                    <h3 class="text-lg font-bold mb-2">Peripheral & Driver Troubleshooting</h3>
+                    <p class="text-sm text-slate-600 mb-4">How hardware talks to software. Managing Device Manager, rolling back broken updates, and installing clean drivers.</p>
+                    <div class="text-xs font-semibold text-slate-700 uppercase tracking-wide">Hands-on: Driver Reinstallations</div>
+                </div>
+
+                <!-- Lesson 7 -->
+                <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-cadbury-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Cisco Module</div>
+                    <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold mb-4">7</div>
+                    <h3 class="text-lg font-bold mb-2">Cisco: Local Networks & Devices</h3>
+                    <p class="text-sm text-slate-600 mb-4">Defining a network (LAN/WAN). Understanding the specific roles of Endpoints, Switches, and Routers in an infrastructure.</p>
+                    <div class="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Hands-on: Topology Mapping</div>
+                </div>
+
+                <!-- Lesson 8 -->
+                <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-cadbury-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Cisco Module</div>
+                    <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold mb-4">8</div>
+                    <h3 class="text-lg font-bold mb-2">Cisco: Addressing & IPv4</h3>
+                    <p class="text-sm text-slate-600 mb-4">Unpacking IPv4. Public vs. Private IPs, Subnet Masks, Default Gateways, and how DHCP assigns addresses automatically.</p>
+                    <div class="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Hands-on: IP Configuration Analysis</div>
+                </div>
+
+                <!-- Lesson 9 -->
+                <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-cadbury-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Cisco Module</div>
+                    <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold mb-4">9</div>
+                    <h3 class="text-lg font-bold mb-2">Cisco: Services & Diagnostics</h3>
+                    <p class="text-sm text-slate-600 mb-4">Understanding DNS. Troubleshooting connectivity using industry-standard command-line tools favored by network technicians.</p>
+                    <div class="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Hands-on: Ping, Tracert, Nslookup</div>
+                </div>
+
+                <!-- Lesson 10 -->
+                <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-cadbury-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Cisco Module</div>
+                    <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold mb-4">10</div>
+                    <h3 class="text-lg font-bold mb-2">Cisco: Wireless & Router Config</h3>
+                    <p class="text-sm text-slate-600 mb-4">Behind the curtain of home/small office networks. Router administrative interfaces, Wi-Fi frequencies, and WPA2/3 security.</p>
+                    <div class="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Hands-on: Evaluating Wi-Fi Channels</div>
+                </div>
+
+                <!-- Lesson 11 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
+                    <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold mb-4">11</div>
+                    <h3 class="text-lg font-bold mb-2">Helpdesk Operations & Tickets</h3>
+                    <p class="text-sm text-slate-600 mb-4">ITSM concepts. How support teams track issues using ticketing systems, manage SLA priorities, and write documentation.</p>
+                    <div class="text-xs font-semibold text-teal-600 uppercase tracking-wide">Hands-on: Ticketing & Communication</div>
+                </div>
+
+                <!-- Lesson 12 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6 border-b-4 border-b-green-500">
+                    <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold mb-4">12</div>
+                    <h3 class="text-lg font-bold mb-2">Live Simulation & Interview Prep</h3>
+                    <p class="text-sm text-slate-600 mb-4">Putting it all together. Rapid-fire troubleshooting scenarios and technical interview prep using the STAR method.</p>
+                    <div class="text-xs font-semibold text-green-600 uppercase tracking-wide">Hands-on: Mock Interview Roleplay</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORKBOOK SECTION -->
+        <section id="section-workbook" class="fade-in hidden max-w-4xl mx-auto">
+            
+            <div class="text-center bg-gradient-to-br from-slate-800 to-slate-900 text-white p-10 sm:p-14 rounded-2xl mb-10 shadow-xl relative overflow-hidden">
+                <i class="fa-solid fa-wrench absolute top-10 left-10 text-6xl text-white/5 transform -rotate-12"></i>
+                <i class="fa-solid fa-server absolute bottom-10 right-10 text-8xl text-white/5"></i>
+                
+                <h1 class="text-4xl sm:text-5xl font-black tracking-tight mb-3 relative z-10">IT Support Core Skills</h1>
+                <h2 class="text-cadbury-300 text-xl sm:text-2xl font-light mb-8 relative z-10">Interactive Student Workbook</h2>
+                
+                <div class="inline-block bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-xl relative z-10 w-full max-w-md">
+                    <label class="block text-sm font-semibold text-slate-300 uppercase tracking-wider mb-2">Student Name</label>
+                    <input type="text" value="Mordechai" class="w-full bg-transparent border-b-2 border-white/50 text-white text-center text-xl pb-1 focus:outline-none focus:border-cadbury-400 transition-colors placeholder-white/30 font-medium" placeholder="Enter your name here">
+                </div>
+                
+                <div class="mt-8 no-print">
+                    <button onclick="window.print()" class="bg-cadbury-600 hover:bg-cadbury-500 text-white px-6 py-2 rounded-lg font-medium shadow-md transition-colors flex items-center justify-center space-x-2 mx-auto">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Print or Save to PDF</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-cadbury-50 border-l-4 border-cadbury-500 p-5 rounded-r-lg mb-12 shadow-sm">
+                <p class="text-cadbury-900 font-medium"><i class="fa-solid fa-circle-info mr-2"></i><strong>Welcome!</strong> This interactive workbook contains your in-class concept checks, practical lab reference materials, and detailed homework assignments. You can type directly into the fields below.</p>
+            </div>
+
+            <!-- LESSON 1 -->
+            <div class="mb-16 print-break-inside-avoid">
+                <div class="bg-cadbury-600 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
+                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-desktop mr-3"></i> Lesson 1: Intro to IT Support & Windows</h2>
+                    <input type="date" class="bg-cadbury-700 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-cadbury-400 outline-none">
+                </div>
+                
+                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
+                    
+                    <div class="bg-cadbury-50 p-5 border-l-4 border-cadbury-600 rounded-r-lg mb-8">
+                        <strong class="text-cadbury-900 block mb-1 text-lg"><i class="fa-regular fa-lightbulb mr-2 text-yellow-500"></i> The Golden Rule of IT Support:</strong> 
+                        <em class="text-cadbury-800">"Fix the person first, then fix the machine."</em> Empathy and communication are just as important as technical skills. A frustrated user cannot help you troubleshoot!
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Concept Checks</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-2">1. The Helpdesk Tiers:</p>
+                            <div class="pl-4 space-y-3">
+                                <p class="text-slate-700 flex items-center flex-wrap gap-2">
+                                    <i class="fa-solid fa-hand-point-right text-cadbury-500 mr-2"></i> 
+                                    Which tier is responsible for initial triage, password resets, and basic troubleshooting?
+                                    <span class="font-bold text-red-600 whitespace-nowrap">Tier <input type="text" class="w-16 border-b-2 border-slate-300 focus:border-cadbury-500 outline-none px-1 text-center font-bold text-slate-900 bg-slate-50 rounded-t"></span>
+                                </p>
+                                <p class="text-slate-700 flex items-center flex-wrap gap-2">
+                                    <i class="fa-solid fa-hand-point-right text-cadbury-500 mr-2"></i> 
+                                    Which tier handles complex infrastructure, server architecture, and network design?
+                                    <span class="font-bold text-red-600 whitespace-nowrap">Tier <input type="text" class="w-16 border-b-2 border-slate-300 focus:border-cadbury-500 outline-none px-1 text-center font-bold text-slate-900 bg-slate-50 rounded-t"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-2">2. Navigation Mastery (Keyboard Shortcuts):</p>
+                            <table class="w-full text-left border-collapse rounded-lg overflow-hidden ring-1 ring-slate-200">
+                                <tbody class="divide-y divide-slate-200">
+                                    <tr class="hover:bg-slate-50"><td class="p-3 text-slate-700">Open the Modern Settings App</td><td class="p-3"><code class="bg-slate-100 text-pink-600 px-2 py-1 rounded font-mono text-sm">Win + <input type="text" class="w-8 border-b border-slate-400 bg-transparent text-center outline-none focus:border-cadbury-500"></code></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="p-3 text-slate-700">Open File Explorer</td><td class="p-3"><code class="bg-slate-100 text-pink-600 px-2 py-1 rounded font-mono text-sm">Win + <input type="text" class="w-8 border-b border-slate-400 bg-transparent text-center outline-none focus:border-cadbury-500"></code></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="p-3 text-slate-700">Open the "Power User" Menu</td><td class="p-3"><code class="bg-slate-100 text-pink-600 px-2 py-1 rounded font-mono text-sm">Win + <input type="text" class="w-8 border-b border-slate-400 bg-transparent text-center outline-none focus:border-cadbury-500"></code></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="p-3 text-slate-700">Open the Run Dialog Box</td><td class="p-3"><code class="bg-slate-100 text-pink-600 px-2 py-1 rounded font-mono text-sm">Win + <input type="text" class="w-8 border-b border-slate-400 bg-transparent text-center outline-none focus:border-cadbury-500"></code></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-2">3. File Explorer Configuration:</p>
+                            <p class="text-sm text-slate-600 italic mb-2">Why is it absolutely critical for an IT Technician to enable "File name extensions" in the View tab? (Give an example of how this prevents a security issue).</p>
+                            <textarea class="w-full border border-slate-300 rounded-md p-3 focus:ring-2 focus:ring-cadbury-500 outline-none text-slate-700 resize-y" rows="3" placeholder="Type your answer here..."></textarea>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mt-10 mb-6">B. Practical Lab: System Discovery</h3>
+                    <p class="text-slate-700 mb-4"><em>Navigate to <strong>Settings > System > About</strong> (or run <code>msinfo32</code>) and document this machine's exact hardware profile:</em></p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                            <span class="block text-sm font-semibold text-slate-500 uppercase tracking-wide mb-1">Device Name</span>
+                            <input type="text" class="w-full bg-transparent border-b-2 border-slate-300 focus:border-cadbury-500 outline-none font-medium text-slate-800 pb-1" placeholder="e.g., DESKTOP-XYZ123">
+                        </div>
+                        <div class="bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                            <span class="block text-sm font-semibold text-slate-500 uppercase tracking-wide mb-1">Windows Edition</span>
+                            <input type="text" class="w-full bg-transparent border-b-2 border-slate-300 focus:border-cadbury-500 outline-none font-medium text-slate-800 pb-1" placeholder="e.g., Windows 10 Pro">
+                        </div>
+                        <div class="bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                            <span class="block text-sm font-semibold text-slate-500 uppercase tracking-wide mb-1">Processor (CPU)</span>
+                            <input type="text" class="w-full bg-transparent border-b-2 border-slate-300 focus:border-cadbury-500 outline-none font-medium text-slate-800 pb-1" placeholder="e.g., Intel Core i5-1135G7">
+                        </div>
+                        <div class="bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                            <span class="block text-sm font-semibold text-slate-500 uppercase tracking-wide mb-1">Installed RAM</span>
+                            <input type="text" class="w-full bg-transparent border-b-2 border-slate-300 focus:border-cadbury-500 outline-none font-medium text-slate-800 pb-1" placeholder="e.g., 16.0 GB">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HOMEWORK -->
+                <div class="bg-amber-50 p-6 sm:p-8 border-l-4 border-amber-500 rounded-r-lg mt-4 shadow-sm relative overflow-hidden">
+                    <i class="fa-solid fa-house-laptop absolute -bottom-5 -right-5 text-8xl text-amber-500/10"></i>
+                    <h3 class="text-2xl font-bold text-amber-900 mb-4 flex items-center"><i class="fa-solid fa-clipboard-list mr-3 text-amber-600"></i> Homework Assignment 1</h3>
+                    
+                    <div class="space-y-5 relative z-10">
+                        <div>
+                            <p class="font-bold text-slate-800">Task 1: Desktop Optimization for the IT Pro</p>
+                            <p class="text-slate-700 text-sm mb-3">Clean up your Windows Start Menu. Unpin all unnecessary bloatware. Pin at least 4 built-in administrative or utility tools that an IT pro would use daily (e.g., Snipping Tool, Command Prompt, Control Panel). Take a screenshot.</p>
+                            <div class="flex flex-col space-y-2 pl-4">
+                                <label class="flex items-center text-slate-700"><span class="w-24 font-medium">Pinned Tool 1:</span> <input type="text" class="flex-grow border-b-2 border-amber-200 bg-transparent outline-none focus:border-amber-500 px-2"></label>
+                                <label class="flex items-center text-slate-700"><span class="w-24 font-medium">Pinned Tool 2:</span> <input type="text" class="flex-grow border-b-2 border-amber-200 bg-transparent outline-none focus:border-amber-500 px-2"></label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <p class="font-bold text-slate-800">Task 2: Power Configuration</p>
+                            <p class="text-slate-700 text-sm mb-2">Navigate to the legacy <strong>Control Panel</strong>. Find the "Power Options". Change your active plan to ensure the computer <em>Never</em> goes to sleep when plugged in. Write down the exact click-path:</p>
+                            <div class="bg-white/60 p-3 rounded border border-amber-200 font-mono text-sm text-red-600 flex items-center flex-wrap gap-2">
+                                Control Panel <i class="fa-solid fa-angle-right text-slate-400"></i>
+                                <input type="text" class="w-32 border-b border-red-300 bg-transparent outline-none focus:border-red-600 text-center" placeholder="Hardware &..."> <i class="fa-solid fa-angle-right text-slate-400"></i>
+                                <input type="text" class="w-32 border-b border-red-300 bg-transparent outline-none focus:border-red-600 text-center" placeholder="Power Opt...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LESSON 2 -->
+            <div class="mb-16 print-break-inside-avoid">
+                <div class="bg-purple-700 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
+                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-gears mr-3"></i> Lesson 2: Architecture & Admin Tools</h2>
+                    <input type="date" class="bg-purple-800 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-purple-400 outline-none">
+                </div>
+                
+                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
+                    
+                    <div class="bg-red-50 p-5 border-l-4 border-red-600 rounded-r-lg mb-8">
+                        <strong class="text-red-900 block mb-1 text-lg"><i class="fa-solid fa-triangle-exclamation mr-2 text-red-600"></i> Danger Zone:</strong> 
+                        <span class="text-red-800">Never randomly "End Task" on Windows background processes if you don't know what they do. Terminating <code>svchost.exe</code> or <code>wininit.exe</code> can instantly crash the operating system!</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Concept Checks</h3>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-3">1. Task Manager (<code>Ctrl + Shift + Esc</code>):</p>
+                            <ul class="space-y-4 pl-4 text-slate-700 list-disc list-inside">
+                                <li>Which tab gives you a visual graph of CPU, Memory, Disk, and Network usage? 
+                                    <input type="text" class="w-32 ml-2 border-b-2 border-slate-300 focus:border-purple-500 outline-none px-1 font-bold text-slate-900 bg-slate-50 rounded-t text-center">
+                                </li>
+                                <li class="flex flex-col">
+                                    <span class="mb-2">What is the functional difference between an "App" and a "Background Process"?</span>
+                                    <textarea class="w-full border border-slate-300 rounded-md p-2 focus:ring-2 focus:ring-purple-500 outline-none text-slate-700 resize-y" rows="2"></textarea>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-2">2. Services (<code>services.msc</code>):</p>
+                            <p class="text-slate-700 mb-3">A program running in the background without user interaction is called a <input type="text" class="w-32 border-b-2 border-slate-300 focus:border-purple-500 outline-none px-1 text-center font-bold text-purple-700 bg-purple-50 rounded-t">. List the three main "Startup Types":</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-4 text-slate-700">
+                                <li><input type="text" class="w-32 border-b border-slate-400 bg-transparent outline-none focus:border-purple-500 text-center"> (Starts automatically with Windows)</li>
+                                <li><input type="text" class="w-32 border-b border-slate-400 bg-transparent outline-none focus:border-purple-500 text-center"> (Starts only when requested by another app)</li>
+                                <li><input type="text" class="w-32 border-b border-slate-400 bg-transparent outline-none focus:border-purple-500 text-center"> (Cannot be started at all)</li>
+                            </ol>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-2">3. Resource Monitor (<code>resmon</code>):</p>
+                            <p class="text-slate-700">If a user complains their hard drive is constantly spinning and the PC is slow, which tab in Resource Monitor shows you <em>exactly</em> which files are being read/written? <input type="text" class="w-32 border-b-2 border-slate-300 focus:border-purple-500 outline-none px-1 text-center font-bold text-slate-900 bg-slate-50 rounded-t"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HOMEWORK -->
+                <div class="bg-purple-50 p-6 sm:p-8 border-l-4 border-purple-500 rounded-r-lg mt-4 shadow-sm relative overflow-hidden">
+                    <i class="fa-solid fa-rocket absolute -bottom-2 -right-5 text-8xl text-purple-500/10 transform rotate-45"></i>
+                    <h3 class="text-2xl font-bold text-purple-900 mb-4 flex items-center"><i class="fa-solid fa-clipboard-list mr-3 text-purple-600"></i> Homework Assignment 2</h3>
+                    
+                    <div class="relative z-10">
+                        <p class="font-bold text-slate-800">Task: Startup Optimization Analysis</p>
+                        <p class="text-slate-700 text-sm mb-4">Open Task Manager and navigate to the <strong>Startup</strong> tab. Disable at least three non-essential applications. Document them below:</p>
+                        
+                        <div class="overflow-x-auto mb-6">
+                            <table class="w-full text-left border-collapse rounded-lg overflow-hidden ring-1 ring-slate-300 bg-white">
+                                <thead class="bg-slate-100 border-b border-slate-300">
+                                    <tr>
+                                        <th class="p-3 text-sm font-semibold text-slate-700">Application Name</th>
+                                        <th class="p-3 text-sm font-semibold text-slate-700">Publisher</th>
+                                        <th class="p-3 text-sm font-semibold text-slate-700">Startup Impact</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">
+                                    <tr>
+                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                        <td class="p-2"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                        <td class="p-2"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                        <td class="p-2"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-slate-700 flex items-center bg-white/60 p-3 border border-purple-200 rounded">
+                            <strong class="mr-2">The Reboot Test:</strong> Restart your machine. Check Task Manager > Startup. What is your "Last BIOS time" (top right)? 
+                            <span class="font-bold text-red-600 ml-2"><input type="text" class="w-16 border-b-2 border-red-300 focus:border-red-600 outline-none px-1 text-center bg-transparent"> seconds.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LESSON 3 -->
+            <div class="mb-16 print-break-inside-avoid">
+                <div class="bg-red-700 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
+                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-hard-drive mr-3"></i> Lesson 3: Filesystems & Storage</h2>
+                    <input type="date" class="bg-red-800 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-red-400 outline-none">
+                </div>
+                
+                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
+                    
+                    <div class="bg-amber-50 p-5 border-l-4 border-amber-500 rounded-r-lg mb-8">
+                        <strong class="text-amber-900 block mb-1 text-lg"><i class="fa-solid fa-lock mr-2 text-amber-600"></i> The Network Security Rule:</strong> 
+                        <span class="text-amber-800">When dealing with folders shared over a network, the <strong>MOST restrictive permission</strong> always wins. If NTFS permissions say "Read-Only" but Share permissions say "Full Control", the user only gets "Read-Only" access.</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Concept Checks</h3>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-3">1. Disk Management (<code>diskmgmt.msc</code>):</p>
+                            <ul class="space-y-4 pl-4 text-slate-700 list-disc list-inside">
+                                <li>What is the standard, modern filesystem used by Windows for internal drives? 
+                                    <input type="text" class="w-24 ml-2 border-b-2 border-slate-300 focus:border-red-500 outline-none px-1 font-bold text-slate-900 bg-slate-50 rounded-t text-center">
+                                </li>
+                                <li class="flex flex-col">
+                                    <span class="mb-2">What two major steps must you take to make a brand new "Unallocated" drive usable?</span>
+                                    <div class="pl-6 space-y-2">
+                                        <div class="flex items-center"><span class="mr-2">1.</span><input type="text" class="flex-grow border-b border-slate-400 focus:border-red-500 outline-none px-2 py-1 bg-transparent" placeholder="Initialize as MBR/GPT..."></div>
+                                        <div class="flex items-center"><span class="mr-2">2.</span><input type="text" class="flex-grow border-b border-slate-400 focus:border-red-500 outline-none px-2 py-1 bg-transparent" placeholder="Create Simple Volume / Format..."></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-3">2. NTFS Permissions:</p>
+                            <ul class="space-y-4 pl-4 text-slate-700 list-disc list-inside">
+                                <li>What is the process called where a folder automatically takes on the security permissions of the folder above it? 
+                                    <input type="text" class="w-32 ml-2 border-b-2 border-slate-300 focus:border-red-500 outline-none px-1 font-bold text-slate-900 bg-slate-50 rounded-t text-center">
+                                </li>
+                                <li>If you want a user to edit and save a Word document, but NOT delete it, which explicit permission do they need? (Read / Write / Modify / Full Control) 
+                                    <input type="text" class="w-32 ml-2 border-b-2 border-red-300 focus:border-red-500 outline-none px-1 font-bold text-red-600 bg-red-50 rounded-t text-center">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HOMEWORK -->
+                <div class="bg-red-50 p-6 sm:p-8 border-l-4 border-red-600 rounded-r-lg mt-4 shadow-sm relative overflow-hidden">
+                    <i class="fa-solid fa-folder-tree absolute -bottom-5 -right-5 text-8xl text-red-500/10"></i>
+                    <h3 class="text-2xl font-bold text-red-900 mb-4 flex items-center"><i class="fa-solid fa-clipboard-list mr-3 text-red-600"></i> Homework Assignment 3</h3>
+                    
+                    <div class="relative z-10">
+                        <p class="font-bold text-slate-800 mb-2">Task: Local Security Policy Simulation</p>
+                        <p class="text-slate-700 text-sm mb-4">You are an IT Admin setting up a workstation. Follow these steps exactly and check them off:</p>
+                        
+                        <ul class="space-y-3 mb-6 bg-white/60 p-4 rounded-lg border border-red-200">
+                            <li class="flex items-start">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
+                                <span class="ml-3 text-slate-700">1. Open Computer Management (<code>compmgmt.msc</code>) > Local Users and Groups.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
+                                <span class="ml-3 text-slate-700">2. Create a new local user account named <strong>"TempUser"</strong>.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
+                                <span class="ml-3 text-slate-700">3. Create a folder on your C: drive named <strong>"Company_Policies"</strong>.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
+                                <span class="ml-3 text-slate-700">4. Right-click the folder > Properties > Security tab > Advanced.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
+                                <span class="ml-3 text-slate-700">5. Click "Disable Inheritance".</span>
+                            </li>
+                            <li class="flex items-start">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
+                                <span class="ml-3 text-slate-700">6. Click "Add", select "TempUser", and set their explicit permissions to <strong>"Read & execute" ONLY</strong>.</span>
+                            </li>
+                        </ul>
+                        
+                        <div>
+                            <p class="text-slate-700 italic mb-2">Testing it: Log out, log into TempUser, and try to delete the "Company_Policies" folder. What happens?</p>
+                            <textarea class="w-full border border-red-200 rounded-md p-3 focus:ring-2 focus:ring-red-500 outline-none text-slate-700 resize-y bg-white" rows="2" placeholder="Describe the result..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CISCO SKIP MARKER -->
+            <div class="text-center my-12 p-6 bg-slate-100 rounded-xl border-2 border-dashed border-slate-300">
+                <p class="text-slate-500 font-medium italic"><i class="fa-solid fa-forward-step mr-2"></i> --- Lessons 7-10 (Cisco Networking Modules) Excluded from this Core OS Workbook ---</p>
+            </div>
+
+            <!-- LESSON 11 -->
+            <div class="mb-16 print-break-inside-avoid">
+                <div class="bg-teal-600 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
+                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-ticket mr-3"></i> Lesson 11: Helpdesk Operations</h2>
+                    <input type="date" class="bg-teal-700 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-teal-400 outline-none">
+                </div>
+                
+                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
+                    
+                    <div class="bg-cadbury-50 p-5 border-l-4 border-cadbury-500 rounded-r-lg mb-8">
+                        <strong class="text-cadbury-900 block mb-1 text-lg"><i class="fa-solid fa-pen-nib mr-2 text-cadbury-600"></i> The Ticket Rule:</strong> 
+                        <span class="text-cadbury-800">"If it's not in the ticket, it didn't happen." Always document your exact troubleshooting steps. Your notes might save another technician hours of work next month!</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Concept Checks</h3>
+                    
+                    <div class="space-y-6 mb-10">
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-2">1. ITSM Basics:</p>
+                            <div class="pl-4 space-y-4 text-slate-700">
+                                <div class="flex flex-col">
+                                    <span class="mb-1">What does SLA stand for, and what does it mean practically?</span>
+                                    <input type="text" class="w-full border-b border-slate-300 focus:border-teal-500 outline-none px-2 py-1 bg-transparent">
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="mb-1">Why must you ask for a "PC Name/Asset Tag" instead of taking their word that "my laptop is broken"?</span>
+                                    <input type="text" class="w-full border-b border-slate-300 focus:border-teal-500 outline-none px-2 py-1 bg-transparent">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">B. Practical Lab: Ticket Creation</h3>
+                    <p class="text-slate-700 mb-4 italic">Listen to the tutor act out a mock phone call. Take notes and draft the ticket below.</p>
+                    
+                    <div class="border-2 border-teal-500 rounded-lg p-5 bg-teal-50/30 shadow-inner">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 border-b border-teal-200 pb-4">
+                            <div>
+                                <label class="text-xs font-bold text-teal-800 uppercase block mb-1">User Name</label>
+                                <input type="text" class="w-full bg-white border border-teal-300 rounded px-2 py-1 outline-none focus:ring-2 focus:ring-teal-400">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-teal-800 uppercase block mb-1">Asset Tag</label>
+                                <input type="text" class="w-full bg-white border border-teal-300 rounded px-2 py-1 outline-none focus:ring-2 focus:ring-teal-400">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 border-b border-teal-200 pb-4">
+                            <label class="text-xs font-bold text-teal-800 uppercase block mb-2">Category</label>
+                            <div class="flex flex-wrap gap-4">
+                                <label class="flex items-center"><input type="radio" name="cat" class="mr-2 text-teal-600 focus:ring-teal-500"> Hardware</label>
+                                <label class="flex items-center"><input type="radio" name="cat" class="mr-2 text-teal-600 focus:ring-teal-500"> Software</label>
+                                <label class="flex items-center"><input type="radio" name="cat" class="mr-2 text-teal-600 focus:ring-teal-500"> Network</label>
+                                <label class="flex items-center"><input type="radio" name="cat" class="mr-2 text-teal-600 focus:ring-teal-500"> Access</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="text-xs font-bold text-teal-800 uppercase block mb-1">Issue Description (From User)</label>
+                            <textarea class="w-full bg-white border border-teal-300 rounded p-2 outline-none focus:ring-2 focus:ring-teal-400 resize-y" rows="3"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="text-sm font-bold text-teal-900 uppercase block mb-1"><i class="fa-solid fa-check-double mr-1"></i> Resolution Notes (Filled after fix)</label>
+                            <textarea class="w-full bg-white border-2 border-teal-400 rounded p-2 outline-none focus:ring-2 focus:ring-teal-500 resize-y" rows="3" placeholder="Document the exact steps taken to resolve..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HOMEWORK -->
+                <div class="bg-cyan-50 p-6 sm:p-8 border-l-4 border-cyan-500 rounded-r-lg mt-4 shadow-sm relative overflow-hidden">
+                    <i class="fa-solid fa-envelope-open-text absolute -bottom-5 -right-5 text-8xl text-cyan-500/10"></i>
+                    <h3 class="text-2xl font-bold text-cyan-900 mb-4 flex items-center"><i class="fa-solid fa-clipboard-list mr-3 text-cyan-600"></i> Homework Assignment 11</h3>
+                    
+                    <div class="relative z-10">
+                        <p class="font-bold text-slate-800 mb-2">Task: De-escalation Email</p>
+                        <p class="text-slate-700 text-sm mb-4">A user is locked out for guessing their password too many times. They email: <em>"IT is preventing me from doing my urgent work! Fix this now!"</em> Draft a professional, empathetic reply explaining the security policy and providing a temporary password (TempPass123!).</p>
+                        
+                        <div class="bg-white p-5 border border-slate-300 rounded-lg shadow-sm font-sans">
+                            <p class="text-slate-600 mb-4">To: user@company.com<br>Subject: RE: Account Lockout</p>
+                            <p class="mb-2">Hi [User Name],</p>
+                            <textarea class="w-full border-none outline-none resize-y text-slate-800 min-h-[100px]" placeholder="Type your professional response here..."></textarea>
+                            <p class="mt-4">Best regards,<br>IT Support</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LESSON 12 -->
+            <div class="mb-16 print-break-inside-avoid">
+                <div class="bg-green-600 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
+                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-rocket mr-3"></i> Lesson 12: Simulation & Interview</h2>
+                    <input type="date" class="bg-green-700 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
+                
+                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
+                    
+                    <div class="bg-yellow-50 p-5 border-l-4 border-yellow-500 rounded-r-lg mb-8">
+                        <strong class="text-yellow-900 block mb-1 text-lg"><i class="fa-solid fa-star mr-2 text-yellow-500"></i> The STAR Method:</strong> 
+                        <span class="text-yellow-800">When asked behavioral interview questions ("Tell me about a time..."), answer using: <strong>S</strong>ituation, <strong>T</strong>ask, <strong>A</strong>ction, <strong>R</strong>esult.</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Simulation Notes</h3>
+                    <p class="text-slate-700 mb-4 italic">Jot down clues as you guide the tutor through the rapid-fire troubleshooting scenarios.</p>
+                    
+                    <div class="space-y-4 mb-10">
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3">
+                            <strong class="text-slate-800 whitespace-nowrap">Scenario 1 (The Freezing App):</strong> 
+                            <input type="text" class="flex-grow bg-white border border-slate-300 rounded px-3 py-1 outline-none focus:border-green-500" placeholder="Tools used...">
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3">
+                            <strong class="text-slate-800 whitespace-nowrap">Scenario 2 (The Display Issue):</strong> 
+                            <input type="text" class="flex-grow bg-white border border-slate-300 rounded px-3 py-1 outline-none focus:border-green-500" placeholder="Tools used...">
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3">
+                            <strong class="text-slate-800 whitespace-nowrap">Scenario 3 (The Access Issue):</strong> 
+                            <input type="text" class="flex-grow bg-white border border-slate-300 rounded px-3 py-1 outline-none focus:border-green-500" placeholder="Tools used...">
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-4">B. Interview Prep</h3>
+                    <p class="font-bold text-slate-800 mb-2">"Walk me through the exact steps you take if a user calls and says their computer won't turn on."</p>
+                    <textarea class="w-full bg-slate-50 border border-slate-300 rounded p-3 outline-none focus:ring-2 focus:ring-green-400 resize-y text-slate-700" rows="4" placeholder="Draft your response here..."></textarea>
+                </div>
+
+                <!-- HOMEWORK / FINAL ASSIGNMENT -->
+                <div class="bg-emerald-50 p-6 sm:p-8 border-l-4 border-emerald-600 rounded-r-lg mt-4 shadow-md relative overflow-hidden">
+                    <i class="fa-solid fa-trophy absolute -bottom-5 -right-5 text-8xl text-emerald-600/10"></i>
+                    <h3 class="text-2xl font-bold text-emerald-900 mb-4 flex items-center"><i class="fa-solid fa-graduation-cap mr-3 text-emerald-600"></i> Final Assignment: CV Optimization</h3>
+                    
+                    <div class="relative z-10">
+                        <p class="font-bold text-slate-800 mb-2">Task: Update your Resume/CV</p>
+                        <p class="text-slate-700 text-sm mb-6">Translate this course into a "Technical Skills" section on your CV. Do not say "Learned about...". Use strong action verbs (e.g., <em>Configured, Diagnosed, Managed, Administered</em>).</p>
+                        
+                        <p class="font-semibold text-slate-800 mb-3">Draft three strong bullet points for your CV based on what we've covered:</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-check text-emerald-600 mt-1 mr-3"></i>
+                                <textarea class="flex-grow bg-white border border-emerald-200 rounded p-2 outline-none focus:ring-2 focus:ring-emerald-500 resize-none text-sm text-slate-700" rows="2" placeholder="e.g., Administered Windows environments, utilizing Task Manager and Resource Monitor to optimize system performance..."></textarea>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-check text-emerald-600 mt-1 mr-3"></i>
+                                <textarea class="flex-grow bg-white border border-emerald-200 rounded p-2 outline-none focus:ring-2 focus:ring-emerald-500 resize-none text-sm text-slate-700" rows="2" placeholder="Write bullet point 2..."></textarea>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-check text-emerald-600 mt-1 mr-3"></i>
+                                <textarea class="flex-grow bg-white border border-emerald-200 rounded p-2 outline-none focus:ring-2 focus:ring-emerald-500 resize-none text-sm text-slate-700" rows="2" placeholder="Write bullet point 3..."></textarea>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pb-20 no-print">
+                <p class="text-slate-500 font-medium">End of Interactive Workbook</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function switchTab(tabId) {
+            // Get DOM elements
+            const syllabusSection = document.getElementById('section-syllabus');
+            const workbookSection = document.getElementById('section-workbook');
+            const tabSyllabus = document.getElementById('tab-syllabus');
+            const tabWorkbook = document.getElementById('tab-workbook');
+
+            // Reset classes
+            syllabusSection.classList.add('hidden');
+            workbookSection.classList.add('hidden');
+            
+            tabSyllabus.className = 'tab-inactive h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2';
+            tabWorkbook.className = 'tab-inactive h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2';
+
+            // Apply active states
+            if (tabId === 'syllabus') {
+                syllabusSection.classList.remove('hidden');
+                tabSyllabus.className = 'tab-active h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2';
+            } else if (tabId === 'workbook') {
+                workbookSection.classList.remove('hidden');
+                tabWorkbook.className = 'tab-active h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2';
+            }
+        }
+    </script>
+</body>
+</html>
