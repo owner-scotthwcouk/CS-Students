@@ -3,710 +3,2176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Support Foundation - Course Portal</title>
+    <title>Salford Digital Academy Portal - Level 1 IT</title>
+    <!-- Tailwind CSS for modern responsive styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cadbury: {
-                            50: '#f4f2f9',
-                            100: '#e9e4f2',
-                            200: '#d3c9e6',
-                            300: '#bdaed9',
-                            400: '#9179be',
-                            500: '#6543a3',
-                            600: '#482683', /* Core Cadbury Purple */
-                            700: '#3a1e69',
-                            800: '#2e1854',
-                            900: '#261445',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter and Fira Code for clean technical presentation -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons for UI elements -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
         }
-        /* Custom styling for printable workbook */
-        @media print {
-            .no-print { display: none !important; }
-            .print-break-inside-avoid { break-inside: avoid; }
-            body { background-color: white; }
-            input[type="text"] { border-bottom: 1px solid black; background: transparent; }
-        }
-        .tab-active { border-bottom-width: 4px; border-color: #482683; color: #482683; font-weight: 600; }
-        .tab-inactive { color: #64748b; border-bottom-width: 4px; border-color: transparent; }
-        .tab-inactive:hover { color: #334155; border-color: #cbd5e1; }
         
-        /* Smooth transitions */
-        .fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Custom scrollbar behavior for professional layout feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-<script>navigator.serviceWorker.register("service-worker.js")</script> 
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Print Media Styles to optimize worksheet layout on paper/PDF */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                font-size: 12pt;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .print-card {
+                border: 1px solid #000000 !important;
+                padding: 1.5in !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                background: transparent !important;
+            }
+            .worksheet-body {
+                padding: 0 !important;
+                border: none !important;
+            }
+            input[type="text"] {
+                border-bottom: 1px solid #000000 !important;
+                background: transparent !important;
+                color: #000000 !important;
+            }
+            select {
+                border: 1px solid #000000 !important;
+                background: transparent !important;
+                color: #000000 !important;
+                appearance: none;
+            }
+            textarea {
+                border: 1px solid #000000 !important;
+                background: transparent !important;
+                color: #000000 !important;
+            }
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col">
 
-    <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50 no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-cadbury-600 text-white p-2 rounded-lg">
-                        <i class="fa-solid fa-laptop-medical text-xl"></i>
+
+<!-- Top Navigation Bar -->
+<header class="bg-indigo-900 text-white shadow-md border-b border-indigo-950 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="bg-amber-500 text-indigo-950 p-2 rounded-lg font-black tracking-wider flex items-center justify-center">
+                <i class="fa-solid fa-graduation-cap text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold leading-tight">Salford Digital Academy</h1>
+                <p class="text-xs text-indigo-200">UK Level 1 IT Skills Curriculum</p>
+            </div>
+        </div>
+        
+        <!-- Action Utilities & Instructor Mode Toggle -->
+        <div class="flex items-center space-x-4">
+            <button id="instructor-mode-toggle" class="flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold border border-indigo-400 bg-indigo-950 hover:bg-indigo-800 transition shadow" onclick="toggleInstructorMode()">
+                <span class="h-2 w-2 rounded-full bg-red-400 animate-pulse inline-block" id="instructor-indicator"></span>
+                <span>🎓 Instructor Grading Mode: <strong id="instructor-status">OFF</strong></span>
+            </button>
+            <button onclick="downloadBackup()" class="bg-amber-500 hover:bg-amber-600 text-indigo-950 px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1.5 transition shadow" title="Download entire backup state of answers">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                <span class="hidden md:inline">Save Progress Backup</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Main Workspace Grid -->
+<div class="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
+    
+    <!-- Left Navigation Panel (Lessons List & Curriculum Summary) -->
+    <aside class="w-full md:w-80 flex-shrink-0 no-print">
+        
+        <!-- Search bar -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4">
+            <div class="relative">
+                <input type="text" id="search-input" onkeyup="filterLessons()" placeholder="Search lessons or topics..." class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-slate-800">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+            </div>
+        </div>
+
+        <!-- Course Progression Card & Interactive Checklist -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-4">
+            <div class="bg-indigo-50 p-4 border-b border-indigo-100 flex items-center justify-between">
+                <span class="text-xs font-bold text-indigo-900 tracking-wide uppercase">Your Progress Map</span>
+                <span id="global-progress" class="text-xs font-black bg-indigo-200 text-indigo-950 px-2 py-0.5 rounded-full">0%</span>
+            </div>
+            <div class="p-4 bg-slate-50 border-b border-slate-100">
+                <div class="w-full bg-slate-200 rounded-full h-2">
+                    <div id="global-progress-bar" class="bg-amber-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lessons Tree View Navigation -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-slate-50 p-4 border-b border-slate-100 font-bold text-xs text-slate-600 tracking-wider uppercase">
+                Lessons Directory
+            </div>
+            <nav id="lessons-nav" class="divide-y divide-slate-100 max-h-[500px] overflow-y-auto">
+                <!-- JavaScript loads list elements dynamically -->
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Right Side Dynamic Content Pane -->
+    <main class="flex-1 min-w-0">
+        
+        <!-- Course General Description Panel -->
+        <section id="curriculum-view" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+            <!-- Active Lesson Detail Rendered Dynamically -->
+            <div id="lesson-info-area">
+                <!-- Javascript Renders Lesson Objectives Here -->
+            </div>
+        </section>
+
+        <!-- Dynamic Worksheet Interface Tabs -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-slate-50 border-b border-slate-200 no-print">
+                <div class="flex border-b border-slate-200 px-4">
+                    <button id="tab-in-class-1" onclick="switchTab(0)" class="px-4 py-3.5 text-xs font-bold border-b-2 tracking-wide uppercase transition flex items-center space-x-1.5 focus:outline-none">
+                        <i class="fa-solid fa-desktop text-slate-400"></i>
+                        <span>In-Class 1</span>
+                    </button>
+                    <button id="tab-in-class-2" onclick="switchTab(1)" class="px-4 py-3.5 text-xs font-bold border-b-2 tracking-wide uppercase transition flex items-center space-x-1.5 focus:outline-none">
+                        <i class="fa-solid fa-desktop text-slate-400"></i>
+                        <span>In-Class 2</span>
+                    </button>
+                    <button id="tab-homework-1" onclick="switchTab(2)" class="px-4 py-3.5 text-xs font-bold border-b-2 tracking-wide uppercase transition flex items-center space-x-1.5 focus:outline-none">
+                        <i class="fa-solid fa-house-user text-slate-400"></i>
+                        <span>Homework 1</span>
+                    </button>
+                    <button id="tab-homework-2" onclick="switchTab(3)" class="px-4 py-3.5 text-xs font-bold border-b-2 tracking-wide uppercase transition flex items-center space-x-1.5 focus:outline-none">
+                        <i class="fa-solid fa-house-user text-slate-400"></i>
+                        <span>Homework 2</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Student Worksheet Container -->
+            <div class="p-6 relative">
+                
+                <!-- Student Metadata Header Block -->
+                <div class="bg-slate-50 rounded-xl p-4 mb-6 border border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-4 no-print" id="student-meta-container">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Student Full Name</label>
+                        <input type="text" id="student-name" onkeyup="saveMeta()" placeholder="Type your name..." class="w-full text-sm bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-slate-900 leading-tight">IT Support Foundation</h1>
-                        <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Tutor: Scott &bull; Student: Mordechai</p>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Task Completion Date</label>
+                        <input type="date" id="student-date" onchange="saveMeta()" class="w-full text-sm bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Instructor Review</label>
+                        <div class="flex items-center space-x-3 mt-2">
+                            <label class="flex items-center text-xs text-slate-600 font-medium">
+                                <input type="checkbox" id="inst-completed" onchange="saveMeta()" class="rounded text-indigo-600 border-slate-300 focus:ring-indigo-500 mr-1.5">
+                                Completed
+                            </label>
+                            <label class="flex items-center text-xs text-slate-600 font-medium">
+                                <input type="checkbox" id="inst-review" onchange="saveMeta()" class="rounded text-indigo-600 border-slate-300 focus:ring-indigo-500 mr-1.5">
+                                Needs Review
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Score / Feedback</label>
+                        <input type="text" id="inst-score" onkeyup="saveMeta()" placeholder="Score or Feedback comments" class="w-full text-sm bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
                     </div>
                 </div>
-                <div class="flex items-center space-x-8">
-                    <button onclick="switchTab('syllabus')" id="tab-syllabus" class="tab-active h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2">
-                        <i class="fa-solid fa-book-open"></i>
-                        <span>Course Syllabus</span>
-                    </button>
-                    <button onclick="switchTab('workbook')" id="tab-workbook" class="tab-inactive h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <span>Interactive Workbook</span>
+
+                <!-- Print Version Header (hidden by default on screen) -->
+                <div class="hidden print-only mb-6 border-b-2 border-black pb-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-bold uppercase tracking-wider" id="print-sheet-title">SALFORD DIGITAL ACADEMY WORKSHEET</h2>
+                            <p class="text-sm font-semibold" id="print-sheet-subtitle">UK Level 1 IT Skills Certification Program</p>
+                        </div>
+                        <div class="text-right text-xs">
+                            <p><strong>Salford City Council Outreach</strong></p>
+                            <p>Instructor Contact: scott@scott-hw.online</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-4 gap-4 mt-4 border border-black p-2 text-xs">
+                        <div><strong>Student Name:</strong> <span id="print-meta-name" class="underline"></span></div>
+                        <div><strong>Date:</strong> <span id="print-meta-date" class="underline"></span></div>
+                        <div><strong>Review Check:</strong> [  ] Completed  [  ] Needs Review</div>
+                        <div><strong>Score/Feedback:</strong> _________________</div>
+                    </div>
+                </div>
+
+                <!-- Live HTML Worksheet Container -->
+                <div id="worksheet-form" class="prose prose-slate max-w-none text-slate-800">
+                    <!-- Dynamic form gets parsed and injected here -->
+                </div>
+
+                <!-- Utility Actions Panel at bottom of Worksheet -->
+                <div class="mt-8 pt-6 border-t border-slate-200 flex flex-wrap gap-3 justify-between items-center no-print">
+                    <div class="flex space-x-2">
+                        <button onclick="downloadWorksheetMD()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center space-x-2 transition shadow">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                            <span>Download Worksheet (.md)</span>
+                        </button>
+                        <button onclick="printActiveWorksheet()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center space-x-2 transition shadow">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Print / Save PDF</span>
+                        </button>
+                    </div>
+                    <button onclick="clearCurrentAnswers()" class="text-xs font-semibold text-slate-500 hover:text-red-600 transition flex items-center space-x-1">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Reset Worksheet Answers</span>
                     </button>
                 </div>
             </div>
         </div>
-    </header>
-
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- SYLLABUS SECTION -->
-        <section id="section-syllabus" class="fade-in block">
-            
-            <div class="bg-gradient-to-r from-cadbury-600 to-cadbury-800 rounded-2xl p-8 sm:p-12 text-white shadow-lg mb-10 relative overflow-hidden">
-                <div class="relative z-10 max-w-3xl">
-                    <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">12-Lesson Practical Course Outline</h2>
-                    <p class="text-cadbury-100 text-lg leading-relaxed mb-6">
-                        Welcome to your IT Support training! This course is designed to bridge the gap between basic computer knowledge and the practical skills needed for an entry-level IT support or helpdesk role. 
-                        This curriculum incorporates core concepts from Cisco Networking Essentials alongside crucial Windows troubleshooting skills.
-                    </p>
-                    <div class="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 text-sm font-medium">
-                        <i class="fa-regular fa-clock"></i>
-                        <span>Each lesson is 60 minutes</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-network-wired absolute -bottom-10 -right-10 text-9xl text-white opacity-10"></i>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Lesson 1 -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
-                    <div class="w-10 h-10 rounded-full bg-cadbury-100 text-cadbury-600 flex items-center justify-center font-bold mb-4">1</div>
-                    <h3 class="text-lg font-bold mb-2">Intro to IT Support & Windows</h3>
-                    <p class="text-sm text-slate-600 mb-4">What a helpdesk tech does. Navigating the modern Windows interface, Settings vs. Control Panel, and File Explorer mastery.</p>
-                    <div class="text-xs font-semibold text-cadbury-600 uppercase tracking-wide">Hands-on: Workspace & Specs</div>
-                </div>
-
-                <!-- Lesson 2 -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
-                    <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold mb-4">2</div>
-                    <h3 class="text-lg font-bold mb-2">Windows Architecture & Admin Tools</h3>
-                    <p class="text-sm text-slate-600 mb-4">Going "under the hood." Task Manager, Resource Monitor, services, and identifying performance bottlenecks.</p>
-                    <div class="text-xs font-semibold text-purple-600 uppercase tracking-wide">Hands-on: Performance Tracking</div>
-                </div>
-
-                <!-- Lesson 3 -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
-                    <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold mb-4">3</div>
-                    <h3 class="text-lg font-bold mb-2">Filesystems & Storage Management</h3>
-                    <p class="text-sm text-slate-600 mb-4">How Windows organizes data. Managing drives, partitions, and securing files using complex NTFS permissions.</p>
-                    <div class="text-xs font-semibold text-red-600 uppercase tracking-wide">Hands-on: Network Shares & Security</div>
-                </div>
-
-                <!-- Lesson 4 -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
-                    <div class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold mb-4">4</div>
-                    <h3 class="text-lg font-bold mb-2">Troubleshooting & Event Viewer</h3>
-                    <p class="text-sm text-slate-600 mb-4">The IT troubleshooting methodology. Using Windows Event Viewer—the "flight recorder" of your PC—to diagnose crashes.</p>
-                    <div class="text-xs font-semibold text-orange-600 uppercase tracking-wide">Hands-on: Error Code Hunting</div>
-                </div>
-
-                <!-- Lesson 5 -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
-                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold mb-4">5</div>
-                    <h3 class="text-lg font-bold mb-2">Boot Issues & Recovery</h3>
-                    <p class="text-sm text-slate-600 mb-4">What to do when Windows won't start. The boot process, Advanced Startup, Safe Mode, and command-line repairs.</p>
-                    <div class="text-xs font-semibold text-emerald-600 uppercase tracking-wide">Hands-on: Safe Mode & SFC Scans</div>
-                </div>
-
-                <!-- Lesson 6 -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
-                    <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center font-bold mb-4">6</div>
-                    <h3 class="text-lg font-bold mb-2">Peripheral & Driver Troubleshooting</h3>
-                    <p class="text-sm text-slate-600 mb-4">How hardware talks to software. Managing Device Manager, rolling back broken updates, and installing clean drivers.</p>
-                    <div class="text-xs font-semibold text-slate-700 uppercase tracking-wide">Hands-on: Driver Reinstallations</div>
-                </div>
-
-                <!-- Lesson 7 -->
-                <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 bg-cadbury-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Cisco Module</div>
-                    <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold mb-4">7</div>
-                    <h3 class="text-lg font-bold mb-2">Cisco: Local Networks & Devices</h3>
-                    <p class="text-sm text-slate-600 mb-4">Defining a network (LAN/WAN). Understanding the specific roles of Endpoints, Switches, and Routers in an infrastructure.</p>
-                    <div class="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Hands-on: Topology Mapping</div>
-                </div>
-
-                <!-- Lesson 8 -->
-                <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 bg-cadbury-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Cisco Module</div>
-                    <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold mb-4">8</div>
-                    <h3 class="text-lg font-bold mb-2">Cisco: Addressing & IPv4</h3>
-                    <p class="text-sm text-slate-600 mb-4">Unpacking IPv4. Public vs. Private IPs, Subnet Masks, Default Gateways, and how DHCP assigns addresses automatically.</p>
-                    <div class="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Hands-on: IP Configuration Analysis</div>
-                </div>
-
-                <!-- Lesson 9 -->
-                <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 bg-cadbury-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Cisco Module</div>
-                    <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold mb-4">9</div>
-                    <h3 class="text-lg font-bold mb-2">Cisco: Services & Diagnostics</h3>
-                    <p class="text-sm text-slate-600 mb-4">Understanding DNS. Troubleshooting connectivity using industry-standard command-line tools favored by network technicians.</p>
-                    <div class="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Hands-on: Ping, Tracert, Nslookup</div>
-                </div>
-
-                <!-- Lesson 10 -->
-                <div class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 bg-cadbury-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Cisco Module</div>
-                    <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold mb-4">10</div>
-                    <h3 class="text-lg font-bold mb-2">Cisco: Wireless & Router Config</h3>
-                    <p class="text-sm text-slate-600 mb-4">Behind the curtain of home/small office networks. Router administrative interfaces, Wi-Fi frequencies, and WPA2/3 security.</p>
-                    <div class="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Hands-on: Evaluating Wi-Fi Channels</div>
-                </div>
-
-                <!-- Lesson 11 -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6">
-                    <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold mb-4">11</div>
-                    <h3 class="text-lg font-bold mb-2">Helpdesk Operations & Tickets</h3>
-                    <p class="text-sm text-slate-600 mb-4">ITSM concepts. How support teams track issues using ticketing systems, manage SLA priorities, and write documentation.</p>
-                    <div class="text-xs font-semibold text-teal-600 uppercase tracking-wide">Hands-on: Ticketing & Communication</div>
-                </div>
-
-                <!-- Lesson 12 -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6 border-b-4 border-b-green-500">
-                    <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold mb-4">12</div>
-                    <h3 class="text-lg font-bold mb-2">Live Simulation & Interview Prep</h3>
-                    <p class="text-sm text-slate-600 mb-4">Putting it all together. Rapid-fire troubleshooting scenarios and technical interview prep using the STAR method.</p>
-                    <div class="text-xs font-semibold text-green-600 uppercase tracking-wide">Hands-on: Mock Interview Roleplay</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- WORKBOOK SECTION -->
-        <section id="section-workbook" class="fade-in hidden max-w-4xl mx-auto">
-            
-            <div class="text-center bg-gradient-to-br from-slate-800 to-slate-900 text-white p-10 sm:p-14 rounded-2xl mb-10 shadow-xl relative overflow-hidden">
-                <i class="fa-solid fa-wrench absolute top-10 left-10 text-6xl text-white/5 transform -rotate-12"></i>
-                <i class="fa-solid fa-server absolute bottom-10 right-10 text-8xl text-white/5"></i>
-                
-                <h1 class="text-4xl sm:text-5xl font-black tracking-tight mb-3 relative z-10">IT Support Core Skills</h1>
-                <h2 class="text-cadbury-300 text-xl sm:text-2xl font-light mb-8 relative z-10">Interactive Student Workbook</h2>
-                
-                <div class="inline-block bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-xl relative z-10 w-full max-w-md">
-                    <label class="block text-sm font-semibold text-slate-300 uppercase tracking-wider mb-2">Student Name</label>
-                    <input type="text" value="Mordechai" class="w-full bg-transparent border-b-2 border-white/50 text-white text-center text-xl pb-1 focus:outline-none focus:border-cadbury-400 transition-colors placeholder-white/30 font-medium" placeholder="Enter your name here">
-                </div>
-                
-                <div class="mt-8 no-print">
-                    <button onclick="window.print()" class="bg-cadbury-600 hover:bg-cadbury-500 text-white px-6 py-2 rounded-lg font-medium shadow-md transition-colors flex items-center justify-center space-x-2 mx-auto">
-                        <i class="fa-solid fa-print"></i>
-                        <span>Print or Save to PDF</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="bg-cadbury-50 border-l-4 border-cadbury-500 p-5 rounded-r-lg mb-12 shadow-sm">
-                <p class="text-cadbury-900 font-medium"><i class="fa-solid fa-circle-info mr-2"></i><strong>Welcome!</strong> This interactive workbook contains your in-class concept checks, practical lab reference materials, and detailed homework assignments. You can type directly into the fields below.</p>
-            </div>
-
-            <!-- LESSON 1 -->
-            <div class="mb-16 print-break-inside-avoid">
-                <div class="bg-cadbury-600 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
-                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-desktop mr-3"></i> Lesson 1: Intro to IT Support & Windows</h2>
-                    <input type="date" class="bg-cadbury-700 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-cadbury-400 outline-none">
-                </div>
-                
-                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
-                    
-                    <div class="bg-cadbury-50 p-5 border-l-4 border-cadbury-600 rounded-r-lg mb-8">
-                        <strong class="text-cadbury-900 block mb-1 text-lg"><i class="fa-regular fa-lightbulb mr-2 text-yellow-500"></i> The Golden Rule of IT Support:</strong> 
-                        <em class="text-cadbury-800">"Fix the person first, then fix the machine."</em> Empathy and communication are just as important as technical skills. A frustrated user cannot help you troubleshoot!
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Concept Checks</h3>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-2">1. The Helpdesk Tiers:</p>
-                            <div class="pl-4 space-y-3">
-                                <p class="text-slate-700 flex items-center flex-wrap gap-2">
-                                    <i class="fa-solid fa-hand-point-right text-cadbury-500 mr-2"></i> 
-                                    Which tier is responsible for initial triage, password resets, and basic troubleshooting?
-                                    <span class="font-bold text-red-600 whitespace-nowrap">Tier <input type="text" class="w-16 border-b-2 border-slate-300 focus:border-cadbury-500 outline-none px-1 text-center font-bold text-slate-900 bg-slate-50 rounded-t"></span>
-                                </p>
-                                <p class="text-slate-700 flex items-center flex-wrap gap-2">
-                                    <i class="fa-solid fa-hand-point-right text-cadbury-500 mr-2"></i> 
-                                    Which tier handles complex infrastructure, server architecture, and network design?
-                                    <span class="font-bold text-red-600 whitespace-nowrap">Tier <input type="text" class="w-16 border-b-2 border-slate-300 focus:border-cadbury-500 outline-none px-1 text-center font-bold text-slate-900 bg-slate-50 rounded-t"></span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-2">2. Navigation Mastery (Keyboard Shortcuts):</p>
-                            <table class="w-full text-left border-collapse rounded-lg overflow-hidden ring-1 ring-slate-200">
-                                <tbody class="divide-y divide-slate-200">
-                                    <tr class="hover:bg-slate-50"><td class="p-3 text-slate-700">Open the Modern Settings App</td><td class="p-3"><code class="bg-slate-100 text-pink-600 px-2 py-1 rounded font-mono text-sm">Win + <input type="text" class="w-8 border-b border-slate-400 bg-transparent text-center outline-none focus:border-cadbury-500"></code></td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="p-3 text-slate-700">Open File Explorer</td><td class="p-3"><code class="bg-slate-100 text-pink-600 px-2 py-1 rounded font-mono text-sm">Win + <input type="text" class="w-8 border-b border-slate-400 bg-transparent text-center outline-none focus:border-cadbury-500"></code></td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="p-3 text-slate-700">Open the "Power User" Menu</td><td class="p-3"><code class="bg-slate-100 text-pink-600 px-2 py-1 rounded font-mono text-sm">Win + <input type="text" class="w-8 border-b border-slate-400 bg-transparent text-center outline-none focus:border-cadbury-500"></code></td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="p-3 text-slate-700">Open the Run Dialog Box</td><td class="p-3"><code class="bg-slate-100 text-pink-600 px-2 py-1 rounded font-mono text-sm">Win + <input type="text" class="w-8 border-b border-slate-400 bg-transparent text-center outline-none focus:border-cadbury-500"></code></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-2">3. File Explorer Configuration:</p>
-                            <p class="text-sm text-slate-600 italic mb-2">Why is it absolutely critical for an IT Technician to enable "File name extensions" in the View tab? (Give an example of how this prevents a security issue).</p>
-                            <textarea class="w-full border border-slate-300 rounded-md p-3 focus:ring-2 focus:ring-cadbury-500 outline-none text-slate-700 resize-y" rows="3" placeholder="Type your answer here..."></textarea>
-                        </div>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mt-10 mb-6">B. Practical Lab: System Discovery</h3>
-                    <p class="text-slate-700 mb-4"><em>Navigate to <strong>Settings > System > About</strong> (or run <code>msinfo32</code>) and document this machine's exact hardware profile:</em></p>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-slate-50 p-4 border border-slate-200 rounded-lg">
-                            <span class="block text-sm font-semibold text-slate-500 uppercase tracking-wide mb-1">Device Name</span>
-                            <input type="text" class="w-full bg-transparent border-b-2 border-slate-300 focus:border-cadbury-500 outline-none font-medium text-slate-800 pb-1" placeholder="e.g., DESKTOP-XYZ123">
-                        </div>
-                        <div class="bg-slate-50 p-4 border border-slate-200 rounded-lg">
-                            <span class="block text-sm font-semibold text-slate-500 uppercase tracking-wide mb-1">Windows Edition</span>
-                            <input type="text" class="w-full bg-transparent border-b-2 border-slate-300 focus:border-cadbury-500 outline-none font-medium text-slate-800 pb-1" placeholder="e.g., Windows 10 Pro">
-                        </div>
-                        <div class="bg-slate-50 p-4 border border-slate-200 rounded-lg">
-                            <span class="block text-sm font-semibold text-slate-500 uppercase tracking-wide mb-1">Processor (CPU)</span>
-                            <input type="text" class="w-full bg-transparent border-b-2 border-slate-300 focus:border-cadbury-500 outline-none font-medium text-slate-800 pb-1" placeholder="e.g., Intel Core i5-1135G7">
-                        </div>
-                        <div class="bg-slate-50 p-4 border border-slate-200 rounded-lg">
-                            <span class="block text-sm font-semibold text-slate-500 uppercase tracking-wide mb-1">Installed RAM</span>
-                            <input type="text" class="w-full bg-transparent border-b-2 border-slate-300 focus:border-cadbury-500 outline-none font-medium text-slate-800 pb-1" placeholder="e.g., 16.0 GB">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- HOMEWORK -->
-                <div class="bg-amber-50 p-6 sm:p-8 border-l-4 border-amber-500 rounded-r-lg mt-4 shadow-sm relative overflow-hidden">
-                    <i class="fa-solid fa-house-laptop absolute -bottom-5 -right-5 text-8xl text-amber-500/10"></i>
-                    <h3 class="text-2xl font-bold text-amber-900 mb-4 flex items-center"><i class="fa-solid fa-clipboard-list mr-3 text-amber-600"></i> Homework Assignment 1</h3>
-                    
-                    <div class="space-y-5 relative z-10">
-                        <div>
-                            <p class="font-bold text-slate-800">Task 1: Desktop Optimization for the IT Pro</p>
-                            <p class="text-slate-700 text-sm mb-3">Clean up your Windows Start Menu. Unpin all unnecessary bloatware. Pin at least 4 built-in administrative or utility tools that an IT pro would use daily (e.g., Snipping Tool, Command Prompt, Control Panel). Take a screenshot.</p>
-                            <div class="flex flex-col space-y-2 pl-4">
-                                <label class="flex items-center text-slate-700"><span class="w-24 font-medium">Pinned Tool 1:</span> <input type="text" class="flex-grow border-b-2 border-amber-200 bg-transparent outline-none focus:border-amber-500 px-2"></label>
-                                <label class="flex items-center text-slate-700"><span class="w-24 font-medium">Pinned Tool 2:</span> <input type="text" class="flex-grow border-b-2 border-amber-200 bg-transparent outline-none focus:border-amber-500 px-2"></label>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <p class="font-bold text-slate-800">Task 2: Power Configuration</p>
-                            <p class="text-slate-700 text-sm mb-2">Navigate to the legacy <strong>Control Panel</strong>. Find the "Power Options". Change your active plan to ensure the computer <em>Never</em> goes to sleep when plugged in. Write down the exact click-path:</p>
-                            <div class="bg-white/60 p-3 rounded border border-amber-200 font-mono text-sm text-red-600 flex items-center flex-wrap gap-2">
-                                Control Panel <i class="fa-solid fa-angle-right text-slate-400"></i>
-                                <input type="text" class="w-32 border-b border-red-300 bg-transparent outline-none focus:border-red-600 text-center" placeholder="Hardware &..."> <i class="fa-solid fa-angle-right text-slate-400"></i>
-                                <input type="text" class="w-32 border-b border-red-300 bg-transparent outline-none focus:border-red-600 text-center" placeholder="Power Opt...">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- LESSON 2 -->
-            <div class="mb-16 print-break-inside-avoid">
-                <div class="bg-purple-700 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
-                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-gears mr-3"></i> Lesson 2: Architecture & Admin Tools</h2>
-                    <input type="date" class="bg-purple-800 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-purple-400 outline-none">
-                </div>
-                
-                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
-                    
-                    <div class="bg-red-50 p-5 border-l-4 border-red-600 rounded-r-lg mb-8">
-                        <strong class="text-red-900 block mb-1 text-lg"><i class="fa-solid fa-triangle-exclamation mr-2 text-red-600"></i> Danger Zone:</strong> 
-                        <span class="text-red-800">Never randomly "End Task" on Windows background processes if you don't know what they do. Terminating <code>svchost.exe</code> or <code>wininit.exe</code> can instantly crash the operating system!</span>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Concept Checks</h3>
-                    
-                    <div class="space-y-8">
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-3">1. Task Manager (<code>Ctrl + Shift + Esc</code>):</p>
-                            <ul class="space-y-4 pl-4 text-slate-700 list-disc list-inside">
-                                <li>Which tab gives you a visual graph of CPU, Memory, Disk, and Network usage? 
-                                    <input type="text" class="w-32 ml-2 border-b-2 border-slate-300 focus:border-purple-500 outline-none px-1 font-bold text-slate-900 bg-slate-50 rounded-t text-center">
-                                </li>
-                                <li class="flex flex-col">
-                                    <span class="mb-2">What is the functional difference between an "App" and a "Background Process"?</span>
-                                    <textarea class="w-full border border-slate-300 rounded-md p-2 focus:ring-2 focus:ring-purple-500 outline-none text-slate-700 resize-y" rows="2"></textarea>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-2">2. Services (<code>services.msc</code>):</p>
-                            <p class="text-slate-700 mb-3">A program running in the background without user interaction is called a <input type="text" class="w-32 border-b-2 border-slate-300 focus:border-purple-500 outline-none px-1 text-center font-bold text-purple-700 bg-purple-50 rounded-t">. List the three main "Startup Types":</p>
-                            <ol class="list-decimal list-inside space-y-2 pl-4 text-slate-700">
-                                <li><input type="text" class="w-32 border-b border-slate-400 bg-transparent outline-none focus:border-purple-500 text-center"> (Starts automatically with Windows)</li>
-                                <li><input type="text" class="w-32 border-b border-slate-400 bg-transparent outline-none focus:border-purple-500 text-center"> (Starts only when requested by another app)</li>
-                                <li><input type="text" class="w-32 border-b border-slate-400 bg-transparent outline-none focus:border-purple-500 text-center"> (Cannot be started at all)</li>
-                            </ol>
-                        </div>
-
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-2">3. Resource Monitor (<code>resmon</code>):</p>
-                            <p class="text-slate-700">If a user complains their hard drive is constantly spinning and the PC is slow, which tab in Resource Monitor shows you <em>exactly</em> which files are being read/written? <input type="text" class="w-32 border-b-2 border-slate-300 focus:border-purple-500 outline-none px-1 text-center font-bold text-slate-900 bg-slate-50 rounded-t"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- HOMEWORK -->
-                <div class="bg-purple-50 p-6 sm:p-8 border-l-4 border-purple-500 rounded-r-lg mt-4 shadow-sm relative overflow-hidden">
-                    <i class="fa-solid fa-rocket absolute -bottom-2 -right-5 text-8xl text-purple-500/10 transform rotate-45"></i>
-                    <h3 class="text-2xl font-bold text-purple-900 mb-4 flex items-center"><i class="fa-solid fa-clipboard-list mr-3 text-purple-600"></i> Homework Assignment 2</h3>
-                    
-                    <div class="relative z-10">
-                        <p class="font-bold text-slate-800">Task: Startup Optimization Analysis</p>
-                        <p class="text-slate-700 text-sm mb-4">Open Task Manager and navigate to the <strong>Startup</strong> tab. Disable at least three non-essential applications. Document them below:</p>
-                        
-                        <div class="overflow-x-auto mb-6">
-                            <table class="w-full text-left border-collapse rounded-lg overflow-hidden ring-1 ring-slate-300 bg-white">
-                                <thead class="bg-slate-100 border-b border-slate-300">
-                                    <tr>
-                                        <th class="p-3 text-sm font-semibold text-slate-700">Application Name</th>
-                                        <th class="p-3 text-sm font-semibold text-slate-700">Publisher</th>
-                                        <th class="p-3 text-sm font-semibold text-slate-700">Startup Impact</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-200">
-                                    <tr>
-                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                        <td class="p-2"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                        <td class="p-2"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                        <td class="p-2 border-r border-slate-200"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                        <td class="p-2"><input type="text" class="w-full outline-none px-2 py-1 focus:bg-purple-50"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p class="text-slate-700 flex items-center bg-white/60 p-3 border border-purple-200 rounded">
-                            <strong class="mr-2">The Reboot Test:</strong> Restart your machine. Check Task Manager > Startup. What is your "Last BIOS time" (top right)? 
-                            <span class="font-bold text-red-600 ml-2"><input type="text" class="w-16 border-b-2 border-red-300 focus:border-red-600 outline-none px-1 text-center bg-transparent"> seconds.</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- LESSON 3 -->
-            <div class="mb-16 print-break-inside-avoid">
-                <div class="bg-red-700 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
-                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-hard-drive mr-3"></i> Lesson 3: Filesystems & Storage</h2>
-                    <input type="date" class="bg-red-800 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-red-400 outline-none">
-                </div>
-                
-                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
-                    
-                    <div class="bg-amber-50 p-5 border-l-4 border-amber-500 rounded-r-lg mb-8">
-                        <strong class="text-amber-900 block mb-1 text-lg"><i class="fa-solid fa-lock mr-2 text-amber-600"></i> The Network Security Rule:</strong> 
-                        <span class="text-amber-800">When dealing with folders shared over a network, the <strong>MOST restrictive permission</strong> always wins. If NTFS permissions say "Read-Only" but Share permissions say "Full Control", the user only gets "Read-Only" access.</span>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Concept Checks</h3>
-                    
-                    <div class="space-y-8">
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-3">1. Disk Management (<code>diskmgmt.msc</code>):</p>
-                            <ul class="space-y-4 pl-4 text-slate-700 list-disc list-inside">
-                                <li>What is the standard, modern filesystem used by Windows for internal drives? 
-                                    <input type="text" class="w-24 ml-2 border-b-2 border-slate-300 focus:border-red-500 outline-none px-1 font-bold text-slate-900 bg-slate-50 rounded-t text-center">
-                                </li>
-                                <li class="flex flex-col">
-                                    <span class="mb-2">What two major steps must you take to make a brand new "Unallocated" drive usable?</span>
-                                    <div class="pl-6 space-y-2">
-                                        <div class="flex items-center"><span class="mr-2">1.</span><input type="text" class="flex-grow border-b border-slate-400 focus:border-red-500 outline-none px-2 py-1 bg-transparent" placeholder="Initialize as MBR/GPT..."></div>
-                                        <div class="flex items-center"><span class="mr-2">2.</span><input type="text" class="flex-grow border-b border-slate-400 focus:border-red-500 outline-none px-2 py-1 bg-transparent" placeholder="Create Simple Volume / Format..."></div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-3">2. NTFS Permissions:</p>
-                            <ul class="space-y-4 pl-4 text-slate-700 list-disc list-inside">
-                                <li>What is the process called where a folder automatically takes on the security permissions of the folder above it? 
-                                    <input type="text" class="w-32 ml-2 border-b-2 border-slate-300 focus:border-red-500 outline-none px-1 font-bold text-slate-900 bg-slate-50 rounded-t text-center">
-                                </li>
-                                <li>If you want a user to edit and save a Word document, but NOT delete it, which explicit permission do they need? (Read / Write / Modify / Full Control) 
-                                    <input type="text" class="w-32 ml-2 border-b-2 border-red-300 focus:border-red-500 outline-none px-1 font-bold text-red-600 bg-red-50 rounded-t text-center">
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- HOMEWORK -->
-                <div class="bg-red-50 p-6 sm:p-8 border-l-4 border-red-600 rounded-r-lg mt-4 shadow-sm relative overflow-hidden">
-                    <i class="fa-solid fa-folder-tree absolute -bottom-5 -right-5 text-8xl text-red-500/10"></i>
-                    <h3 class="text-2xl font-bold text-red-900 mb-4 flex items-center"><i class="fa-solid fa-clipboard-list mr-3 text-red-600"></i> Homework Assignment 3</h3>
-                    
-                    <div class="relative z-10">
-                        <p class="font-bold text-slate-800 mb-2">Task: Local Security Policy Simulation</p>
-                        <p class="text-slate-700 text-sm mb-4">You are an IT Admin setting up a workstation. Follow these steps exactly and check them off:</p>
-                        
-                        <ul class="space-y-3 mb-6 bg-white/60 p-4 rounded-lg border border-red-200">
-                            <li class="flex items-start">
-                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
-                                <span class="ml-3 text-slate-700">1. Open Computer Management (<code>compmgmt.msc</code>) > Local Users and Groups.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
-                                <span class="ml-3 text-slate-700">2. Create a new local user account named <strong>"TempUser"</strong>.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
-                                <span class="ml-3 text-slate-700">3. Create a folder on your C: drive named <strong>"Company_Policies"</strong>.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
-                                <span class="ml-3 text-slate-700">4. Right-click the folder > Properties > Security tab > Advanced.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
-                                <span class="ml-3 text-slate-700">5. Click "Disable Inheritance".</span>
-                            </li>
-                            <li class="flex items-start">
-                                <input type="checkbox" class="mt-1 w-5 h-5 text-red-600 rounded focus:ring-red-500 cursor-pointer">
-                                <span class="ml-3 text-slate-700">6. Click "Add", select "TempUser", and set their explicit permissions to <strong>"Read & execute" ONLY</strong>.</span>
-                            </li>
-                        </ul>
-                        
-                        <div>
-                            <p class="text-slate-700 italic mb-2">Testing it: Log out, log into TempUser, and try to delete the "Company_Policies" folder. What happens?</p>
-                            <textarea class="w-full border border-red-200 rounded-md p-3 focus:ring-2 focus:ring-red-500 outline-none text-slate-700 resize-y bg-white" rows="2" placeholder="Describe the result..."></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CISCO SKIP MARKER -->
-            <div class="text-center my-12 p-6 bg-slate-100 rounded-xl border-2 border-dashed border-slate-300">
-                <p class="text-slate-500 font-medium italic"><i class="fa-solid fa-forward-step mr-2"></i> --- Lessons 7-10 (Cisco Networking Modules) Excluded from this Core OS Workbook ---</p>
-            </div>
-
-            <!-- LESSON 11 -->
-            <div class="mb-16 print-break-inside-avoid">
-                <div class="bg-teal-600 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
-                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-ticket mr-3"></i> Lesson 11: Helpdesk Operations</h2>
-                    <input type="date" class="bg-teal-700 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-teal-400 outline-none">
-                </div>
-                
-                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
-                    
-                    <div class="bg-cadbury-50 p-5 border-l-4 border-cadbury-500 rounded-r-lg mb-8">
-                        <strong class="text-cadbury-900 block mb-1 text-lg"><i class="fa-solid fa-pen-nib mr-2 text-cadbury-600"></i> The Ticket Rule:</strong> 
-                        <span class="text-cadbury-800">"If it's not in the ticket, it didn't happen." Always document your exact troubleshooting steps. Your notes might save another technician hours of work next month!</span>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Concept Checks</h3>
-                    
-                    <div class="space-y-6 mb-10">
-                        <div>
-                            <p class="font-semibold text-slate-800 mb-2">1. ITSM Basics:</p>
-                            <div class="pl-4 space-y-4 text-slate-700">
-                                <div class="flex flex-col">
-                                    <span class="mb-1">What does SLA stand for, and what does it mean practically?</span>
-                                    <input type="text" class="w-full border-b border-slate-300 focus:border-teal-500 outline-none px-2 py-1 bg-transparent">
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="mb-1">Why must you ask for a "PC Name/Asset Tag" instead of taking their word that "my laptop is broken"?</span>
-                                    <input type="text" class="w-full border-b border-slate-300 focus:border-teal-500 outline-none px-2 py-1 bg-transparent">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">B. Practical Lab: Ticket Creation</h3>
-                    <p class="text-slate-700 mb-4 italic">Listen to the tutor act out a mock phone call. Take notes and draft the ticket below.</p>
-                    
-                    <div class="border-2 border-teal-500 rounded-lg p-5 bg-teal-50/30 shadow-inner">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 border-b border-teal-200 pb-4">
-                            <div>
-                                <label class="text-xs font-bold text-teal-800 uppercase block mb-1">User Name</label>
-                                <input type="text" class="w-full bg-white border border-teal-300 rounded px-2 py-1 outline-none focus:ring-2 focus:ring-teal-400">
-                            </div>
-                            <div>
-                                <label class="text-xs font-bold text-teal-800 uppercase block mb-1">Asset Tag</label>
-                                <input type="text" class="w-full bg-white border border-teal-300 rounded px-2 py-1 outline-none focus:ring-2 focus:ring-teal-400">
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4 border-b border-teal-200 pb-4">
-                            <label class="text-xs font-bold text-teal-800 uppercase block mb-2">Category</label>
-                            <div class="flex flex-wrap gap-4">
-                                <label class="flex items-center"><input type="radio" name="cat" class="mr-2 text-teal-600 focus:ring-teal-500"> Hardware</label>
-                                <label class="flex items-center"><input type="radio" name="cat" class="mr-2 text-teal-600 focus:ring-teal-500"> Software</label>
-                                <label class="flex items-center"><input type="radio" name="cat" class="mr-2 text-teal-600 focus:ring-teal-500"> Network</label>
-                                <label class="flex items-center"><input type="radio" name="cat" class="mr-2 text-teal-600 focus:ring-teal-500"> Access</label>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label class="text-xs font-bold text-teal-800 uppercase block mb-1">Issue Description (From User)</label>
-                            <textarea class="w-full bg-white border border-teal-300 rounded p-2 outline-none focus:ring-2 focus:ring-teal-400 resize-y" rows="3"></textarea>
-                        </div>
-                        
-                        <div>
-                            <label class="text-sm font-bold text-teal-900 uppercase block mb-1"><i class="fa-solid fa-check-double mr-1"></i> Resolution Notes (Filled after fix)</label>
-                            <textarea class="w-full bg-white border-2 border-teal-400 rounded p-2 outline-none focus:ring-2 focus:ring-teal-500 resize-y" rows="3" placeholder="Document the exact steps taken to resolve..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- HOMEWORK -->
-                <div class="bg-cyan-50 p-6 sm:p-8 border-l-4 border-cyan-500 rounded-r-lg mt-4 shadow-sm relative overflow-hidden">
-                    <i class="fa-solid fa-envelope-open-text absolute -bottom-5 -right-5 text-8xl text-cyan-500/10"></i>
-                    <h3 class="text-2xl font-bold text-cyan-900 mb-4 flex items-center"><i class="fa-solid fa-clipboard-list mr-3 text-cyan-600"></i> Homework Assignment 11</h3>
-                    
-                    <div class="relative z-10">
-                        <p class="font-bold text-slate-800 mb-2">Task: De-escalation Email</p>
-                        <p class="text-slate-700 text-sm mb-4">A user is locked out for guessing their password too many times. They email: <em>"IT is preventing me from doing my urgent work! Fix this now!"</em> Draft a professional, empathetic reply explaining the security policy and providing a temporary password (TempPass123!).</p>
-                        
-                        <div class="bg-white p-5 border border-slate-300 rounded-lg shadow-sm font-sans">
-                            <p class="text-slate-600 mb-4">To: user@company.com<br>Subject: RE: Account Lockout</p>
-                            <p class="mb-2">Hi [User Name],</p>
-                            <textarea class="w-full border-none outline-none resize-y text-slate-800 min-h-[100px]" placeholder="Type your professional response here..."></textarea>
-                            <p class="mt-4">Best regards,<br>IT Support</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- LESSON 12 -->
-            <div class="mb-16 print-break-inside-avoid">
-                <div class="bg-green-600 text-white p-5 rounded-t-xl flex justify-between items-center shadow-md">
-                    <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-rocket mr-3"></i> Lesson 12: Simulation & Interview</h2>
-                    <input type="date" class="bg-green-700 border-none rounded px-2 py-1 text-sm text-white focus:ring-2 focus:ring-green-400 outline-none">
-                </div>
-                
-                <div class="bg-white p-6 sm:p-8 border-x border-b border-slate-200 rounded-b-xl shadow-sm">
-                    
-                    <div class="bg-yellow-50 p-5 border-l-4 border-yellow-500 rounded-r-lg mb-8">
-                        <strong class="text-yellow-900 block mb-1 text-lg"><i class="fa-solid fa-star mr-2 text-yellow-500"></i> The STAR Method:</strong> 
-                        <span class="text-yellow-800">When asked behavioral interview questions ("Tell me about a time..."), answer using: <strong>S</strong>ituation, <strong>T</strong>ask, <strong>A</strong>ction, <strong>R</strong>esult.</span>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-6">A. In-Class Simulation Notes</h3>
-                    <p class="text-slate-700 mb-4 italic">Jot down clues as you guide the tutor through the rapid-fire troubleshooting scenarios.</p>
-                    
-                    <div class="space-y-4 mb-10">
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3">
-                            <strong class="text-slate-800 whitespace-nowrap">Scenario 1 (The Freezing App):</strong> 
-                            <input type="text" class="flex-grow bg-white border border-slate-300 rounded px-3 py-1 outline-none focus:border-green-500" placeholder="Tools used...">
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3">
-                            <strong class="text-slate-800 whitespace-nowrap">Scenario 2 (The Display Issue):</strong> 
-                            <input type="text" class="flex-grow bg-white border border-slate-300 rounded px-3 py-1 outline-none focus:border-green-500" placeholder="Tools used...">
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3">
-                            <strong class="text-slate-800 whitespace-nowrap">Scenario 3 (The Access Issue):</strong> 
-                            <input type="text" class="flex-grow bg-white border border-slate-300 rounded px-3 py-1 outline-none focus:border-green-500" placeholder="Tools used...">
-                        </div>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-800 border-b-2 border-slate-100 pb-2 mb-4">B. Interview Prep</h3>
-                    <p class="font-bold text-slate-800 mb-2">"Walk me through the exact steps you take if a user calls and says their computer won't turn on."</p>
-                    <textarea class="w-full bg-slate-50 border border-slate-300 rounded p-3 outline-none focus:ring-2 focus:ring-green-400 resize-y text-slate-700" rows="4" placeholder="Draft your response here..."></textarea>
-                </div>
-
-                <!-- HOMEWORK / FINAL ASSIGNMENT -->
-                <div class="bg-emerald-50 p-6 sm:p-8 border-l-4 border-emerald-600 rounded-r-lg mt-4 shadow-md relative overflow-hidden">
-                    <i class="fa-solid fa-trophy absolute -bottom-5 -right-5 text-8xl text-emerald-600/10"></i>
-                    <h3 class="text-2xl font-bold text-emerald-900 mb-4 flex items-center"><i class="fa-solid fa-graduation-cap mr-3 text-emerald-600"></i> Final Assignment: CV Optimization</h3>
-                    
-                    <div class="relative z-10">
-                        <p class="font-bold text-slate-800 mb-2">Task: Update your Resume/CV</p>
-                        <p class="text-slate-700 text-sm mb-6">Translate this course into a "Technical Skills" section on your CV. Do not say "Learned about...". Use strong action verbs (e.g., <em>Configured, Diagnosed, Managed, Administered</em>).</p>
-                        
-                        <p class="font-semibold text-slate-800 mb-3">Draft three strong bullet points for your CV based on what we've covered:</p>
-                        <ul class="space-y-4">
-                            <li class="flex items-start">
-                                <i class="fa-solid fa-check text-emerald-600 mt-1 mr-3"></i>
-                                <textarea class="flex-grow bg-white border border-emerald-200 rounded p-2 outline-none focus:ring-2 focus:ring-emerald-500 resize-none text-sm text-slate-700" rows="2" placeholder="e.g., Administered Windows environments, utilizing Task Manager and Resource Monitor to optimize system performance..."></textarea>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa-solid fa-check text-emerald-600 mt-1 mr-3"></i>
-                                <textarea class="flex-grow bg-white border border-emerald-200 rounded p-2 outline-none focus:ring-2 focus:ring-emerald-500 resize-none text-sm text-slate-700" rows="2" placeholder="Write bullet point 2..."></textarea>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa-solid fa-check text-emerald-600 mt-1 mr-3"></i>
-                                <textarea class="flex-grow bg-white border border-emerald-200 rounded p-2 outline-none focus:ring-2 focus:ring-emerald-500 resize-none text-sm text-slate-700" rows="2" placeholder="Write bullet point 3..."></textarea>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center pb-20 no-print">
-                <p class="text-slate-500 font-medium">End of Interactive Workbook</p>
-            </div>
-        </section>
-
     </main>
+</div>
 
-    <script>
-        function switchTab(tabId) {
-            // Get DOM elements
-            const syllabusSection = document.getElementById('section-syllabus');
-            const workbookSection = document.getElementById('section-workbook');
-            const tabSyllabus = document.getElementById('tab-syllabus');
-            const tabWorkbook = document.getElementById('tab-workbook');
+<!-- Modal Alert System (Avoiding alerts) -->
+<div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center space-x-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+    <div id="toast-icon-bg" class="p-1 rounded bg-indigo-500 text-slate-950 flex items-center justify-center">
+        <i class="fa-solid fa-circle-check text-sm" id="toast-icon"></i>
+    </div>
+    <span class="text-xs font-semibold tracking-wide" id="toast-msg">Progress Saved!</span>
+</div>
 
-            // Reset classes
-            syllabusSection.classList.add('hidden');
-            workbookSection.classList.add('hidden');
-            
-            tabSyllabus.className = 'tab-inactive h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2';
-            tabWorkbook.className = 'tab-inactive h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2';
 
-            // Apply active states
-            if (tabId === 'syllabus') {
-                syllabusSection.classList.remove('hidden');
-                tabSyllabus.className = 'tab-active h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2';
-            } else if (tabId === 'workbook') {
-                workbookSection.classList.remove('hidden');
-                tabWorkbook.className = 'tab-active h-full px-2 pt-1 transition-colors duration-200 flex items-center space-x-2';
+<script>
+// We store the raw Markdown source of ALL worksheets representing lessons 1 to 12.
+// The custom engine converts empty space lines like '____' into clean input fields,
+// checklists '[]' into interactive elements, and matching matrices into selector forms.
+const worksheetsDatabase = {
+    l1: {
+        title: "Lesson 1: Computing Basics, Web Browsing, and Email Setup",
+        objectives: [
+            "Hardware & Interface Basics: Turning on/off, mouse/trackpad skills, keyboard navigation.",
+            "Web Browsing Essentials: Browser interfaces, URLs, safe link traversal, and basic searching.",
+            "Email Fundamentals: Creating a secure email profile, composing, recipient lines (To, CC, BCC)."
+        ],
+        sheets: [
+            {
+                id: "l1_ws1_1",
+                title: "In-Class Worksheet 1.1: Hardware & Desktop Navigation",
+                markdown: `### Task 1: Hardware Match-Up
+Draw a line or select the correct letter matching the computer component to its correct function:
+
+| Computer Component | Match Option | Main Function / Job |
+| :--- | :---: | :--- |
+| **1. Mouse / Trackpad** | | **A.** Displays text, images, and videos on the screen. |
+| **2. Keyboard** | | **B.** Used to input letters, numbers, symbols, and commands. |
+| **3. Screen / Monitor** | | **C.** Moves the pointer on the screen and allows you to select items. |
+
+---
+
+### Task 2: Desktop Exploration
+Minimize any open windows to view your computer screen's **Desktop**. Locate each of the items listed below. Check the box once you have successfully found it:
+
+*   [ ] **The "Start" Button / Main Menu Icon** (usually located in the bottom-left corner).
+*   [ ] **The System Clock & Date** (usually located in the bottom-right corner).
+*   [ ] **A Web Browser Icon** (e.g., Google Chrome, Microsoft Edge, Mozilla Firefox, or Safari).
+*   [ ] **The Recycle Bin / Trash Can** (where deleted files go).`
+            },
+            {
+                id: "l1_ws1_2",
+                title: "In-Class Worksheet 1.2: Web Searching & Email Setup",
+                markdown: `### Task 1: Search Engine Scavenger Hunt
+Open your web browser (e.g., Google Chrome). Navigate to a search engine like Google (www.google.com) and search for the answers to the following questions:
+
+1. **What is the current weather forecast for tomorrow in Salford?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **In what year was the first personal computer (PC) invented?**  
+   *Answer:* __________________________________________________________________________________
+
+---
+
+### Task 2: Email Setup Checklist
+Follow your instructor's guidance to set up your free email account. Fill out and check off the steps as you complete them:
+
+*   [ ] **Select Email Provider:** [ ] Gmail (Google)  [ ] Outlook (Microsoft)  [ ] Other: ______________
+*   [ ] **Choose Your Username (Email Address):**  
+    *My Email Address:* \`___________________________________________________ @ ____________________\`
+*   [ ] **Create a Password:** Create a strong, memorable password. *(Note: Keep this secret! Do not write it here.)*
+*   [ ] **Log In:** Successfully log into your new inbox for the first time.
+*   [ ] **Send a Test Email:** Compose and send a quick message to your instructor's email address (\`scott@scott-hw.online\`).`
+            },
+            {
+                id: "l1_ws2_1",
+                title: "Homework Worksheet 1.1: Typing & Mouse Practice",
+                markdown: `### Task 1: Typing Exercise
+Open a simple text editor on your computer (such as **Notepad** on Windows or **TextEdit** on Mac). Type the exact paragraph below. Pay close attention to punctuation, capital letters, and spacing.
+
+> *“Learning to use a computer takes time and patience. The keyboard is laid out in a specific way called QWERTY. Today, I am practicing using the spacebar, the shift key for capital letters, and the full stop.”*
+
+---
+
+### Task 2: Reflection Questions
+1. **Which key on the keyboard did you find the most difficult to locate?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **Approximately how long did it take you to type the entire paragraph?**  
+   *Answer:* _________________________ minutes.`
+            },
+            {
+                id: "l1_ws2_2",
+                title: "Homework Worksheet 1.2: Exploring the Web",
+                markdown: `### Task: Finding Useful Websites
+Identify three different websites that align with your personal interests, hobbies, or daily life (e.g., a news site, a cooking blog, a local services page). Write down the name of the website and its exact URL (web address).
+
+*   **Website 1:**
+    *   *Name of Site:* __________________________________________________________________________
+    *   *Web Address (URL):* \`https://www.___________________________________________________________\`
+*   **Website 2:**
+    *   *Name of Site:* __________________________________________________________________________
+    *   *Web Address (URL):* \`https://www.___________________________________________________________\`
+*   **Website 3:**
+    *   *Name of Site:* __________________________________________________________________________
+    *   *Web Address (URL):* \`https://www.___________________________________________________________\``
+            }
+        ]
+    },
+    l2: {
+        title: "Lesson 2: Internet Safety, Security, and Scam Recognition",
+        objectives: [
+            "Understand modern cryptography basics: Safe passphrase construction methods.",
+            "Learn connection security: Spotting certificate padlocks, domains, and HTTPS indicators.",
+            "Phishing Defense drills: Critiquing email domain alerts, link traps, and timing pressure techniques.",
+            "Understand terminal logistics: Safe procedures for public workspace termination."
+        ],
+        sheets: [
+            {
+                id: "l2_ws1_1",
+                title: "In-Class Worksheet 2.1: Creating Strong Passphrases",
+                markdown: `### Concept Introduction
+A **passphrase** is a sequence of words that is long, secure, but easy to remember. We can create strong passwords by taking the first letter of each word in a memorable sentence and inserting a number and a symbol.
+
+*   *Example Sentence:* **I** **l**ove **d**rinking **t**ea **i**n **t**he **m**orning.
+*   *Resulting Passphrase:* \`Ildt1tm!\` *(Using "1" instead of "in" and adding "!" at the end)*
+
+---
+
+### Task: Create Your Own Passphrases
+Convert the two sentences below into strong, secure passphrases using the first-letter method.
+
+1. **Sentence:** My favorite color is blue and I have two cats.  
+   *Your Passphrase:* _________________________________________________________________________
+
+2. **Sentence:** I walk in the park every Sunday afternoon.  
+   *Your Passphrase (incorporate at least one number and one symbol):*  
+   *Your Passphrase:* _________________________________________________________________________`
+            },
+            {
+                id: "l2_ws1_2",
+                title: "In-Class Worksheet 2.2: Spot the Scam (Phishing)",
+                markdown: `### Task: Phishing Detection
+Review the mockup email below. It contains several "red flags" indicating that it is a malicious phishing scam rather than a legitimate message from a bank.
+
+\`\`\`text
+================================================================================
+FROM: Security@Bank0fAmerica-alerts.com
+DATE: June 4, 2026
+SUBJECT: URGENT: Your account will be closed!!
+================================================================================
+
+Dear Customer,
+
+We have noticed suspicious activity on your acount. You must click the 
+link below immediately to verify your details or your money will be 
+frozen in 24 hours.
+
+Click here to verify now: www.secure-login-bank-update123.com/login
+
+Thanks,
+The Bank Team
+================================================================================
+\`\`\`
+
+### Written Analysis
+List **three distinct red flags** you identified in the email above that prove it is a scam:
+
+1. **First Red Flag:** _________________________________________________________________________________
+2. **Second Red Flag:** _______________________________________________________________________________
+3. **Third Red Flag:** ________________________________________________________________________________`
+            },
+            {
+                id: "l2_ws2_1",
+                title: "Homework Worksheet 2.1: Security Scenarios",
+                markdown: `### Task: Real-World Safe Practices
+Read the two scenarios below and write down the safest course of action for each situation.
+
+#### Scenario A: The Public Computer
+You are using a shared computer at the public library to check your personal emails. Your rental time is running out, and you must leave immediately.
+*   **What is the most critical security action you must perform before leaving the computer?**  
+    *Answer:* __________________________________________________________________________________
+    ___________________________________________________________________________________________
+
+#### Scenario B: The Unexpected Prize
+You receive an email from a major retail brand stating that you have won a £500 gift card, despite not entering any competition. The email requests your home address and your bank details to "process the shipping and tax."
+*   **How should you handle this email?**  
+    *Answer:* __________________________________________________________________________________
+    ___________________________________________________________________________________________`
+            },
+            {
+                id: "l2_ws2_2",
+                title: "Homework Worksheet 2.2: The Padlock & Security Check",
+                markdown: `### Concept Reminder
+The **HTTPS** protocol and the small **padlock icon** in your browser's address bar signify that your connection to a website is encrypted. **Never** input sensitive information (such as passwords, credit card numbers, or home addresses) into a website that does not display these security markers.
+
+---
+
+### Task: Security Verification Audit
+Using a computer or a smartphone, visit three websites of your choosing. Look closely at the browser address bar for each site and fill out the security log below:
+
+| Website Name / URL | Padlock Visible? (Yes / No) | Address Starts with HTTPS? (Yes / No) | Is it safe to enter a password here? |
+| :--- | :---: | :---: | :---: |
+| **1.** \`____________________________________\` | [ ] Yes  [ ] No | [ ] Yes  [ ] No | [ ] Yes  [ ] No |
+| **2.** \`____________________________________\` | [ ] Yes  [ ] No | [ ] Yes  [ ] No | [ ] Yes  [ ] No |
+| **3.** \`____________________________________\` | [ ] Yes  [ ] No | [ ] Yes  [ ] No | [ ] Yes  [ ] No |`
+            }
+        ]
+    },
+    l3: {
+        title: "Lesson 3: File Management and Organization",
+        objectives: [
+            "Filing System Analogy: Hard drive cabinet system vs physical desks.",
+            "Path Finder: Mastering System File Explorer paths (Downloads, Documents, Desktop).",
+            "Data Control: Creating folders, strategic renames, bulk dragging, and folder migrations.",
+            "Storage Logistics: Evaluating local storage spaces versus external flash drives."
+        ],
+        sheets: [
+            {
+                id: "l3_ws1_1",
+                title: "In-Class Worksheet 3.1: The Digital Filing Cabinet",
+                markdown: `### Task: Analogy Match-Up
+A computer organizes files similarly to a physical office filing system. Match each digital term to its real-world physical equivalent:
+
+| Digital Term | Match Option | Physical Office Equivalent |
+| :--- | :---: | :--- |
+| **1. Hard Drive / Storage** | | **A.** A single physical sheet of paper (e.g., a photo, a written letter, a financial bill). |
+| **2. A File** (e.g., \`.docx\`, \`.jpg\`) | | **B.** The entire heavy metal filing cabinet itself. |
+| **3. A Folder** | | **C.** A labeled paper folder used to hold related documents together. |`
+            },
+            {
+                id: "l3_ws1_2",
+                title: "In-Class Worksheet 3.2: Folder Creation Checklist",
+                markdown: `### Task: Hands-On Navigation & Organization
+Follow these hands-on steps on your computer. Mark each checkbox as you successfully complete the action under your instructor's supervision.
+
+*   [ ] **Open the File Manager:** Open **File Explorer** (if on a Windows computer) or **Finder** (if on a Mac).
+*   [ ] **Go to Desktop:** Locate and select the **Desktop** shortcut in the left-hand sidebar.
+*   [ ] **Create a Main Folder:** Right-click on an empty space on your desktop, select *New -> Folder*, and name the folder: \`IT Coursework\`.
+*   [ ] **Create a Sub-Folder:** Open your new \`IT Coursework\` folder. Inside it, right-click and create a second folder. Name this folder: \`Practice Documents\`.
+*   [ ] **Rename a Folder:** Right-click on the \`Practice Documents\` folder, select *Rename*, and change its name to: \`Word Documents\`.`
+            },
+            {
+                id: "l3_ws2_1",
+                title: "Homework Worksheet 3.1: Planning Your Personal Digital Folders",
+                markdown: `### Task: Directory Structure Design
+Before creating folders on a computer, it is best practice to plan them on paper. Imagine you want to organize your primary "Documents" folder. 
+
+Write down **three main folder names** you would create for your personal files (e.g., "Medical", "Travel", "Finances"). Under each main folder, list **two specific sub-folders** that belong inside it.
+
+*   **Main Folder 1:** ___________________________________________________________________________
+    *   *Sub-folder A:* ___________________________________________________________________________
+    *   *Sub-folder B:* ___________________________________________________________________________
+*   **Main Folder 2:** ___________________________________________________________________________
+    *   *Sub-folder A:* ___________________________________________________________________________
+    *   *Sub-folder B:* ___________________________________________________________________________
+*   **Main Folder 3:** ___________________________________________________________________________
+    *   *Sub-folder A:* ___________________________________________________________________________
+    *   *Sub-folder B:* ___________________________________________________________________________`
+            },
+            {
+                id: "l3_ws2_2",
+                title: "Homework Worksheet 3.2: Troubleshooting & Navigating Files",
+                markdown: `### Task: Checking Your Understanding
+Answer the following questions about how computer operating systems handle and relocate saved files.
+
+1. **If you download an image or a document from the internet, which default folder does the computer automatically save it to?**  
+   *Answer:* The _________________________________________________ folder.
+
+2. **If you want to move a file from one folder to another using your mouse, what is the standard action called? (Hint: It involves clicking a file, holding the button down, moving the cursor, and releasing the button).**  
+   *Answer:* It is called "_______________________ and _______________________."`
+            }
+        ]
+    },
+    l4: {
+        title: "Lesson 4: Word Processing Essentials",
+        objectives: [
+            "Mastering Word Office GUI ribbon sets and text copy/paste operations.",
+            "Manipulating characters: Bold, Italics, Underlines, sizing fonts, and margins.",
+            "Creating systematic structures: Using indented numbering and lists.",
+            "Save operations: Navigating deep directory pathways cleanly."
+        ],
+        sheets: [
+            {
+                id: "l4_ws1_1",
+                title: "In-Class Worksheet 4.1: Word Processing Layout & Typing",
+                markdown: `### Task 1: Identifying the Ribbon Elements
+Open your word processor (e.g., Microsoft Word or Google Docs). Look at the top toolbar (often called the **Ribbon**). Match the buttons on the left to their functions on the right:
+
+| Formatting Button | Match Option | Function / Action |
+| :--- | :---: | :--- |
+| **1. B** | | **A.** Underlines the selected text. |
+| **2. *I*** | | **B.** Makes the selected text bold (thicker). |
+| **3. <u>U</u>** | | **C.** Slants the selected text (italics). |
+| **4. Font Size (e.g., 11 pt)** | | **D.** Changes how large or small the letters appear. |
+
+---
+
+### Task 2: Typing and Basic Formatting Practice
+1. Open a blank document in your word processor.
+2. Type the following sentence exactly as it is shown:  
+   *The quick brown fox jumps over the lazy dog.*
+3. Highlight the word **quick** and make it **bold**.
+4. Highlight the word **brown** and change its font size to **16**.
+5. Highlight the word **lazy** and make it *italic*.
+6. Highlight the word **dog** and <u>underline</u> it.
+7. Show your instructor your finished document on the screen.`
+            },
+            {
+                id: "l4_ws1_2",
+                title: "In-Class Worksheet 4.2: List Making & Saving",
+                markdown: `### Task 1: Bulleted and Numbered Lists
+Type the following shopping list items into your word processor. Use the toolbar buttons to turn the first group into a **bulleted list** and the second group into a **numbered list**.
+
+**Group 1 (Make this a Bulleted List):**
+*   Apples
+*   Milk
+*   Bread
+
+**Group 2 (Make this a Numbered List):**
+1.  Wake up at 7:00 AM
+2.  Eat breakfast
+3.  Turn on the computer
+
+---
+
+### Task 2: The Saving Challenge
+You must save your document into the correct folder you created in Lesson 3.
+
+*   [ ] Click on **File** in the top-left corner, and choose **Save As** (or **Save**).
+*   [ ] Name your file: \`Shopping List\`.
+*   [ ] Navigate your computer's folders to find: \`Desktop -> IT Coursework -> Word Documents\`.
+*   [ ] Click **Save**.
+*   [ ] Close the program, open your folder manually to verify the file is there, and check this box once verified.`
+            },
+            {
+                id: "l4_ws2_1",
+                title: "Homework Worksheet 4.1: Writing a Personal Recipe",
+                markdown: `### Task: Formatting Your Document
+Open your word processor at home. Create a document for a very simple recipe (for example, how to make a cup of tea or a piece of toast). Follow these formatting rules strictly:
+
+1.  **Title:** Center the title of your recipe at the top of the page. Make the font size **18** and **bold**.
+2.  **Introduction:** Write one short sentence underneath explaining why you like this food/drink. Put this sentence in *italics*.
+3.  **Ingredients:** Create a **bulleted list** of the items you need.
+4.  **Steps:** Create a **numbered list** detailing the steps to make it.
+5.  **Save:** Save this file to your computer's documents folder with the name \`My Recipe\`.
+
+---
+
+### Reflection Questions
+1. **Which button icon did you press to center your title? Describe what it looks like:**  
+   *Answer:* __________________________________________________________________________________
+
+2. **What is the difference between clicking "Save" and "Save As" when working on an existing document?**  
+   *Answer:* __________________________________________________________________________________
+   ___________________________________________________________________________________________`
+            },
+            {
+                id: "l4_ws2_2",
+                title: "Homework Worksheet 4.2: Shortcut Keys & Review",
+                markdown: `### Task 1: Keyboard Shortcuts Match-Up
+Using quick keyboard combinations (shortcuts) saves a lot of time. Match the keyboard shortcuts below to their correct operations:
+
+| Keyboard Shortcut | Match Option | Action / Result |
+| :--- | :---: | :--- |
+| **1. Ctrl + C** (or Cmd + C on Mac) | | **A.** Paste (inserts copied text at the cursor). |
+| **2. Ctrl + V** (or Cmd + V on Mac) | | **B.** Save (saves the current file). |
+| **3. Ctrl + S** (or Cmd + S on Mac) | | **C.** Copy (copies selected text to memory). |
+
+---
+
+### Task 2: Editing Practice
+Suppose you typed this sentence into your computer:  
+> *“The computer is on top of of the desk”*
+
+1. **What mistake did you make in this sentence?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **How would you remove the extra word? (What key on the keyboard would you use to delete it?)**  
+   *Answer:* __________________________________________________________________________________`
+            }
+        ]
+    },
+    l5: {
+        title: "Lesson 5: Spreadsheet Essentials",
+        objectives: [
+            "Deconstructing spreadsheets: Row indices, column values, cell cross points, and formulas.",
+            "Data optimization: Currency, values, bolding headers, and layout expansion.",
+            "Creating operational formulas: AutoSum ($\Sigma$) additions, and values sorting (A-Z)."
+        ],
+        sheets: [
+            {
+                id: "l5_ws1_1",
+                title: "In-Class Worksheet 5.1: Spreadsheet Anatomy & Data Entry",
+                markdown: `### Task 1: Spreadsheet Anatomy
+Identify the different parts of a spreadsheet window. Match the concept descriptions below:
+
+*   **A.** A vertical stack of cells labeled with letters (e.g., A, B, C...).
+*   **B.** A horizontal row of cells labeled with numbers (e.g., 1, 2, 3...).
+*   **C.** The basic building block of a spreadsheet where a row and column meet (e.g., A1).
+*   **D.** The long white bar at the top used to enter formulas or view cell contents.
+
+1. **Cell:** _____  
+2. **Column:** _____  
+3. **Row:** _____  
+4. **Formula Bar:** _____
+
+---
+
+### Task 2: Data Entry & Formatting
+Open a blank spreadsheet and create the table below. Follow the specific formatting instructions:
+
+*   [ ] Type the headers **Item** in Cell \`A1\` and **Cost** in Cell \`B1\`. Make them **Bold**.
+*   [ ] In cells \`A2\` to \`A4\`, enter: \`Milk\`, \`Bread\`, \`Apples\`.
+*   [ ] In cells \`B2\` to \`B4\`, enter the numbers: \`2.10\`, \`1.50\`, \`3.00\`.
+*   [ ] Highlight cells \`B2\` to \`B4\` and change their format to **Currency (£)** so they display as prices.
+*   [ ] Adjust the width of Column A so no text is cut off.`
+            },
+            {
+                id: "l5_ws1_2",
+                title: "In-Class Worksheet 5.2: Simple Math & Formulas",
+                markdown: `### Task 1: Writing Formulas
+Every formula in a spreadsheet **must** start with an equals sign ($=$). Fill in the blank formulas below to solve these basic math problems:
+
+1. You want to add the values in cell \`B2\` and cell \`B3\` together.  
+   *What do you type into the cell?*  \`=\` __________________________________
+
+2. You want to subtract the cost in cell \`B3\` from the income in cell \`B2\`.  
+   *What do you type into the cell?*  \`=\` __________________________________
+
+3. Look at your spreadsheet toolbar and locate the **AutoSum** button (it looks like a Greek letter $\Sigma$). Use it in cell \`B5\` to add up cells \`B2\`, \`B3\`, and \`B4\`.  
+   *What formula automatically appeared in the cell?*  \`=\` __________________________________
+
+---
+
+### Task 2: Sorting Data
+*   [ ] Highlight your entire table (cells \`A1\` to \`B4\`).
+*   [ ] Find the **Sort** button on your toolbar (often under the "Data" tab).
+*   [ ] Sort Column A from **A to Z**.
+*   [ ] Write down which item is now listed first at the top of the list:  
+    *Answer:* _________________________`
+            },
+            {
+                id: "l5_ws2_1",
+                title: "Homework Worksheet 5.1: Monthly Budget Planning",
+                markdown: `### Task: Designing a Budget on Paper
+Before using the computer, plan a small personal monthly budget grid below. Use fictional numbers.
+
+*   Your monthly income is **£1,500**.
+*   You have three monthly bills: Rent (**£600**), Groceries (**£200**), and Electric (**£100**).
+
+| | **Column A** (Expense Name) | **Column B** (Cost) |
+| :--- | :--- | :--- |
+| **Row 1 (Headers)** | **Expense Name** | **Monthly Cost** |
+| **Row 2** | Rent | £ _________________ |
+| **Row 3** | Groceries | £ _________________ |
+| **Row 4** | Electric | £ _________________ |
+| **Row 5** | **Total Expenses** | £ _________________ |
+| **Row 6** | **Remaining Money** | £ _________________ |
+
+### Formula Writing Questions
+1. **What spreadsheet formula would you use in cell \`B5\` to automatically calculate your Total Expenses?**  
+   *Answer:* \`=\` ______________________________________________________________________________
+
+2. **Your Income (£1,500) is saved in cell \`B8\`. What formula would you write in cell \`B6\` to subtract your Total Expenses (cell \`B5\`) from your Income (cell \`B8\`)?**  
+   *Answer:* \`=\` ______________________________________________________________________________`
+            },
+            {
+                id: "l5_ws2_2",
+                title: "Homework Worksheet 5.2: Cell Grid Reading Check",
+                markdown: `### Task: Reading the Grid
+Look closely at the mock spreadsheet below and answer the check questions:
+
+\`\`\`text
+       A           B           C
+  +-----------+-----------+-----------+
+1 | Month     | Savings   | Spendings |
+  +-----------+-----------+-----------+
+2 | January   |    500    |    300    |
+  +-----------+-----------+-----------+
+3 | February  |    450    |    400    |
+  +-----------+-----------+-----------+
+4 | March     |    600    |    350    |
+  +-----------+-----------+-----------+
+\`\`\`
+
+1. **What is the value written in Cell B3?**  
+   *Answer:* _________________________
+
+2. **What value is written in Cell C4?**  
+   *Answer:* _________________________
+
+3. **If you run the formula \`=B2 + B4\` in an empty cell, what number will it calculate?**  
+   *Answer:* _________________________
+
+4. **If you run the formula \`=B3 - C3\`, what number will it calculate?**  
+   *Answer:* _________________________`
+            }
+        ]
+    },
+    l6: {
+        title: "Lesson 6: Everyday Online Services",
+        objectives: [
+            "Online Mapping: Utilizing digital GPS routing vectors, distance math, and transit tables.",
+            "NHS and Council Portal Navigation: Finding healthcare resources, district parameters, and local codes.",
+            "Verifying Safe Retailers: Detecting counterfeit pricing, HTTP vulnerabilities, and phishing sites."
+        ],
+        sheets: [
+            {
+                id: "l6_ws1_1",
+                title: "In-Class Worksheet 6.1: Navigating Digital Maps",
+                markdown: `### Task 1: Finding Directions
+Open your web browser and navigate to an online map service (e.g., Google Maps). Use the map search tool to look up directions from **Salford Crescent Station** to **Manchester Piccadilly Station**. Fill out the information below:
+
+1. **By Car (Driving):**
+   *   What is the fastest route called? ___________________________________________________________
+   *   How many minutes will the drive take? _________________________ minutes.
+
+2. **By Public Transport (Train/Bus):**
+   *   Which train or bus line should you take? _____________________________________________________
+   *   How long will the trip take? _________________________ minutes.
+
+---
+
+### Task 2: Locating Local Services
+Use the search bar on the map to search for **"Pharmacies near Salford"**.
+1. **Write down the name of one pharmacy you found on the map:**  
+   *Answer:* __________________________________________________________________________________
+
+2. **Look at the pharmacy's details on the left-hand panel. What are its opening hours today?**  
+   *Answer:* __________________________________________________________________________________`
+            },
+            {
+                id: "l6_ws1_2",
+                title: "In-Class Worksheet 6.2: Public Services & Health Sites",
+                markdown: `### Task 1: Navigating NHS Choices
+Navigate your web browser to the official National Health Service (NHS) website at www.nhs.uk. Locate the search or menu tools to find information regarding local dentists.
+
+*   [ ] Find the tool called **"Find a dentist"** (or local health services).
+*   [ ] Enter the postcode: \`M5 4WT\` (near Salford).
+*   [ ] List the names of the top **two** dental practices closest to this postcode:
+    1.  _____________________________________________________________________________________
+    2.  _____________________________________________________________________________________
+
+---
+
+### Task 2: Navigating Local Council Services
+Navigate your web browser to your local council website (e.g., Salford City Council: www.salford.gov.uk). Look for the section on **Bins and Recycling**.
+
+1. **What is the standard color of the bin used for paper and cardboard recycling in Salford?**  
+   *Answer:* _________________________
+
+2. **What bin color is used for garden waste?**  
+   *Answer:* _________________________`
+            },
+            {
+                id: "l6_ws2_1",
+                title: "Homework Worksheet 6.1: Travel Itinerary Planner",
+                markdown: `### Task: Planning a Journey
+Use Google Maps (or a similar mapping service) to plan a hypothetical journey from your home address (or the classroom building) to the **Museum of Science and Industry (MOSI)** in Manchester.
+
+1. **Starting Point Address:** __________________________________________________________________
+2. **Destination Address:** ____________________________________________________________________
+3. **If you choose to walk, how long will the walk take?**  
+   *Answer:* _________________________ minutes / hours.
+4. **Identify one major road or street you will walk along during this route:**  
+   *Answer:* __________________________________________________________________________________
+5. **If you choose to take a bus or train, what is the number of the bus or name of the train route?**  
+   *Answer:* __________________________________________________________________________________`
+            },
+            {
+                id: "l6_ws2_2",
+                title: "Homework Worksheet 6.2: Safe Online Shopping Check",
+                markdown: `### Scenario: The Too-Good-To-Be-True Deal
+Imagine you are looking online to purchase a new winter coat. You see a post on social media advertising an expensive designer coat worth **£200** for only **£15** on a website called \`www.cheapcoat-superstore-deals3.ru\`.
+
+Analyze the scenario and answer the questions below to evaluate if this is a safe, legitimate online shop.
+
+1. **Look closely at the web address (URL). What are two suspicious red flags in this URL?**  
+   *Red Flag 1:* ______________________________________________________________________________  
+   *Red Flag 2:* ______________________________________________________________________________
+
+2. **Look at the price difference (£200 original vs £15 sale). Why is this price reduction a cause for concern?**  
+   *Answer:* __________________________________________________________________________________
+   ___________________________________________________________________________________________
+
+3. **If you click "buy" and the payment page is missing the padlock icon and says "HTTP" instead of "HTTPS" in the address bar, what should you do?**  
+   *Answer:* __________________________________________________________________________________
+   ___________________________________________________________________________________________`
+            }
+        ]
+    },
+    l7: {
+        title: "Lesson 7: Video Conferencing Basics",
+        objectives: [
+            "Deconstructing Video Call Tools: Mute mic structures, cameras, and chat bars.",
+            "Joining Calls: Linking to invitation URLs and typing waiting-room credentials safely.",
+            "Bandwidth Optimization: Overcoming technical issues, lag, and freeze states."
+        ],
+        sheets: [
+            {
+                id: "l7_ws1_1",
+                title: "In-Class Worksheet 7.1: Identifying Video Call Controls",
+                markdown: `### Task 1: Labeling the Toolbar Icons
+When you are on a live video call, a small toolbar appears on your screen. Match the typical icons below to their correct actions:
+
+| Icon Description | Match Option | Action / Result |
+| :--- | :---: | :--- |
+| **1. Microphone** (with a line through it) | | **A.** Opens a sidebar where you can type written messages. |
+| **2. Video Camera** (no line) | | **B.** Your microphone is muted. No one in the call can hear you. |
+| **3. Speech Bubble / Chat** | | **C.** Disconnects you from the call completely (leaves the meeting). |
+| **4. Red Phone / "Leave" Button** | | **D.** Your camera is active. Other people in the call can see you. |
+
+---
+
+### Task 2: Online Meeting Etiquette Check
+Read each scenario and check the box for the correct choice:
+
+1. **You are in a video call and someone else is speaking, but there is a lawnmower making loud noise outside your window.**
+   *   [ ] Keep your microphone turned on so you can jump in and talk quickly.
+   *   [ ] Mute your microphone immediately until it is your turn to speak.
+
+2. **You want to speak during a busy online presentation with 20 other attendees.**
+   *   [ ] Start talking over the speaker so they can hear you clearly.
+   *   [ ] Use the virtual "Raise Hand" button or type your question quietly in the chat box.`
+            },
+            {
+                id: "l7_ws1_2",
+                title: "In-Class Worksheet 7.2: Joining a Meeting & Live Controls Checklist",
+                markdown: `### Task: Hands-on Video Call Run-Through
+Your instructor will send a mock invitation link to your email address. Follow the instructions below to access the session and practice using active controls.
+
+*   [ ] **Open Your Email:** Log into your personal inbox and find the email from your instructor with the subject containing \`Meeting Invite\`.
+*   [ ] **Click the Link:** Locate the web link (URL) inside the email body and click it once.
+*   [ ] **Choose Your Connection:** If prompted, choose "Join on the web" or "Open App."
+*   [ ] **Type Your Name:** Enter your real name clearly so the host knows who you are in the waiting room.
+*   [ ] **Check Your Camera/Mic:** Make sure your camera preview is working, then click **Join Now**.
+*   [ ] **Practice Muting:** Once inside the call, locate the microphone icon. Click it to **Mute**, wait 5 seconds, and click it again to **Unmute**.
+*   [ ] **Open the Chat Pane:** Click on the **Chat** bubble. Type \`"Hello, this is Mordechai!"\` and press Enter to send it.`
+            },
+            {
+                id: "l7_ws2_1",
+                title: "Homework Worksheet 7.1: Video Call Troubleshooting Scenarios",
+                markdown: `### Task: Practical Problem Solving
+Imagine you are at home joining a video call with your family or an online class, and you run into these common technological issues. Explain what steps you would take to resolve them.
+
+#### Scenario A: "No One Can Hear Me!"
+You are talking during your video call, but the other participants are waving their hands and pointing to their ears, indicating they cannot hear you.
+1. **What is the first, most common visual indicator you should look for on your computer screen?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **What physical connection should you check if you are using an external microphone or headset?**  
+   *Answer:* __________________________________________________________________________________
+
+#### Scenario B: "The Video is Freezing!"
+The people on your screen are moving in slow motion, their voices are cutting in and out, and a notification says "Your internet connection is unstable."
+1. **What is a quick action you can take regarding your own camera to help save internet bandwidth?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **If your connection remains completely frozen, what is the best "restart" action to take?**  
+   *Answer:* __________________________________________________________________________________`
+            },
+            {
+                id: "l7_ws2_2",
+                title: "Homework Worksheet 7.2: App Installation & Settings Check",
+                markdown: `### Task 1: Software Installation Walkthrough
+Prepare your personal computer or laptop for future online calls. Follow these steps and mark them complete:
+
+*   [ ] Open your web browser and navigate to: \`www.zoom.us/download\` (or the download site for your chosen app).
+*   [ ] Click the download button for the software client.
+*   [ ] Locate the downloaded installer file (usually in your **Downloads** folder) and run it to install the application.
+*   [ ] Launch the application on your computer and verify that it opens to a login screen.
+
+---
+
+### Task 2: Video Call True or False
+Read the statements below and write **True** or **False** in the space provided.
+
+1. **You should always set up your video calling area with a bright window directly behind your back.**  
+   *Answer:* _________________________
+
+2. **It is considered polite to test your microphone and speakers a few minutes before an important call starts.**  
+   *Answer:* _________________________
+
+3. **Once you join a video meeting, your camera and microphone cannot be adjusted or turned off.**  
+   *Answer:* _________________________`
+            }
+        ]
+    },
+    l8: {
+        title: "Lesson 8: Creating Basic Presentations",
+        objectives: [
+            "Deconstructing slides software: Main slide canvas pane, layout ribbons, and thumbnails panel.",
+            "Formatting Slides: Applying themes, structuring bulleted text blocks, and resizing pictures.",
+            "Presenting slideshows: Activating full screen loops ($F5$ and $Esc$ escapes)."
+        ],
+        sheets: [
+            {
+                id: "l8_ws1_1",
+                title: "In-Class Worksheet 8.1: Presentation Software Anatomy",
+                markdown: `### Task 1: Matching Layout Elements
+Open your presentation software (e.g., Microsoft PowerPoint or Google Slides) to a blank file. Match each layout element to its description:
+
+| Slide Element | Match Option | Purpose / Action |
+| :--- | :---: | :--- |
+| **1. Slide Thumbnails Pane** (Left side) | | **A.** The large main canvas in the center where you design your current slide. |
+| **2. Main Slide Canvas** (Center) | | **B.** The toolbar at the top housing text styles, shapes, and image tools. |
+| **3. The Ribbon / Toolbar** (Top) | | **C.** Plays your slides in full-screen mode, starting the presentation. |
+| **4. Present / Slideshow Button** | | **D.** A vertical column displaying small previews of all the slides in your project. |
+
+---
+
+### Task 2: Theme & Layout Selection Checklist
+*   [ ] Click on the **Design** or **Theme** tab on the top menu toolbar.
+*   [ ] Browse the pre-made designs and select one that has light, easily readable backgrounds.
+*   [ ] Click on the drop-down menu labeled **Layout** (under the Home or Slide tab).
+*   [ ] Select the **Title Slide** layout for your opening slide.`
+            },
+            {
+                id: "l8_ws1_2",
+                title: "In-Class Worksheet 8.2: Creating Your Holiday Presentation (3 Slides)",
+                markdown: `### Task: Hands-on Presentation Construction
+Create a simple 3-slide presentation on your computer about a holiday destination you would like to visit (or have visited). Follow these exact steps:
+
+*   [ ] **Slide 1 (Title Slide):**
+    *   Click inside the box labeled *"Click to add title"* and type: \`My Holiday to [Destination]\`.
+    *   Click inside the subtitle box and type: \`By [Your Name]\`.
+*   [ ] **Slide 2 (Bullet Point Details):**
+    *   Click **New Slide** on the toolbar and choose the **Title and Content** layout.
+    *   Type the title: \`Why I Want to Visit\`.
+    *   Type at least three distinct reasons in a **bulleted list** (e.g., beautiful beaches, history, good food).
+*   [ ] **Slide 3 (Visual Layout):**
+    *   Create another **New Slide** with a layout that supports an image.
+    *   Use the **Insert -> Pictures** tool to insert a sample picture of your destination.
+    *   Resize the picture by clicking and dragging its corners so it fits neatly.
+*   [ ] **Save Your File:** Save this presentation to your \`IT Coursework\` folder with the file name \`My Holiday\`.`
+            },
+            {
+                id: "l8_ws2_1",
+                title: "Homework Worksheet 8.1: Designing Slides on Paper",
+                markdown: `### Task: Storyboard Planning for Slide 4 & Slide 5
+It is helpful to plan your presentations on paper before building them on screen. Imagine you are adding two more slides to your "My Holiday" presentation. Sketch out your planned text layout below.
+
+#### Slide 4: Travel Plans
+1. **What will you write as the Slide Title?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **Draft three brief, readable bullet points detailing how you will get there and where you will stay:**  
+   *   ________________________________________________________________________________________
+   *   ________________________________________________________________________________________
+   *   ________________________________________________________________________________________
+
+#### Slide 5: Fun Facts
+1. **What will you write as the Slide Title?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **Draft a single, interesting fact about your destination in one short sentence:**  
+   *Answer:* __________________________________________________________________________________`
+            },
+            {
+                id: "l8_ws2_2",
+                title: "Homework Worksheet 8.2: Presentation Delivery Check",
+                markdown: `### Task: Readability and Shortcut Keys
+Answer the following review questions based on best practices for designing slides.
+
+1. **Why is it a bad design choice to write long, heavy paragraphs of tiny text on a slide?**  
+   *Answer:* __________________________________________________________________________________
+   ___________________________________________________________________________________________
+
+2. **If you want to view your presentation full-screen from the very first slide, what keyboard shortcut button at the top of your keyboard can you press? (Hint: It is a function key).**  
+   *Answer:* The _________________________ key.
+
+3. **If you are in the middle of a full-screen slideshow and need to exit immediately to make an edit, what keyboard key do you press?**  
+   *Answer:* The _________________________ key.`
+            }
+        ]
+    },
+    l9: {
+        title: "Lesson 9: Digital Media and Entertainment",
+        objectives: [
+            "Deconstructing Video Player GUI controls: volume sliders, subtitles toggles, CC indicators, and zoom controls.",
+            "Accessing UK television networks safely: Understanding account registration steps and licensing laws.",
+            "Understanding photo file structures: Local folders versus digital cloud backups."
+        ],
+        sheets: [
+            {
+                id: "l9_ws1_1",
+                title: "In-Class Worksheet 9.1: Safe YouTube Navigation & Controls",
+                markdown: `### Task 1: Labeling Video Player Controls
+Open your web browser and navigate to www.youtube.com. Open any educational video. Hover your mouse over the playing video to view the player bar. Match the icons to their functions:
+
+| Player Icon | Match Option | Function / Action |
+| :--- | :---: | :--- |
+| **1. Play / Pause** (Triangle / Two Bars) | | **A.** Makes the video fill up your entire computer monitor screen. |
+| **2. CC Icon** (Subtitles) | | **B.** Controls how loud or soft the video sound plays. |
+| **3. Speaker Icon** | | **C.** Turns on written words at the bottom of the screen. |
+| **4. Bracket Frame** (Full Screen) | | **D.** Starts the video playing, or stops it temporarily. |
+
+---
+
+### Task 2: Search Engine & Subtitles Drill
+1. Type **"Salford History"** into the search bar at the top of YouTube.
+2. Select a video that is between 2 and 5 minutes long.
+3. Click the **CC button** on the video player bar to turn on closed caption subtitles.
+4. Watch 1 minute of the video. Write down one piece of information you read on the subtitles:  
+   *Answer:* __________________________________________________________________________________`
+            },
+            {
+                id: "l9_ws1_2",
+                title: "In-Class Worksheet 9.2: Introduction to Catch-up TV & Photo Storage",
+                markdown: `### Task 1: Understanding Catch-up TV (e.g., BBC iPlayer)
+Navigate your web browser to the BBC iPlayer website (www.bbc.co.uk/iplayer). Answer the following questions:
+
+1. **When you try to click and watch a television program on BBC iPlayer, what security action does the website require you to complete first?**  
+   *Answer:* You must **Register** or ____________________________________________________________
+
+2. **In the UK, what legal requirement must you possess to watch live or catch-up TV on any device?**  
+   *Answer:* A _______________________________________________________________________________
+
+---
+
+### Task 2: Sorting Photo Storage Formats
+Identify if the following photo storage concepts represent **Local Storage** (saved physically on your computer) or **Cloud Storage** (saved securely over the internet).
+
+1. **A folder of images on your desktop computer's internal hard drive:**  
+   *Answer:* _________________________ Storage.
+2. **Photos automatically backed up to Google Drive, iCloud, or OneDrive:**  
+   *Answer:* _________________________ Storage.`
+            },
+            {
+                id: "l9_ws2_1",
+                title: "Homework Worksheet 9.1: YouTube Learning Log",
+                markdown: `### Task: Active Watching Exercise
+Use a computer or smartphone at home to find an educational video on a hobby or interest of yours. Watch it carefully with the subtitles turned on, and fill out this review card.
+
+1. **What is the title of the video you watched?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **What is the exact URL (web address) of the video?**  
+   *Answer:* \`https://www.youtube.com/watch?v=___________________________________________________\`
+
+3. **Using the subtitles to help you, write down three facts or instructions you learned from this video:**  
+   *   *Fact 1:* ________________________________________________________________________________
+   *   *Fact 2:* ________________________________________________________________________________
+   *   *Fact 3:* ________________________________________________________________________________`
+            },
+            {
+                id: "l9_ws2_2",
+                title: "Homework Worksheet 9.2: Cloud Storage & Digital Safety Quiz",
+                markdown: `### Task 1: Multiple Choice Questions
+Select the best answer for each question regarding online entertainment safety.
+
+1. **You are watching a video on a free media website and a flashing box pops up saying "Warning: Your computer has 10 viruses! Click here to download cleaner." What should you do?**
+   *   [ ] Click it immediately to protect your computer.
+   *   [ ] Close the web browser window safely and ignore the pop-up (it is a malicious advertisement).
+   *   [ ] Restart your computer and call the phone number on the warning screen.
+
+2. **What is the primary benefit of saving your personal photos to "Cloud Storage" rather than keeping them only on your smartphone?**
+   *   [ ] The cloud makes the photos look clearer.
+   *   [ ] If you lose your physical phone, you can still access all your photos from any other computer.
+   *   [ ] Cloud storage is completely free of any storage limits.
+
+---
+
+### Task 2: Digital Media Verification Checklist
+Suppose you want to share a family video with a relative who lives in another country. Under what conditions is it safest to do so?
+*   [ ] Send it via a secure, password-protected cloud link (like OneDrive or Google Drive).
+*   [ ] Post it publicly on a global website with no privacy restrictions.
+*   [ ] Email it directly to their personal email address as a secure attachment.`
+            }
+        ]
+    },
+    l10: {
+        title: "Lesson 10: Integrating Skills",
+        objectives: [
+            "Research and synthesis: Researching local historical sites and summarizing findings in a document.",
+            "Formatting integration: Designing formatted text structures with bolding, centering, and size matching.",
+            "Media downloading: Locating, downloading, and inserting images cleanly into word processors.",
+            "Communication logistics: Attaching documents and spreadsheets to email campaigns."
+        ],
+        sheets: [
+            {
+                id: "l10_ws1_1",
+                title: "In-Class Worksheet 10.1: Internet Research and Formatting",
+                markdown: `### Task: Research & Summarise
+Open your web browser and a blank word processing document. You are going to research a local Salford historical site and compile a brief report.
+
+1. **Find Information:** Open a search engine and search for: **"Ordsall Hall Salford history"**.
+2. **Draft Your Report:** In your word processor, type out a short, three-sentence summary of what Ordsall Hall is and when it was built.
+3. **Format Your Text:**
+   *   Create a title at the top: \`Ordsall Hall Historical Report\`.
+   *   Make the title **Bold**, **Centred**, and size **16**.
+   *   Underline the name **Ordsall Hall** every time it appears in your paragraph.
+   *   Set the font of your summary paragraph to **Arial** or **Calibri**, size **12**.
+
+---
+
+### Task Check-Off
+Show your instructor your document on the screen and check off when verified:
+*   [ ] Centred, Bold Title (Size 16)
+*   [ ] Three-sentence informative paragraph
+*   [ ] Proper underlining of "Ordsall Hall"
+*   [ ] Correct font and body text size (Size 12)`
+            },
+            {
+                id: "l10_ws1_2",
+                title: "In-Class Worksheet 10.2: Image Downloading and Document Integration",
+                markdown: `### Task: Adding Visual Elements Safely
+Now, you will add a picture to the Ordsall Hall report you created in Worksheet 10.1.
+
+1. **Search for an Image:** Go back to your web browser and select the **Images** tab on your search engine. Look for a clear photo of Ordsall Hall.
+2. **Save the Image:** Right-click on the image, select **Save Image As...**, and save it into your \`Desktop -> IT Coursework -> Word Documents\` folder. Name the file \`ordsall_hall_photo\`.
+3. **Insert the Image:** 
+   *   Go back to your open Word document.
+   *   Place your flashing text cursor *below* your typed paragraph.
+   *   Click **Insert -> Pictures**.
+   *   Select \`ordsall_hall_photo\`, and click **Insert**.
+4. **Resize:** Click on the image. Drag the small corner handles inward to shrink the picture so it fits neatly below your text without spilling onto a second page.
+
+---
+
+### Integration Check Questions
+1. **Why is it better to drag the *corner* handles of an image to resize it instead of the side handles?**  
+   *Answer:* __________________________________________________________________________________
+
+2. **Write down the full name of the folder where you saved your image before inserting it:**  
+   *Answer:* __________________________________________________________________________________`
+            },
+            {
+                id: "l10_ws2_1",
+                title: "Homework Worksheet 10.1: Attaching Files to Emails",
+                markdown: `### Task: Sending Your Work to Your Instructor
+You have finished your integrated Ordsall Hall document! Now you must email it directly to your instructor as an attachment. 
+
+Write down the numbers (**1** to **5**) in the blanks to show the correct order of actions required to email a file:
+
+*   [ ] Click the **Attach** button (usually shaped like a paperclip).
+*   [ ] Type your instructor's email address in the **"To"** line and \`"My Salford Report"\` in the **"Subject"** line.
+*   [ ] Open your web browser, log into your email account, and click **Compose**.
+*   [ ] Locate your file (\`Ordsall Hall Report.docx\`) inside your folders and click **Open**.
+*   [ ] Type a polite, brief greeting in the main message box and click **Send**.
+
+---
+
+### Reflection Question
+1. **What is the difference between typing your report directly into the email box versus sending it as an attachment? When would you use an attachment?**  
+   *Answer:* __________________________________________________________________________________`
+            },
+            {
+                id: "l10_ws2_2",
+                title: "Homework Worksheet 10.2: File Size and File Type Recognition",
+                markdown: `### Task 1: Identifying File Extensions
+A file's extension tells the computer which program is needed to open it. Match the file name to its file type:
+
+| File Name | Match Option | File Type |
+| :--- | :---: | :--- |
+| **1. \`monthly_budget.xlsx\`** | | **A.** A picture or photo file. |
+| **2. \`family_photo.jpg\`** | | **B.** A spreadsheet file (Excel/Sheets). |
+| **3. \`salford_history.docx\`** | | **C.** A formatted word document. |
+
+---
+
+### Task 2: File Size Comprehension
+Computer storage space is measured in bytes. As a rule:
+*   **Kilobytes (KB)** are very small.
+*   **Megabytes (MB)** are larger (like pictures, songs, or short videos).
+*   **Gigabytes (GB)** are extremely large (like full-length movies).
+
+Read the scenarios and answer the questions:
+
+1. **You have two files: \`note.txt\` (15 KB) and \`holiday_video.mp4\` (450 MB). Which of these files will take longer to download and send over an email?**  
+   *Answer:* _________________________
+
+2. **If your email account has a strict attachment size limit of 25 MB, will you be able to attach the 450 MB video file?**  
+   *Answer:* _________________________`
+            }
+        ]
+    },
+    l11: {
+        title: "Lesson 11: Basic Troubleshooting and Next Steps",
+        objectives: [
+            "Hardware & Software Diagnostics: Debugging frozen programs, bad ports, and network dropouts.",
+            "System Recovery: Mastering close-out routines, system restarts, and cable checks.",
+            "Finding Help: Querying search engines for precise technical errors."
+        ],
+        sheets: [
+            {
+                id: "l11_ws1_1",
+                title: "In-Class Worksheet 11.1: Common Hardware & Software Troubleshooting",
+                markdown: `### Task 1: Diagnostic Scenario Match-Up
+Match the common problem on the left with the most sensible, safe troubleshooting action on the right:
+
+| Technical Problem | Match Option | First Troubleshooting Action |
+| :--- | :---: | :--- |
+| **1. The screen is completely black** | | **A.** Press Caps Lock to check indicator lights, or unplug and re-plug keyboard. |
+| **2. The mouse cursor will not move** | | **B.** Unplug the internet router power, wait 10 seconds, and plug it back in. |
+| **3. The typing keys do not output letters** | | **C.** Check the main power outlet plug on the wall and back of monitor. |
+| **4. The internet displays a connection error** | | **D.** Unplug mouse USB, wait 5 seconds, and plug into a different USB port. |
+
+---
+
+### Task 2: The "Three Golden Rules" of IT Support
+Before panic sets in, write down the three most common non-destructive actions you should try when a program freezes or behaves strangely:
+
+1. **Rule 1 (The Software Escape):** Close the unresponsive application down using the **X** button, or use Task Manager / Force Quit to shut it down.
+2. **Rule 2 (The Universal Fix):** ___________________________________________________________
+3. **Rule 3 (The Physical Check):** __________________________________________________________`
+            },
+            {
+                id: "l11_ws1_2",
+                title: "In-Class Worksheet 11.2: Using Online \"Help\" & Search to Solve Tech Problems",
+                markdown: `### Task: Searching for Tech Solutions
+When a computer displays an error message, you can often solve the problem yourself by typing the error message directly into a search engine.
+
+#### Practice Scenarios
+Use Google to search for the quick solutions for these common digital errors:
+
+1. **Search Query:** Type \`"How to unfreeze a frozen Google Chrome tab"\` into your search bar.
+   *   What is the fastest keyboard shortcut listed to close a frozen tab on Windows?  
+       *Answer:* _______________________________________________________________________________
+
+2. **Search Query:** Type \`"Why is my computer speaker icon showing a red X"\` into your search bar.
+   *   What is the most likely reason your sound is not playing?  
+       *Answer:* _______________________________________________________________________________
+
+3. **Search Query:** Type \`"How to zoom in on web page browser shortcut"\` into your search bar.
+   *   What keyboard shortcut allows you to make the text on a website look larger?  
+       *Answer:* _______________________________________________________________________________`
+            },
+            {
+                id: "l11_ws2_1",
+                title: "Homework Worksheet 11.1: Troubleshooting Case Studies",
+                markdown: `### Task: Analyze and Advise
+Read the troubleshooting scenarios below. Write a brief advice note to help the user resolve their issue.
+
+#### Case Study A: The Frozen Document
+> *“I have spent two hours typing a recipe on Microsoft Word. Suddenly, a spinning blue circle appeared, and I cannot click on anything or type any more letters. The screen says 'Not Responding' at the top.”*
+
+1. **Should the user pull the power plug out of the wall immediately to fix this? Why or why not?**  
+   *Answer:* __________________________________________________________________________________
+   ___________________________________________________________________________________________
+
+2. **What is the safest, most logical next step they should take to try and save their typed work before closing the program?**  
+   *Answer:* __________________________________________________________________________________
+   ___________________________________________________________________________________________
+
+#### Case Study B: The Missing File
+> *“I downloaded an exciting photo of Salford Cathedral from my email yesterday. Today, I opened my computer, clicked on my 'Documents' folder, and it is empty! I don't know where my photo has gone.”*
+
+1. **Where does a computer usually save files downloaded from an email or a web browser by default?**  
+   *Answer:* The _________________________________________________ folder.
+
+2. **What utility on the Desktop can they open to see if they accidentally deleted the file?**  
+   *Answer:* The _________________________________________________ bin.`
+            },
+            {
+                id: "l11_ws2_2",
+                title: "Homework Worksheet 11.2: General Diagnostic Skills Match-Up",
+                markdown: `### Task: True or False Diagnostic Check
+Read the statements below. Write **True** if the statement is a safe, helpful troubleshooting practice, or **False** if it is incorrect or dangerous.
+
+1. **"If your computer screen freezes, you should repeatedly hit the keyboard and shake the monitor."**  
+   *Answer:* _________________________
+
+2. **"Restarting your computer clears the temporary memory and resolves a huge portion of basic computer glitches."**  
+   *Answer:* _________________________
+
+3. **"If a website tells you that your computer is infected with 100 viruses and you must call a premium phone number immediately, this is always a scam."**  
+   *Answer:* _________________________
+
+4. **"It is safe to unplug USB cords and power cables from the computer while the system is actively saving a file."**  
+   *Answer:* _________________________
+
+5. **"Checking that all physical cables are firmly pushed into their ports is one of the first diagnostic steps you should take."**  
+   *Answer:* _________________________`
+            }
+        ]
+    },
+    l12: {
+        title: "Lesson 12: Capstone Lesson (Bringing It All Together)",
+        objectives: [
+            "Comprehensive review: Completing the 'Salford Digital Tea Morning' promotional flyer.",
+            "Financial budgeting: Assembling structural expense sheets, formatting price units, and running totals.",
+            "File transmission: Dispatching completed files securely to instructor endpoints.",
+            "Self-assessment quiz: Testing comprehensive Level 1 concepts."
+        ],
+        sheets: [
+            {
+                id: "l12_ws1_1",
+                title: "In-Class Worksheet 12.1: Capstone Project Phase 1 (Planning & Flyer)",
+                markdown: `### The Capstone Brief
+You are organizing a **"Salford Digital Tea Morning"** for local residents. You need to create a formatted flyer in a word processor to print out, and a small event budget grid in a spreadsheet to present to your community group.
+
+### Task 1: Building the Event Flyer
+Open your word processor and create a new blank document. Type and format the following text:
+
+1. **Title:** \`Salford Digital Tea Morning\`
+   *Formatting:* **Centred**, **Bold**, Font Size **18**.
+
+2. **Sub-heading:** \`A Free Class to Learn Computing Basics!\`
+   *Formatting:* *Italicised*, Font Size **14**.
+
+3. **Event Details (Bulleted List):** Create a bulleted list underneath containing:
+   * **Date:** Saturday, July 11, 2026
+   * **Time:** 10:00 AM to 12:00 PM
+   * **Location:** Salford Community Center, M5 4WT
+   * **What to Bring:** Just yourself and a curiosity to learn!
+
+4. **Insert a Picture:** Search online for a safe, free public-domain image of a cup of tea. Download it, save it as \`tea_cup\` in your folder, and insert it neatly at the bottom of your flyer.
+
+5. **Save the File:** Save this document as \`Tea Morning Flyer\` inside your \`Word Documents\` folder.
+
+---
+
+### Phase 1 Student Check-Off
+Mark these steps as completed under your instructor's guidance:
+*   [ ] Word Processor is open with a styled title and sub-heading.
+*   [ ] Bulleted list details are accurate.
+*   [ ] Tea cup image is inserted and resized properly.
+*   [ ] Document is saved to \`Desktop -> IT Coursework -> Word Documents -> Tea Morning Flyer.docx\`.`
+            },
+            {
+                id: "l12_ws1_2",
+                title: "In-Class Worksheet 12.2: Capstone Project Phase 2 (Budgeting & Sending)",
+                markdown: `### Task 1: Creating the Budget Spreadsheet
+Open your spreadsheet software. Create a simple budget to track the estimated costs for your Salford Digital Tea Morning.
+
+1. **Set Up Headers:**
+   * Type **Item** in Cell \`A1\`. Make it **Bold**.
+   * Type **Estimated Cost** in Cell \`B1\`. Make it **Bold**.
+
+2. **Enter Data:**
+   * Row 2: Enter \`Teas and Coffees\` in Cell \`A2\`, and \`15.50\` in Cell \`B2\`.
+   * Row 3: Enter \`Biscuits and Cakes\` in Cell \`A3\`, and \`12.00\` in Cell \`B3\`.
+   * Row 4: Enter \`Paper Cups and Plates\` in Cell \`A4\`, and \`8.25\` in Cell \`B4\`.
+
+3. **Format Currency:** Highlight cells \`B2\` to \`B4\` and format as currency (£).
+
+4. **Calculate Total Cost:**
+   * In Cell \`A5\`, type \`Total Event Cost\` in **Bold**.
+   * In Cell \`B5\`, use the AutoSum ($\Sigma$) formula to add up the values in cells \`B2\`, \`B3\`, and \`B4\`.
+
+5. **Save the File:** Save this spreadsheet file as \`Tea Morning Budget\` inside your \`Spreadsheets\` folder.
+
+---
+
+### Task 2: Submitting Your Capstone Work
+To complete your course, you must email your final flyer and budget files to your instructor.
+
+1. **Compose Email:** Open your email inbox and click **Compose**.
+2. **Address Details:**
+   * **To:** \`scott@scott-hw.online\`
+   * **Subject:** \`Mordechai's Capstone Project - Salford Tea Morning\`
+3. **Attach Files:** Click the Attachment Paperclip icon. Navigate and select **both** files:
+   * \`Tea Morning Flyer.docx\` (from Word Documents)
+   * \`Tea Morning Budget.xlsx\` (from Spreadsheets)
+4. **Message:** Write a short greeting and sign off.
+5. **Send:** Click **Send**!
+
+*   [ ] Check this box once both files have been sent successfully.`
+            },
+            {
+                id: "l12_ws2_1",
+                title: "Homework Worksheet 12.1: Digital Skills Self-Reflection",
+                markdown: `### Task: Reflecting on Your 12-Lesson Journey
+Congratulations on completing all 12 lessons! Take a moment to think about your progress from starting with zero computer skills to completing a full digital project.
+
+1. **Which digital skill that you learned in this course are you most proud of, and why?**  
+   *Answer:* _________________________________________________________________________________
+   ___________________________________________________________________________________________
+
+2. **Which topic did you find the most challenging, and how did you overcome it?**  
+   *Answer:* _________________________________________________________________________________
+   ___________________________________________________________________________________________
+
+3. **How do you plan to use your new computer skills in your daily life going forward? (e.g., emailing family, searching the web, keeping personal budgets).**  
+   *Answer:* _________________________________________________________________________________
+   ___________________________________________________________________________________________`
+            },
+            {
+                id: "l12_ws2_2",
+                title: "Homework Worksheet 12.2: Grand Finale Course Quiz",
+                markdown: `### Task: The Ultimate IT Review
+Select the best answer for each question to show you are ready to use computers independently!
+
+1. **If you receive an email from your utility provider saying "Payment failed, click this link immediately or your power will be cut off," what should you check first to verify if it is phishing?**
+   *   [ ] A. The color of the email background.
+   *   [ ] B. The sender's actual email address domain and look for suspicious link names.
+   *   [ ] C. If there are images of lightbulbs in the email.
+
+2. **You want to move a file from your "Downloads" folder into a personal folder on your "Desktop". What is the standard action to perform with your mouse?**
+   *   [ ] A. Double-click the file and turn off the computer.
+   *   [ ] B. Left-click the file, drag it across the screen, and drop it into the destination folder.
+   *   [ ] C. Right-click the folder and click delete.
+
+3. **What does the small padlock icon next to a website address in your web browser mean?**
+   *   [ ] A. The website is locked and you cannot read it.
+   *   [ ] B. Your connection is encrypted and secure (HTTPS).
+   *   [ ] C. The website is safe from all viruses.
+
+4. **In a spreadsheet, what symbol must you always type first before writing any calculation formula?**
+   *   [ ] A. An addition sign ($+$)
+   *   [ ] B. A question mark ($?$)
+   *   [ ] C. An equals sign ($=$)
+
+5. **If you are in a Zoom video call and the other participants can see you but cannot hear you, which button should you look for on your video calling toolbar?**
+   *   [ ] A. The virtual chat bubble.
+   *   [ ] B. The microphone mute/unmute button.
+   *   [ ] C. The "Leave Meeting" button.`
+            }
+        ]
+    }
+};
+
+// Core active tracking parameters
+let activeLessonKey = "l1";
+let activeTabIdx = 0; // 0: In-Class 1, 1: In-Class 2, 2: Homework 1, 3: Homework 2
+let isInstructorGrading = false;
+
+// Global Answers Cache
+let studentAnswers = {};
+
+window.onload = function() {
+    // Load student answers from cache
+    const savedAnswers = localStorage.getItem("salford_digital_answers");
+    if (savedAnswers) {
+        studentAnswers = JSON.parse(savedAnswers);
+    }
+
+    // Load instructor mode from cache
+    const savedInstMode = localStorage.getItem("salford_instructor_mode");
+    if (savedInstMode) {
+        isInstructorGrading = JSON.parse(savedInstMode);
+        updateInstructorModeUI();
+    }
+
+    // Generate Sidebar list
+    renderSidebar();
+
+    // Set Active State
+    selectLesson("l1");
+};
+
+function renderSidebar() {
+    const nav = document.getElementById("lessons-nav");
+    nav.innerHTML = "";
+
+    Object.keys(worksheetsDatabase).forEach(key => {
+        const lesson = worksheetsDatabase[key];
+        const numStr = key.replace("l", "");
+        
+        // Calculate progress for this lesson (4 sheets total)
+        const progressCount = getCompletedCountForLesson(key);
+        
+        const btn = document.createElement("button");
+        btn.id = `nav-btn-${key}`;
+        btn.onclick = () => selectLesson(key);
+        btn.className = "w-full text-left p-4 hover:bg-slate-50 transition flex items-start space-x-3 text-slate-700 outline-none";
+        btn.innerHTML = `
+            <div class="flex-shrink-0 bg-slate-100 text-slate-800 rounded-full h-8 w-8 flex items-center justify-center font-bold text-sm tracking-wide border border-slate-200" id="nav-badge-${key}">
+                ${numStr}
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-xs font-bold text-slate-900 truncate leading-tight">${lesson.title.split(":")[1].trim()}</p>
+                <div class="flex items-center justify-between mt-1.5">
+                    <span class="text-[10px] text-slate-400 font-medium">Lesson ${numStr}</span>
+                    <span class="text-[10px] font-black px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200" id="nav-prog-${key}">${progressCount}/4 Done</span>
+                </div>
+            </div>
+        `;
+        nav.appendChild(btn);
+    });
+
+    calculateGlobalProgress();
+}
+
+function selectLesson(key) {
+    // De-activate old active item
+    const prevBtn = document.getElementById(`nav-btn-${activeLessonKey}`);
+    const prevBadge = document.getElementById(`nav-badge-${activeLessonKey}`);
+    if (prevBtn) {
+        prevBtn.classList.remove("bg-indigo-50", "hover:bg-indigo-50", "border-l-4", "border-indigo-600");
+        prevBtn.classList.add("hover:bg-slate-50");
+    }
+    if (prevBadge) {
+        prevBadge.classList.remove("bg-indigo-600", "text-white", "border-indigo-700");
+        prevBadge.classList.add("bg-slate-100", "text-slate-800", "border-slate-200");
+    }
+
+    // Set new active key
+    activeLessonKey = key;
+
+    // Activate new item UI
+    const activeBtn = document.getElementById(`nav-btn-${key}`);
+    const activeBadge = document.getElementById(`nav-badge-${key}`);
+    if (activeBtn) {
+        activeBtn.classList.add("bg-indigo-50", "hover:bg-indigo-50", "border-l-4", "border-indigo-600");
+        activeBtn.classList.remove("hover:bg-slate-50");
+    }
+    if (activeBadge) {
+        activeBadge.classList.add("bg-indigo-600", "text-white", "border-indigo-700");
+        activeBadge.classList.remove("bg-slate-100", "text-slate-800", "border-slate-200");
+    }
+
+    // Update main Content block (objectives, header)
+    const lesson = worksheetsDatabase[key];
+    const numStr = key.replace("l", "");
+    
+    let objectivesHTML = lesson.objectives.map(obj => `
+        <li class="flex items-start space-x-2 text-slate-600 text-sm">
+            <span class="text-amber-500 mt-1 flex-shrink-0 text-xs"><i class="fa-solid fa-circle-play"></i></span>
+            <span>${obj}</span>
+        </li>
+    `).join("");
+
+    document.getElementById("lesson-info-area").innerHTML = `
+        <div class="flex items-center space-x-2 mb-2 text-indigo-600">
+            <i class="fa-solid fa-bookmark text-xs"></i>
+            <span class="text-xs font-bold uppercase tracking-wider">Lesson ${numStr} Modules</span>
+        </div>
+        <h2 class="text-2xl font-black text-slate-900 mb-3 tracking-tight">${lesson.title}</h2>
+        <div class="bg-indigo-50/50 rounded-xl p-4 border border-indigo-100/50">
+            <h4 class="text-xs font-bold text-indigo-950 uppercase tracking-wider mb-2">Subject Objectives & Learning Criteria</h4>
+            <ul class="space-y-1.5">
+                ${objectivesHTML}
+            </ul>
+        </div>
+    `;
+
+    // Render active tab worksheets
+    renderWorksheet();
+}
+
+function filterLessons() {
+    const query = document.getElementById("search-input").value.toLowerCase();
+    Object.keys(worksheetsDatabase).forEach(key => {
+        const btn = document.getElementById(`nav-btn-${key}`);
+        if (btn) {
+            const titleText = worksheetsDatabase[key].title.toLowerCase();
+            const objectivesText = worksheetsDatabase[key].objectives.join(" ").toLowerCase();
+            if (titleText.includes(query) || objectivesText.includes(query)) {
+                btn.style.display = "flex";
+            } else {
+                btn.style.display = "none";
             }
         }
-    </script>
+    });
+}
+
+function switchTab(tabIdx) {
+    activeTabIdx = tabIdx;
+    
+    // Deactivate all tab selectors
+    const tabIds = ["tab-in-class-1", "tab-in-class-2", "tab-homework-1", "tab-homework-2"];
+    tabIds.forEach((id, idx) => {
+        const btn = document.getElementById(id);
+        if (idx === tabIdx) {
+            btn.classList.add("border-indigo-600", "text-indigo-600");
+            btn.classList.remove("border-transparent", "text-slate-500", "hover:text-slate-800");
+        } else {
+            btn.classList.remove("border-indigo-600", "text-indigo-600");
+            btn.classList.add("border-transparent", "text-slate-500", "hover:text-slate-800");
+        }
+    });
+
+    renderWorksheet();
+}
+
+// This custom compiler generates interactive fillable inputs, matrices, and checklists
+// dynamically based on the markdown strings stored in worksheetsDatabase.
+function renderWorksheet() {
+    const activeSheet = worksheetsDatabase[activeLessonKey].sheets[activeTabIdx];
+    const wsId = activeSheet.id;
+
+    // Set Subtitle details
+    document.getElementById("print-sheet-title").innerText = activeSheet.title.toUpperCase();
+    document.getElementById("print-sheet-subtitle").innerText = worksheetsDatabase[activeLessonKey].title;
+
+    // Load active answers meta profile
+    const meta = studentAnswers[wsId] ? studentAnswers[wsId].meta : {
+        name: "",
+        date: "",
+        completed: false,
+        review: false,
+        score: ""
+    };
+
+    // Update Metadata inputs
+    document.getElementById("student-name").value = meta.name || "";
+    document.getElementById("student-date").value = meta.date || "";
+    document.getElementById("inst-completed").checked = meta.completed || false;
+    document.getElementById("inst-review").checked = meta.review || false;
+    document.getElementById("inst-score").value = meta.score || "";
+
+    // Parse Markdown text to Interactive elements
+    const parsedHTML = parseMarkdownToFillableForm(activeSheet.markdown, wsId);
+    
+    const wrapper = document.getElementById("worksheet-form");
+    wrapper.innerHTML = `
+        <div class="border-b border-slate-100 pb-4 mb-6">
+            <span class="bg-amber-100 text-amber-900 border border-amber-200 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+                ${activeTabIdx < 2 ? "In-Class Core" : "Homework Task"}
+            </span>
+            <h3 class="text-xl font-extrabold text-slate-900 mt-1">${activeSheet.title}</h3>
+        </div>
+        <div class="worksheet-body">
+            ${parsedHTML}
+        </div>
+    `;
+
+    // Initialize answer tracking attributes
+    restoreInputsState(wsId);
+}
+
+function parseMarkdownToFillableForm(md, wsId) {
+    let lines = md.split("\n");
+    let html = [];
+    let insideTable = false;
+    let tableHeaders = [];
+    let tableRows = [];
+    let insideCodeBlock = false;
+    let codeContent = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+
+        // Handle raw code block formatting rules safely
+        if (line.startsWith("```")) {
+            if (insideCodeBlock) {
+                insideCodeBlock = false;
+                html.push(`
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs overflow-x-auto shadow-inner my-4 border border-slate-800 leading-relaxed"><code>${codeContent.join("\n")}</code></pre>
+                `);
+                codeContent = [];
+            } else {
+                insideCodeBlock = true;
+            }
+            continue;
+        }
+
+        if (insideCodeBlock) {
+            codeContent.push(escapeHTML(lines[i])); // Maintain indentation
+            continue;
+        }
+
+        // Handle Blockquote layout conversion
+        if (line.startsWith(">")) {
+            let cleanQuote = line.replace(/^>\s*/, "");
+            // Detect italics wrapper
+            cleanQuote = cleanQuote.replace(/^\*\s*“/, "“").replace(/”\s*\*/, "”");
+            html.push(`
+                <blockquote class="border-l-4 border-amber-400 bg-amber-50/50 p-4 rounded-r-xl italic my-4 text-slate-700 text-sm">
+                    ${inlineMarkdownReplacements(cleanQuote)}
+                </blockquote>
+            `);
+            continue;
+        }
+
+        // Handle Horizontal Rule conversion
+        if (line === "---") {
+            html.push(`<hr class="my-6 border-slate-200" />`);
+            continue;
+        }
+
+        // Handle Heading matching
+        if (line.startsWith("###")) {
+            html.push(`<h4 class="text-base font-extrabold text-indigo-950 mt-6 mb-2 tracking-tight">${inlineMarkdownReplacements(line.replace("###", ""))}</h4>`);
+            continue;
+        }
+        if (line.startsWith("##")) {
+            html.push(`<h3 class="text-lg font-black text-slate-950 mt-8 mb-3 tracking-tight border-b border-slate-100 pb-1">${inlineMarkdownReplacements(line.replace("##", ""))}</h3>`);
+            continue;
+        }
+
+        // Processing Table segments
+        if (line.startsWith("|")) {
+            insideTable = true;
+            let cols = line.split("|").map(c => c.trim()).filter((c, idx, arr) => idx > 0 && idx < arr.length - 1);
+            if (line.includes("---")) {
+                // Separator indicator line, skip
+                continue;
+            }
+            if (tableHeaders.length === 0) {
+                tableHeaders = cols;
+            } else {
+                tableRows.push(cols);
+            }
+            continue;
+        } else if (insideTable && !line.startsWith("|")) {
+            // Table ended, compile HTML table structure
+            html.push(compileHTMLTable(tableHeaders, tableRows, wsId));
+            insideTable = false;
+            tableHeaders = [];
+            tableRows = [];
+        }
+
+        // Checklists, bullet lists
+        if (line.startsWith("*   [ ]") || line.startsWith("-   [ ]") || line.startsWith("* [ ]") || line.startsWith("- [ ]")) {
+            let label = line.replace(/^\*\s*\[\s*\]\s*/, "").replace(/^-\s*\[\s*\]\s*/, "");
+            let cleanLabel = inlineMarkdownReplacements(label);
+            html.push(`
+                <div class="flex items-start gap-3 my-2.5">
+                    <input type="checkbox" onchange="captureAnswer('${wsId}')" class="checkbox-input rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4 mt-1 cursor-pointer" data-ws="${wsId}">
+                    <span class="text-sm text-slate-700 font-medium select-none">${cleanLabel}</span>
+                </div>
+            `);
+            continue;
+        }
+
+        // Standard bullet item parsing
+        if (line.startsWith("* ") || line.startsWith("- ")) {
+            let cleanBullet = inlineMarkdownReplacements(line.substring(2));
+            html.push(`<ul class="list-disc pl-5 my-1 text-sm text-slate-600"><li>${cleanBullet}</li></ul>`);
+            continue;
+        }
+
+        // Numbered list item parsing
+        if (/^\d+\.\s*/.test(line)) {
+            let cleanNum = inlineMarkdownReplacements(line.replace(/^\d+\.\s*/, ""));
+            let matchIndex = line.match(/^\d+/)[0];
+            html.push(`
+                <div class="flex items-start gap-2.5 my-2 text-sm text-slate-700">
+                    <span class="font-bold text-indigo-600 w-4 text-right flex-shrink-0">${matchIndex}.</span>
+                    <div class="flex-1">${cleanNum}</div>
+                </div>
+            `);
+            continue;
+        }
+
+        // Normal text block with dynamic underscore-to-input conversions
+        if (line !== "") {
+            html.push(`<p class="text-sm leading-relaxed text-slate-600 my-2">${inlineMarkdownReplacements(line)}</p>`);
+        }
+    }
+
+    // Safety fallback for trailing table segments
+    if (insideTable) {
+        html.push(compileHTMLTable(tableHeaders, tableRows, wsId));
+    }
+
+    return html.join("\n");
+}
+
+function inlineMarkdownReplacements(text) {
+    let output = text;
+    
+    // Replace Markdown links with targeted blank tabs
+    output = output.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="text-indigo-600 hover:underline font-semibold">$1</a>');
+
+    // Convert code backticks to tiny high-contrast code badges
+    output = output.replace(/`(.*?)`/g, '<code class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 text-rose-600 rounded text-xs font-mono">$1</code>');
+
+    // Bold tags
+    output = output.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900">$1</strong>');
+    
+    // Italics tags
+    output = output.replace(/\*(.*?)\*/g, '<em class="italic text-slate-700">$1</em>');
+
+    // LaTeX Math parameters parsing (e.g., £ symbol, total additions etc.)
+    output = output.replace(/\$(.*?)\$/g, '<span class="font-mono text-xs font-semibold bg-indigo-50 border border-indigo-100 text-indigo-700 px-1 py-0.2 rounded">$1</span>');
+
+    // Convert long blank underscores into highly-interactive dynamic text fields
+    if (output.includes("___________________________") || output.includes("_________________") || output.includes("_____")) {
+        output = output.replace(/_{5,100}/g, function(match) {
+            // Adjust input size based on width of markdown underscores
+            let size = match.length > 30 ? "w-full max-w-xl" : "w-40 inline-block";
+            return `
+                <input type="text" onkeyup="captureAnswer('${activeSheetId()}')" 
+                       class="text-input px-2.5 py-1 text-sm border-b-2 border-slate-300 focus:border-indigo-600 outline-none bg-indigo-50/20 font-medium text-slate-800 placeholder:text-slate-400 rounded-t-md transition ${size}" 
+                       placeholder="Click to type answer...">
+            `;
+        });
+    }
+
+    return output;
+}
+
+function compileHTMLTable(headers, rows, wsId) {
+    let headerCells = headers.map(h => `<th class="px-4 py-3 bg-slate-100 border-b border-slate-200 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">${inlineMarkdownReplacements(h)}</th>`).join("");
+    
+    let rowHTML = rows.map((row, rIdx) => {
+        let isMatchingTable = row.length === 3 && row[1] === "";
+        
+        let cells = row.map((cell, cIdx) => {
+            if (isMatchingTable && cIdx === 1) {
+                // Return option dropdown with corresponding choice keys (A, B, C, D)
+                return `
+                    <td class="px-4 py-2 border-b border-slate-100">
+                        <select onchange="captureAnswer('${wsId}')" class="select-input bg-white border border-slate-300 text-slate-700 text-xs rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-1.5 shadow-sm outline-none font-bold" data-ws="${wsId}">
+                            <option value="">- Select -</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </td>
+                `;
+            }
+            return `<td class="px-4 py-2 border-b border-slate-100 text-xs text-slate-600 font-medium">${inlineMarkdownReplacements(cell)}</td>`;
+        }).join("");
+        return `<tr>${cells}</tr>`;
+    }).join("");
+
+    return `
+        <div class="overflow-x-auto my-4 rounded-xl border border-slate-200 shadow-sm">
+            <table class="min-w-full divide-y divide-slate-200 table-auto">
+                <thead><tr>${headerCells}</tr></thead>
+                <tbody class="bg-white divide-y divide-slate-100">${rowHTML}</tbody>
+            </table>
+        </div>
+    `;
+}
+
+function escapeHTML(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function activeSheetId() {
+    return worksheetsDatabase[activeLessonKey].sheets[activeTabIdx].id;
+}
+
+// Triggered on every keypress and selection change to persist state immediately to cache
+function captureAnswer(wsId) {
+    if (!studentAnswers[wsId]) {
+        studentAnswers[wsId] = { meta: {}, data: [] };
+    }
+
+    // Save Student Metadata State
+    studentAnswers[wsId].meta = {
+        name: document.getElementById("student-name").value,
+        date: document.getElementById("student-date").value,
+        completed: document.getElementById("inst-completed").checked,
+        review: document.getElementById("inst-review").checked,
+        score: document.getElementById("inst-score").value
+    };
+
+    // Gather Inputs array values
+    let data = [];
+    
+    // Checkboxes
+    const checkInputs = document.querySelectorAll("#worksheet-form .checkbox-input");
+    checkInputs.forEach((chk, idx) => {
+        data.push({ type: "checkbox", index: idx, value: chk.checked });
+    });
+
+    // Textfields
+    const textInputs = document.querySelectorAll("#worksheet-form .text-input");
+    textInputs.forEach((txt, idx) => {
+        data.push({ type: "text", index: idx, value: txt.value });
+    });
+
+    // Option Dropdowns
+    const selectInputs = document.querySelectorAll("#worksheet-form .select-input");
+    selectInputs.forEach((sel, idx) => {
+        data.push({ type: "select", index: idx, value: sel.value });
+    });
+
+    studentAnswers[wsId].data = data;
+    
+    localStorage.setItem("salford_digital_answers", JSON.stringify(studentAnswers));
+    
+    // Update active badges and global progressions
+    updateProgressBadges();
+}
+
+function saveMeta() {
+    const wsId = activeSheetId();
+    captureAnswer(wsId);
+    
+    // Mirror name to print template dynamically
+    document.getElementById("print-meta-name").innerText = document.getElementById("student-name").value || "_________________";
+    document.getElementById("print-meta-date").innerText = document.getElementById("student-date").value || "_________________";
+}
+
+function restoreInputsState(wsId) {
+    if (!studentAnswers[wsId]) return;
+    
+    const records = studentAnswers[wsId].data || [];
+
+    // Checkboxes
+    const checkInputs = document.querySelectorAll("#worksheet-form .checkbox-input");
+    records.filter(r => r.type === "checkbox").forEach(rec => {
+        if (checkInputs[rec.index]) checkInputs[rec.index].checked = rec.value;
+    });
+
+    // Textfields
+    const textInputs = document.querySelectorAll("#worksheet-form .text-input");
+    records.filter(r => r.type === "text").forEach(rec => {
+        if (textInputs[rec.index]) textInputs[rec.index].value = rec.value;
+    });
+
+    // Option Dropdowns
+    const selectInputs = document.querySelectorAll("#worksheet-form .select-input");
+    records.filter(r => r.type === "select").forEach(rec => {
+        if (selectInputs[rec.index]) selectInputs[rec.index].value = rec.value;
+    });
+
+    // Mirror print meta name
+    document.getElementById("print-meta-name").innerText = document.getElementById("student-name").value || "_________________";
+    document.getElementById("print-meta-date").innerText = document.getElementById("student-date").value || "_________________";
+}
+
+function getCompletedCountForLesson(lessonKey) {
+    const sheets = worksheetsDatabase[lessonKey].sheets;
+    let completedCount = 0;
+    
+    sheets.forEach(sheet => {
+        const wsId = sheet.id;
+        if (studentAnswers[wsId] && studentAnswers[wsId].data && studentAnswers[wsId].data.length > 0) {
+            // Determine completed state if at least one checkbox is selected or some text is entered
+            const hasActivity = studentAnswers[wsId].data.some(d => d.value === true || (typeof d.value === "string" && d.value.trim() !== ""));
+            if (hasActivity) {
+                completedCount++;
+            }
+        }
+    });
+
+    return completedCount;
+}
+
+function updateProgressBadges() {
+    const progressCount = getCompletedCountForLesson(activeLessonKey);
+    const navProgSpan = document.getElementById(`nav-prog-${activeLessonKey}`);
+    if (navProgSpan) {
+        navProgSpan.innerText = `${progressCount}/4 Done`;
+    }
+    calculateGlobalProgress();
+}
+
+function calculateGlobalProgress() {
+    // Total of 48 worksheets across 12 lessons (12 * 4 = 48)
+    let totalWorksheets = 48;
+    let filledWorksheets = 0;
+
+    Object.keys(worksheetsDatabase).forEach(key => {
+        const sheets = worksheetsDatabase[key].sheets;
+        sheets.forEach(sheet => {
+            const wsId = sheet.id;
+            if (studentAnswers[wsId] && studentAnswers[wsId].data && studentAnswers[wsId].data.length > 0) {
+                const hasActivity = studentAnswers[wsId].data.some(d => d.value === true || (typeof d.value === "string" && d.value.trim() !== ""));
+                if (hasActivity) filledWorksheets++;
+            }
+        });
+    });
+
+    const percent = Math.round((filledWorksheets / totalWorksheets) * 100);
+    
+    const progressSpan = document.getElementById("global-progress");
+    const progressBar = document.getElementById("global-progress-bar");
+    
+    if (progressSpan) progressSpan.innerText = `${percent}%`;
+    if (progressBar) progressBar.style.width = `${percent}%`;
+}
+
+function toggleInstructorMode() {
+    isInstructorGrading = !isInstructorGrading;
+    localStorage.setItem("salford_instructor_mode", JSON.stringify(isInstructorGrading));
+    updateInstructorModeUI();
+    showToast(isInstructorGrading ? "Grading Dashboard Activated!" : "Standard Workspace Restored!");
+}
+
+function updateInstructorModeUI() {
+    const btn = document.getElementById("instructor-mode-toggle");
+    const indicator = document.getElementById("instructor-indicator");
+    const statusText = document.getElementById("instructor-status");
+    const metaContainer = document.getElementById("student-meta-container");
+
+    if (isInstructorGrading) {
+        btn.classList.add("bg-red-950", "border-red-500", "text-red-200");
+        btn.classList.remove("bg-indigo-950", "border-indigo-400", "text-white");
+        indicator.classList.add("bg-green-400");
+        indicator.classList.remove("bg-red-400");
+        statusText.innerText = "ON";
+        
+        // Emphasize instructor inputs
+        metaContainer.classList.add("ring-2", "ring-red-500/50", "bg-red-50/30");
+    } else {
+        btn.classList.remove("bg-red-950", "border-red-500", "text-red-200");
+        btn.classList.add("bg-indigo-950", "border-indigo-400", "text-white");
+        indicator.classList.remove("bg-green-400");
+        indicator.classList.add("bg-red-400");
+        statusText.innerText = "OFF";
+        
+        metaContainer.classList.remove("ring-2", "ring-red-500/50", "bg-red-50/30");
+    }
+}
+
+// Compiles raw template markdown text and replaces blanks with actual student answers
+function compileWorksheetMarkdown(wsId, activeSheet) {
+    let template = activeSheet.markdown;
+    const records = studentAnswers[wsId] ? studentAnswers[wsId].data : [];
+    const meta = studentAnswers[wsId] ? studentAnswers[wsId].meta : {};
+
+    let checkboxIdx = 0;
+    let textIdx = 0;
+    let selectIdx = 0;
+
+    // Inject Markdown header info
+    let output = [];
+    output.push(`# ${activeSheet.title.toUpperCase()}`);
+    output.push(`**Lesson Core:** ${worksheetsDatabase[activeLessonKey].title}`);
+    output.push(`**Student Name:** ${meta.name || "_________________"}   **Date:** ${meta.date || "_________________"}`);
+    output.push(`**Instructor Review:** [${meta.completed ? "x" : " "}] Completed  [${meta.review ? "x" : " "}] Needs Review   **Score/Feedback:** ${meta.score || "_________________"}`);
+    output.push(`\n---\n`);
+
+    let lines = template.split("\n");
+    let tableRowsParsedCount = 0;
+
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        let trimmed = line.trim();
+
+        // Checklists
+        if (trimmed.startsWith("*   [ ]") || trimmed.startsWith("-   [ ]") || trimmed.startsWith("* [ ]") || trimmed.startsWith("- [ ]")) {
+            const chkRec = records.find(r => r.type === "checkbox" && r.index === checkboxIdx);
+            let checkChar = (chkRec && chkRec.value) ? "x" : " ";
+            
+            let label = trimmed.replace(/^\*\s*\[\s*\]\s*/, "").replace(/^-\s*\[\s*\]\s*/, "");
+            output.push(`*   [${checkChar}] ${label}`);
+            checkboxIdx++;
+            continue;
+        }
+
+        // Dropdown Option Table Row Matches
+        if (trimmed.startsWith("|") && !trimmed.includes("---") && trimmed.split("|").length === 5) {
+            // Found a row in a matching layout table. E.g.: | Mouse | | Action |
+            let parts = line.split("|");
+            const selectRec = records.find(r => r.type === "select" && r.index === selectIdx);
+            let chosenVal = selectRec ? selectRec.value : " ";
+            
+            parts[2] = ` **${chosenVal}** `;
+            output.push(parts.join("|"));
+            selectIdx++;
+            continue;
+        }
+
+        // Fill in blanks matching
+        if (trimmed.includes("___________________________") || trimmed.includes("_________________") || trimmed.includes("_____")) {
+            let replacedLine = line;
+            // Scan for underscore occurrences and replace with user answers
+            replacedLine = replacedLine.replace(/_{5,100}/g, function() {
+                const textRec = records.find(r => r.type === "text" && r.index === textIdx);
+                let textVal = textRec ? textRec.value : "";
+                textIdx++;
+                return ` [ **${textVal || "No Answer"}** ] `;
+            });
+            output.push(replacedLine);
+            continue;
+        }
+
+        output.push(line);
+    }
+
+    return output.join("\n");
+}
+
+function downloadWorksheetMD() {
+    const wsId = activeSheetId();
+    const activeSheet = worksheetsDatabase[activeLessonKey].sheets[activeTabIdx];
+    
+    const compiledMD = compileWorksheetMarkdown(wsId, activeSheet);
+    
+    const blob = new Blob([compiledMD], { type: "text/markdown;charset=utf-8;" });
+    const link = document.createElement("a");
+    const filename = `${activeSheet.title.toLowerCase().replace(/[^a-z0-9]/g, "_")}.md`;
+    
+    // Legacy support logic compatibility
+    if (navigator.msSaveBlob) {
+        navigator.msSaveBlob(blob, filename);
+    } else {
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    showToast("Markdown downloaded successfully!");
+}
+
+function printActiveWorksheet() {
+    window.print();
+}
+
+function clearCurrentAnswers() {
+    const wsId = activeSheetId();
+    if (studentAnswers[wsId]) {
+        delete studentAnswers[wsId];
+        localStorage.setItem("salford_digital_answers", JSON.stringify(studentAnswers));
+        renderWorksheet();
+        updateProgressBadges();
+        showToast("Worksheet Answers Reset!");
+    }
+}
+
+function downloadBackup() {
+    const stateStr = JSON.stringify(studentAnswers, null, 2);
+    const blob = new Blob([stateStr], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "salford_it_curriculum_backup.json");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("Full backup downloaded!");
+}
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    const msgSpan = document.getElementById("toast-msg");
+    
+    msgSpan.innerText = message;
+    
+    // Trigger animation slide up
+    toast.classList.remove("translate-y-20", "opacity-0");
+    toast.classList.add("translate-y-0", "opacity-100");
+    
+    setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-20", "opacity-0");
+    }, 2500);
+}
+</script>
 </body>
 </html>
