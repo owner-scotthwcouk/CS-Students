@@ -102,6 +102,11 @@
                 <i class="fa-solid fa-cloud-arrow-down"></i>
                 <span class="hidden md:inline">Save Progress Backup</span>
             </button>
+            <button onclick="triggerLoadBackup()" class="bg-indigo-700 hover:bg-indigo-600 text-white border border-indigo-600 px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1.5 transition shadow" title="Load an entire backup state from a JSON file">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span class="hidden md:inline">Load Backup</span>
+            </button>
+            <input type="file" id="backup-file-input" accept=".json" class="hidden" onchange="handleBackupFile(event)">
         </div>
     </div>
 </header>
@@ -2156,6 +2161,43 @@ function downloadBackup() {
     link.click();
     document.body.removeChild(link);
     showToast("Full backup downloaded!");
+}
+
+function triggerLoadBackup() {
+    document.getElementById("backup-file-input").click();
+}
+
+function handleBackupFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const parsedData = JSON.parse(e.target.result);
+            
+            // Validate basic object structure
+            if (typeof parsedData !== "object" || parsedData === null) {
+                throw new Error("Invalid backup data format.");
+            }
+
+            studentAnswers = parsedData;
+            localStorage.setItem("salford_digital_answers", JSON.stringify(studentAnswers));
+            
+            // Sync all interactive views
+            renderSidebar();
+            selectLesson(activeLessonKey);
+            
+            showToast("Backup loaded successfully!");
+        } catch (err) {
+            showToast("Error: Invalid or corrupted backup file.");
+            console.error(err);
+        } finally {
+            // Reset input so the same file can be uploaded again if needed
+            event.target.value = "";
+        }
+    };
+    reader.readAsText(file);
 }
 
 function showToast(message) {
