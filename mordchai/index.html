@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salford Digital Academy Portal - Level 1 IT</title>
-    <!-- Tailwind CSS for modern responsive styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter and Fira Code for clean technical presentation -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons for UI elements -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -79,7 +76,6 @@
 <body class="text-slate-800 antialiased min-h-screen flex flex-col">
 
 
-<!-- Top Navigation Bar -->
 <header class="bg-indigo-900 text-white shadow-md border-b border-indigo-950 no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center space-x-3">
@@ -92,7 +88,6 @@
             </div>
         </div>
         
-        <!-- Action Utilities & Instructor Mode Toggle -->
         <div class="flex items-center space-x-4">
             <button id="instructor-mode-toggle" class="flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold border border-indigo-400 bg-indigo-950 hover:bg-indigo-800 transition shadow" onclick="toggleInstructorMode()">
                 <span class="h-2 w-2 rounded-full bg-red-400 animate-pulse inline-block" id="instructor-indicator"></span>
@@ -111,13 +106,10 @@
     </div>
 </header>
 
-<!-- Main Workspace Grid -->
 <div class="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
     
-    <!-- Left Navigation Panel (Lessons List & Curriculum Summary) -->
     <aside class="w-full md:w-80 flex-shrink-0 no-print">
         
-        <!-- Search bar -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4">
             <div class="relative">
                 <input type="text" id="search-input" onkeyup="filterLessons()" placeholder="Search lessons or topics..." class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-slate-800">
@@ -125,7 +117,6 @@
             </div>
         </div>
 
-        <!-- Course Progression Card & Interactive Checklist -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-4">
             <div class="bg-indigo-50 p-4 border-b border-indigo-100 flex items-center justify-between">
                 <span class="text-xs font-bold text-indigo-900 tracking-wide uppercase">Your Progress Map</span>
@@ -138,29 +129,22 @@
             </div>
         </div>
 
-        <!-- Lessons Tree View Navigation -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
             <div class="bg-slate-50 p-4 border-b border-slate-100 font-bold text-xs text-slate-600 tracking-wider uppercase">
                 Lessons Directory
             </div>
             <nav id="lessons-nav" class="divide-y divide-slate-100 max-h-[500px] overflow-y-auto">
-                <!-- JavaScript loads list elements dynamically -->
-            </nav>
+                </nav>
         </div>
     </aside>
 
-    <!-- Right Side Dynamic Content Pane -->
     <main class="flex-1 min-w-0">
         
-        <!-- Course General Description Panel -->
         <section id="curriculum-view" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
-            <!-- Active Lesson Detail Rendered Dynamically -->
             <div id="lesson-info-area">
-                <!-- Javascript Renders Lesson Objectives Here -->
-            </div>
+                </div>
         </section>
 
-        <!-- Dynamic Worksheet Interface Tabs -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
             <div class="bg-slate-50 border-b border-slate-200 no-print">
                 <div class="flex border-b border-slate-200 px-4">
@@ -183,10 +167,8 @@
                 </div>
             </div>
 
-            <!-- Student Worksheet Container -->
             <div class="p-6 relative">
                 
-                <!-- Student Metadata Header Block -->
                 <div class="bg-slate-50 rounded-xl p-4 mb-6 border border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-4 no-print" id="student-meta-container">
                     <div>
                         <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Student Full Name</label>
@@ -215,7 +197,6 @@
                     </div>
                 </div>
 
-                <!-- Print Version Header (hidden by default on screen) -->
                 <div class="hidden print-only mb-6 border-b-2 border-black pb-4">
                     <div class="flex justify-between items-center">
                         <div>
@@ -235,12 +216,9 @@
                     </div>
                 </div>
 
-                <!-- Live HTML Worksheet Container -->
                 <div id="worksheet-form" class="prose prose-slate max-w-none text-slate-800">
-                    <!-- Dynamic form gets parsed and injected here -->
-                </div>
+                    </div>
 
-                <!-- Utility Actions Panel at bottom of Worksheet -->
                 <div class="mt-8 pt-6 border-t border-slate-200 flex flex-wrap gap-3 justify-between items-center no-print">
                     <div class="flex space-x-2">
                         <button onclick="downloadWorksheetMD()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center space-x-2 transition shadow">
@@ -262,7 +240,6 @@
     </main>
 </div>
 
-<!-- Modal Alert System (Avoiding alerts) -->
 <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center space-x-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
     <div id="toast-icon-bg" class="p-1 rounded bg-indigo-500 text-slate-950 flex items-center justify-center">
         <i class="fa-solid fa-circle-check text-sm" id="toast-icon"></i>
@@ -301,10 +278,10 @@ Draw a line or select the correct letter matching the computer component to its 
 ### Task 2: Desktop Exploration
 Minimize any open windows to view your computer screen's **Desktop**. Locate each of the items listed below. Check the box once you have successfully found it:
 
-*   [ ] **The "Start" Button / Main Menu Icon** (usually located in the bottom-left corner).
-*   [ ] **The System Clock & Date** (usually located in the bottom-right corner).
-*   [ ] **A Web Browser Icon** (e.g., Google Chrome, Microsoft Edge, Mozilla Firefox, or Safari).
-*   [ ] **The Recycle Bin / Trash Can** (where deleted files go).`
+* [ ] **The "Start" Button / Main Menu Icon** (usually located in the bottom-left corner).
+* [ ] **The System Clock & Date** (usually located in the bottom-right corner).
+* [ ] **A Web Browser Icon** (e.g., Google Chrome, Microsoft Edge, Mozilla Firefox, or Safari).
+* [ ] **The Recycle Bin / Trash Can** (where deleted files go).`
             },
             {
                 id: "l1_ws1_2",
@@ -312,23 +289,20 @@ Minimize any open windows to view your computer screen's **Desktop**. Locate eac
                 markdown: `### Task 1: Search Engine Scavenger Hunt
 Open your web browser (e.g., Google Chrome). Navigate to a search engine like Google (www.google.com) and search for the answers to the following questions:
 
-1. **What is the current weather forecast for tomorrow in Salford?**  
-   *Answer:* __________________________________________________________________________________
+1. **What is the current weather forecast for tomorrow in Salford?** *Answer:* __________________________________________________________________________________
 
-2. **In what year was the first personal computer (PC) invented?**  
-   *Answer:* __________________________________________________________________________________
+2. **In what year was the first personal computer (PC) invented?** *Answer:* __________________________________________________________________________________
 
 ---
 
 ### Task 2: Email Setup Checklist
 Follow your instructor's guidance to set up your free email account. Fill out and check off the steps as you complete them:
 
-*   [ ] **Select Email Provider:** [ ] Gmail (Google)  [ ] Outlook (Microsoft)  [ ] Other: ______________
-*   [ ] **Choose Your Username (Email Address):**  
-    *My Email Address:* \`___________________________________________________ @ ____________________\`
-*   [ ] **Create a Password:** Create a strong, memorable password. *(Note: Keep this secret! Do not write it here.)*
-*   [ ] **Log In:** Successfully log into your new inbox for the first time.
-*   [ ] **Send a Test Email:** Compose and send a quick message to your instructor's email address (\`scott@scott-hw.online\`).`
+* [ ] **Select Email Provider:** [ ] Gmail (Google)  [ ] Outlook (Microsoft)  [ ] Other: ______________
+* [ ] **Choose Your Username (Email Address):** *My Email Address:* \`___________________________________________________ @ ____________________\`
+* [ ] **Create a Password:** Create a strong, memorable password. *(Note: Keep this secret! Do not write it here.)*
+* [ ] **Log In:** Successfully log into your new inbox for the first time.
+* [ ] **Send a Test Email:** Compose and send a quick message to your instructor's email address (\`scott@scott-hw.online\`).`
             },
             {
                 id: "l1_ws2_1",
@@ -341,11 +315,9 @@ Open a simple text editor on your computer (such as **Notepad** on Windows or **
 ---
 
 ### Task 2: Reflection Questions
-1. **Which key on the keyboard did you find the most difficult to locate?**  
-   *Answer:* __________________________________________________________________________________
+1. **Which key on the keyboard did you find the most difficult to locate?** *Answer:* __________________________________________________________________________________
 
-2. **Approximately how long did it take you to type the entire paragraph?**  
-   *Answer:* _________________________ minutes.`
+2. **Approximately how long did it take you to type the entire paragraph?** *Answer:* _________________________ minutes.`
             },
             {
                 id: "l1_ws2_2",
@@ -353,15 +325,15 @@ Open a simple text editor on your computer (such as **Notepad** on Windows or **
                 markdown: `### Task: Finding Useful Websites
 Identify three different websites that align with your personal interests, hobbies, or daily life (e.g., a news site, a cooking blog, a local services page). Write down the name of the website and its exact URL (web address).
 
-*   **Website 1:**
-    *   *Name of Site:* __________________________________________________________________________
-    *   *Web Address (URL):* \`https://www.___________________________________________________________\`
-*   **Website 2:**
-    *   *Name of Site:* __________________________________________________________________________
-    *   *Web Address (URL):* \`https://www.___________________________________________________________\`
-*   **Website 3:**
-    *   *Name of Site:* __________________________________________________________________________
-    *   *Web Address (URL):* \`https://www.___________________________________________________________\``
+* **Website 1:**
+    * *Name of Site:* __________________________________________________________________________
+    * *Web Address (URL):* \`https://www.___________________________________________________________\`
+* **Website 2:**
+    * *Name of Site:* __________________________________________________________________________
+    * *Web Address (URL):* \`https://www.___________________________________________________________\`
+* **Website 3:**
+    * *Name of Site:* __________________________________________________________________________
+    * *Web Address (URL):* \`https://www.___________________________________________________________\``
             }
         ]
     },
@@ -380,8 +352,8 @@ Identify three different websites that align with your personal interests, hobbi
                 markdown: `### Concept Introduction
 A **passphrase** is a sequence of words that is long, secure, but easy to remember. We can create strong passwords by taking the first letter of each word in a memorable sentence and inserting a number and a symbol.
 
-*   *Example Sentence:* **I** **l**ove **d**rinking **t**ea **i**n **t**he **m**orning.
-*   *Resulting Passphrase:* \`Ildt1tm!\` *(Using "1" instead of "in" and adding "!" at the end)*
+* *Example Sentence:* **I** **l**ove **d**rinking **t**ea **i**n **t**he **m**orning.
+* *Resulting Passphrase:* \`Ildt1tm!\` *(Using "1" instead of "in" and adding "!" at the end)*
 
 ---
 
@@ -392,8 +364,7 @@ Convert the two sentences below into strong, secure passphrases using the first-
    *Your Passphrase:* _________________________________________________________________________
 
 2. **Sentence:** I walk in the park every Sunday afternoon.  
-   *Your Passphrase (incorporate at least one number and one symbol):*  
-   *Your Passphrase:* _________________________________________________________________________`
+   *Your Passphrase (incorporate at least one number and one symbol):* *Your Passphrase:* _________________________________________________________________________`
             },
             {
                 id: "l2_ws1_2",
@@ -436,14 +407,12 @@ Read the two scenarios below and write down the safest course of action for each
 
 #### Scenario A: The Public Computer
 You are using a shared computer at the public library to check your personal emails. Your rental time is running out, and you must leave immediately.
-*   **What is the most critical security action you must perform before leaving the computer?**  
-    *Answer:* __________________________________________________________________________________
+* **What is the most critical security action you must perform before leaving the computer?** *Answer:* __________________________________________________________________________________
     ___________________________________________________________________________________________
 
 #### Scenario B: The Unexpected Prize
 You receive an email from a major retail brand stating that you have won a £500 gift card, despite not entering any competition. The email requests your home address and your bank details to "process the shipping and tax."
-*   **How should you handle this email?**  
-    *Answer:* __________________________________________________________________________________
+* **How should you handle this email?** *Answer:* __________________________________________________________________________________
     ___________________________________________________________________________________________`
             },
             {
@@ -492,11 +461,11 @@ A computer organizes files similarly to a physical office filing system. Match e
                 markdown: `### Task: Hands-On Navigation & Organization
 Follow these hands-on steps on your computer. Mark each checkbox as you successfully complete the action under your instructor's supervision.
 
-*   [ ] **Open the File Manager:** Open **File Explorer** (if on a Windows computer) or **Finder** (if on a Mac).
-*   [ ] **Go to Desktop:** Locate and select the **Desktop** shortcut in the left-hand sidebar.
-*   [ ] **Create a Main Folder:** Right-click on an empty space on your desktop, select *New -> Folder*, and name the folder: \`IT Coursework\`.
-*   [ ] **Create a Sub-Folder:** Open your new \`IT Coursework\` folder. Inside it, right-click and create a second folder. Name this folder: \`Practice Documents\`.
-*   [ ] **Rename a Folder:** Right-click on the \`Practice Documents\` folder, select *Rename*, and change its name to: \`Word Documents\`.`
+* [ ] **Open the File Manager:** Open **File Explorer** (if on a Windows computer) or **Finder** (if on a Mac).
+* [ ] **Go to Desktop:** Locate and select the **Desktop** shortcut in the left-hand sidebar.
+* [ ] **Create a Main Folder:** Right-click on an empty space on your desktop, select *New -> Folder*, and name the folder: \`IT Coursework\`.
+* [ ] **Create a Sub-Folder:** Open your new \`IT Coursework\` folder. Inside it, right-click and create a second folder. Name this folder: \`Practice Documents\`.
+* [ ] **Rename a Folder:** Right-click on the \`Practice Documents\` folder, select *Rename*, and change its name to: \`Word Documents\`.`
             },
             {
                 id: "l3_ws2_1",
@@ -506,15 +475,15 @@ Before creating folders on a computer, it is best practice to plan them on paper
 
 Write down **three main folder names** you would create for your personal files (e.g., "Medical", "Travel", "Finances"). Under each main folder, list **two specific sub-folders** that belong inside it.
 
-*   **Main Folder 1:** ___________________________________________________________________________
-    *   *Sub-folder A:* ___________________________________________________________________________
-    *   *Sub-folder B:* ___________________________________________________________________________
-*   **Main Folder 2:** ___________________________________________________________________________
-    *   *Sub-folder A:* ___________________________________________________________________________
-    *   *Sub-folder B:* ___________________________________________________________________________
-*   **Main Folder 3:** ___________________________________________________________________________
-    *   *Sub-folder A:* ___________________________________________________________________________
-    *   *Sub-folder B:* ___________________________________________________________________________`
+* **Main Folder 1:** ___________________________________________________________________________
+    * *Sub-folder A:* ___________________________________________________________________________
+    * *Sub-folder B:* ___________________________________________________________________________
+* **Main Folder 2:** ___________________________________________________________________________
+    * *Sub-folder A:* ___________________________________________________________________________
+    * *Sub-folder B:* ___________________________________________________________________________
+* **Main Folder 3:** ___________________________________________________________________________
+    * *Sub-folder A:* ___________________________________________________________________________
+    * *Sub-folder B:* ___________________________________________________________________________`
             },
             {
                 id: "l3_ws2_2",
@@ -522,11 +491,9 @@ Write down **three main folder names** you would create for your personal files 
                 markdown: `### Task: Checking Your Understanding
 Answer the following questions about how computer operating systems handle and relocate saved files.
 
-1. **If you download an image or a document from the internet, which default folder does the computer automatically save it to?**  
-   *Answer:* The _________________________________________________ folder.
+1. **If you download an image or a document from the internet, which default folder does the computer automatically save it to?** *Answer:* The _________________________________________________ folder.
 
-2. **If you want to move a file from one folder to another using your mouse, what is the standard action called? (Hint: It involves clicking a file, holding the button down, moving the cursor, and releasing the button).**  
-   *Answer:* It is called "_______________________ and _______________________."`
+2. **If you want to move a file from one folder to another using your mouse, what is the standard action called? (Hint: It involves clicking a file, holding the button down, moving the cursor, and releasing the button).** *Answer:* It is called "_______________________ and _______________________."`
             }
         ]
     },
@@ -571,9 +538,9 @@ Open your word processor (e.g., Microsoft Word or Google Docs). Look at the top 
 Type the following shopping list items into your word processor. Use the toolbar buttons to turn the first group into a **bulleted list** and the second group into a **numbered list**.
 
 **Group 1 (Make this a Bulleted List):**
-*   Apples
-*   Milk
-*   Bread
+* Apples
+* Milk
+* Bread
 
 **Group 2 (Make this a Numbered List):**
 1.  Wake up at 7:00 AM
@@ -585,11 +552,11 @@ Type the following shopping list items into your word processor. Use the toolbar
 ### Task 2: The Saving Challenge
 You must save your document into the correct folder you created in Lesson 3.
 
-*   [ ] Click on **File** in the top-left corner, and choose **Save As** (or **Save**).
-*   [ ] Name your file: \`Shopping List\`.
-*   [ ] Navigate your computer's folders to find: \`Desktop -> IT Coursework -> Word Documents\`.
-*   [ ] Click **Save**.
-*   [ ] Close the program, open your folder manually to verify the file is there, and check this box once verified.`
+* [ ] Click on **File** in the top-left corner, and choose **Save As** (or **Save**).
+* [ ] Name your file: \`Shopping List\`.
+* [ ] Navigate your computer's folders to find: \`Desktop -> IT Coursework -> Word Documents\`.
+* [ ] Click **Save**.
+* [ ] Close the program, open your folder manually to verify the file is there, and check this box once verified.`
             },
             {
                 id: "l4_ws2_1",
@@ -606,11 +573,9 @@ Open your word processor at home. Create a document for a very simple recipe (fo
 ---
 
 ### Reflection Questions
-1. **Which button icon did you press to center your title? Describe what it looks like:**  
-   *Answer:* __________________________________________________________________________________
+1. **Which button icon did you press to center your title? Describe what it looks like:** *Answer:* __________________________________________________________________________________
 
-2. **What is the difference between clicking "Save" and "Save As" when working on an existing document?**  
-   *Answer:* __________________________________________________________________________________
+2. **What is the difference between clicking "Save" and "Save As" when working on an existing document?** *Answer:* __________________________________________________________________________________
    ___________________________________________________________________________________________`
             },
             {
@@ -631,11 +596,9 @@ Using quick keyboard combinations (shortcuts) saves a lot of time. Match the key
 Suppose you typed this sentence into your computer:  
 > *“The computer is on top of of the desk”*
 
-1. **What mistake did you make in this sentence?**  
-   *Answer:* __________________________________________________________________________________
+1. **What mistake did you make in this sentence?** *Answer:* __________________________________________________________________________________
 
-2. **How would you remove the extra word? (What key on the keyboard would you use to delete it?)**  
-   *Answer:* __________________________________________________________________________________`
+2. **How would you remove the extra word? (What key on the keyboard would you use to delete it?)** *Answer:* __________________________________________________________________________________`
             }
         ]
     },
@@ -653,10 +616,10 @@ Suppose you typed this sentence into your computer:
                 markdown: `### Task 1: Spreadsheet Anatomy
 Identify the different parts of a spreadsheet window. Match the concept descriptions below:
 
-*   **A.** A vertical stack of cells labeled with letters (e.g., A, B, C...).
-*   **B.** A horizontal row of cells labeled with numbers (e.g., 1, 2, 3...).
-*   **C.** The basic building block of a spreadsheet where a row and column meet (e.g., A1).
-*   **D.** The long white bar at the top used to enter formulas or view cell contents.
+* **A.** A vertical stack of cells labeled with letters (e.g., A, B, C...).
+* **B.** A horizontal row of cells labeled with numbers (e.g., 1, 2, 3...).
+* **C.** The basic building block of a spreadsheet where a row and column meet (e.g., A1).
+* **D.** The long white bar at the top used to enter formulas or view cell contents.
 
 1. **Cell:** _____  
 2. **Column:** _____  
@@ -668,11 +631,11 @@ Identify the different parts of a spreadsheet window. Match the concept descript
 ### Task 2: Data Entry & Formatting
 Open a blank spreadsheet and create the table below. Follow the specific formatting instructions:
 
-*   [ ] Type the headers **Item** in Cell \`A1\` and **Cost** in Cell \`B1\`. Make them **Bold**.
-*   [ ] In cells \`A2\` to \`A4\`, enter: \`Milk\`, \`Bread\`, \`Apples\`.
-*   [ ] In cells \`B2\` to \`B4\`, enter the numbers: \`2.10\`, \`1.50\`, \`3.00\`.
-*   [ ] Highlight cells \`B2\` to \`B4\` and change their format to **Currency (£)** so they display as prices.
-*   [ ] Adjust the width of Column A so no text is cut off.`
+* [ ] Type the headers **Item** in Cell \`A1\` and **Cost** in Cell \`B1\`. Make them **Bold**.
+* [ ] In cells \`A2\` to \`A4\`, enter: \`Milk\`, \`Bread\`, \`Apples\`.
+* [ ] In cells \`B2\` to \`B4\`, enter the numbers: \`2.10\`, \`1.50\`, \`3.00\`.
+* [ ] Highlight cells \`B2\` to \`B4\` and change their format to **Currency (£)** so they display as prices.
+* [ ] Adjust the width of Column A so no text is cut off.`
             },
             {
                 id: "l5_ws1_2",
@@ -681,21 +644,21 @@ Open a blank spreadsheet and create the table below. Follow the specific formatt
 Every formula in a spreadsheet **must** start with an equals sign ($=$). Fill in the blank formulas below to solve these basic math problems:
 
 1. You want to add the values in cell \`B2\` and cell \`B3\` together.  
-   *What do you type into the cell?*  \`=\` __________________________________
+   *What do you type into the cell?* \`=\` __________________________________
 
 2. You want to subtract the cost in cell \`B3\` from the income in cell \`B2\`.  
-   *What do you type into the cell?*  \`=\` __________________________________
+   *What do you type into the cell?* \`=\` __________________________________
 
 3. Look at your spreadsheet toolbar and locate the **AutoSum** button (it looks like a Greek letter $\Sigma$). Use it in cell \`B5\` to add up cells \`B2\`, \`B3\`, and \`B4\`.  
-   *What formula automatically appeared in the cell?*  \`=\` __________________________________
+   *What formula automatically appeared in the cell?* \`=\` __________________________________
 
 ---
 
 ### Task 2: Sorting Data
-*   [ ] Highlight your entire table (cells \`A1\` to \`B4\`).
-*   [ ] Find the **Sort** button on your toolbar (often under the "Data" tab).
-*   [ ] Sort Column A from **A to Z**.
-*   [ ] Write down which item is now listed first at the top of the list:  
+* [ ] Highlight your entire table (cells \`A1\` to \`B4\`).
+* [ ] Find the **Sort** button on your toolbar (often under the "Data" tab).
+* [ ] Sort Column A from **A to Z**.
+* [ ] Write down which item is now listed first at the top of the list:  
     *Answer:* _________________________`
             },
             {
@@ -704,8 +667,8 @@ Every formula in a spreadsheet **must** start with an equals sign ($=$). Fill in
                 markdown: `### Task: Designing a Budget on Paper
 Before using the computer, plan a small personal monthly budget grid below. Use fictional numbers.
 
-*   Your monthly income is **£1,500**.
-*   You have three monthly bills: Rent (**£600**), Groceries (**£200**), and Electric (**£100**).
+* Your monthly income is **£1,500**.
+* You have three monthly bills: Rent (**£600**), Groceries (**£200**), and Electric (**£100**).
 
 | | **Column A** (Expense Name) | **Column B** (Cost) |
 | :--- | :--- | :--- |
@@ -717,11 +680,9 @@ Before using the computer, plan a small personal monthly budget grid below. Use 
 | **Row 6** | **Remaining Money** | £ _________________ |
 
 ### Formula Writing Questions
-1. **What spreadsheet formula would you use in cell \`B5\` to automatically calculate your Total Expenses?**  
-   *Answer:* \`=\` ______________________________________________________________________________
+1. **What spreadsheet formula would you use in cell \`B5\` to automatically calculate your Total Expenses?** *Answer:* \`=\` ______________________________________________________________________________
 
-2. **Your Income (£1,500) is saved in cell \`B8\`. What formula would you write in cell \`B6\` to subtract your Total Expenses (cell \`B5\`) from your Income (cell \`B8\`)?**  
-   *Answer:* \`=\` ______________________________________________________________________________`
+2. **Your Income (£1,500) is saved in cell \`B8\`. What formula would you write in cell \`B6\` to subtract your Total Expenses (cell \`B5\`) from your Income (cell \`B8\`)?** *Answer:* \`=\` ______________________________________________________________________________`
             },
             {
                 id: "l5_ws2_2",
@@ -742,17 +703,13 @@ Look closely at the mock spreadsheet below and answer the check questions:
   +-----------+-----------+-----------+
 \`\`\`
 
-1. **What is the value written in Cell B3?**  
-   *Answer:* _________________________
+1. **What is the value written in Cell B3?** *Answer:* _________________________
 
-2. **What value is written in Cell C4?**  
-   *Answer:* _________________________
+2. **What value is written in Cell C4?** *Answer:* _________________________
 
-3. **If you run the formula \`=B2 + B4\` in an empty cell, what number will it calculate?**  
-   *Answer:* _________________________
+3. **If you run the formula \`=B2 + B4\` in an empty cell, what number will it calculate?** *Answer:* _________________________
 
-4. **If you run the formula \`=B3 - C3\`, what number will it calculate?**  
-   *Answer:* _________________________`
+4. **If you run the formula \`=B3 - C3\`, what number will it calculate?** *Answer:* _________________________`
             }
         ]
     },
@@ -771,22 +728,20 @@ Look closely at the mock spreadsheet below and answer the check questions:
 Open your web browser and navigate to an online map service (e.g., Google Maps). Use the map search tool to look up directions from **Salford Crescent Station** to **Manchester Piccadilly Station**. Fill out the information below:
 
 1. **By Car (Driving):**
-   *   What is the fastest route called? ___________________________________________________________
-   *   How many minutes will the drive take? _________________________ minutes.
+   * What is the fastest route called? ___________________________________________________________
+   * How many minutes will the drive take? _________________________ minutes.
 
 2. **By Public Transport (Train/Bus):**
-   *   Which train or bus line should you take? _____________________________________________________
-   *   How long will the trip take? _________________________ minutes.
+   * Which train or bus line should you take? _____________________________________________________
+   * How long will the trip take? _________________________ minutes.
 
 ---
 
 ### Task 2: Locating Local Services
 Use the search bar on the map to search for **"Pharmacies near Salford"**.
-1. **Write down the name of one pharmacy you found on the map:**  
-   *Answer:* __________________________________________________________________________________
+1. **Write down the name of one pharmacy you found on the map:** *Answer:* __________________________________________________________________________________
 
-2. **Look at the pharmacy's details on the left-hand panel. What are its opening hours today?**  
-   *Answer:* __________________________________________________________________________________`
+2. **Look at the pharmacy's details on the left-hand panel. What are its opening hours today?** *Answer:* __________________________________________________________________________________`
             },
             {
                 id: "l6_ws1_2",
@@ -794,9 +749,9 @@ Use the search bar on the map to search for **"Pharmacies near Salford"**.
                 markdown: `### Task 1: Navigating NHS Choices
 Navigate your web browser to the official National Health Service (NHS) website at www.nhs.uk. Locate the search or menu tools to find information regarding local dentists.
 
-*   [ ] Find the tool called **"Find a dentist"** (or local health services).
-*   [ ] Enter the postcode: \`M5 4WT\` (near Salford).
-*   [ ] List the names of the top **two** dental practices closest to this postcode:
+* [ ] Find the tool called **"Find a dentist"** (or local health services).
+* [ ] Enter the postcode: \`M5 4WT\` (near Salford).
+* [ ] List the names of the top **two** dental practices closest to this postcode:
     1.  _____________________________________________________________________________________
     2.  _____________________________________________________________________________________
 
@@ -805,11 +760,9 @@ Navigate your web browser to the official National Health Service (NHS) website 
 ### Task 2: Navigating Local Council Services
 Navigate your web browser to your local council website (e.g., Salford City Council: www.salford.gov.uk). Look for the section on **Bins and Recycling**.
 
-1. **What is the standard color of the bin used for paper and cardboard recycling in Salford?**  
-   *Answer:* _________________________
+1. **What is the standard color of the bin used for paper and cardboard recycling in Salford?** *Answer:* _________________________
 
-2. **What bin color is used for garden waste?**  
-   *Answer:* _________________________`
+2. **What bin color is used for garden waste?** *Answer:* _________________________`
             },
             {
                 id: "l6_ws2_1",
@@ -819,12 +772,9 @@ Use Google Maps (or a similar mapping service) to plan a hypothetical journey fr
 
 1. **Starting Point Address:** __________________________________________________________________
 2. **Destination Address:** ____________________________________________________________________
-3. **If you choose to walk, how long will the walk take?**  
-   *Answer:* _________________________ minutes / hours.
-4. **Identify one major road or street you will walk along during this route:**  
-   *Answer:* __________________________________________________________________________________
-5. **If you choose to take a bus or train, what is the number of the bus or name of the train route?**  
-   *Answer:* __________________________________________________________________________________`
+3. **If you choose to walk, how long will the walk take?** *Answer:* _________________________ minutes / hours.
+4. **Identify one major road or street you will walk along during this route:** *Answer:* __________________________________________________________________________________
+5. **If you choose to take a bus or train, what is the number of the bus or name of the train route?** *Answer:* __________________________________________________________________________________`
             },
             {
                 id: "l6_ws2_2",
@@ -834,16 +784,13 @@ Imagine you are looking online to purchase a new winter coat. You see a post on 
 
 Analyze the scenario and answer the questions below to evaluate if this is a safe, legitimate online shop.
 
-1. **Look closely at the web address (URL). What are two suspicious red flags in this URL?**  
-   *Red Flag 1:* ______________________________________________________________________________  
+1. **Look closely at the web address (URL). What are two suspicious red flags in this URL?** *Red Flag 1:* ______________________________________________________________________________  
    *Red Flag 2:* ______________________________________________________________________________
 
-2. **Look at the price difference (£200 original vs £15 sale). Why is this price reduction a cause for concern?**  
-   *Answer:* __________________________________________________________________________________
+2. **Look at the price difference (£200 original vs £15 sale). Why is this price reduction a cause for concern?** *Answer:* __________________________________________________________________________________
    ___________________________________________________________________________________________
 
-3. **If you click "buy" and the payment page is missing the padlock icon and says "HTTP" instead of "HTTPS" in the address bar, what should you do?**  
-   *Answer:* __________________________________________________________________________________
+3. **If you click "buy" and the payment page is missing the padlock icon and says "HTTP" instead of "HTTPS" in the address bar, what should you do?** *Answer:* __________________________________________________________________________________
    ___________________________________________________________________________________________`
             }
         ]
@@ -875,12 +822,12 @@ When you are on a live video call, a small toolbar appears on your screen. Match
 Read each scenario and check the box for the correct choice:
 
 1. **You are in a video call and someone else is speaking, but there is a lawnmower making loud noise outside your window.**
-   *   [ ] Keep your microphone turned on so you can jump in and talk quickly.
-   *   [ ] Mute your microphone immediately until it is your turn to speak.
+   * [ ] Keep your microphone turned on so you can jump in and talk quickly.
+   * [ ] Mute your microphone immediately until it is your turn to speak.
 
 2. **You want to speak during a busy online presentation with 20 other attendees.**
-   *   [ ] Start talking over the speaker so they can hear you clearly.
-   *   [ ] Use the virtual "Raise Hand" button or type your question quietly in the chat box.`
+   * [ ] Start talking over the speaker so they can hear you clearly.
+   * [ ] Use the virtual "Raise Hand" button or type your question quietly in the chat box.`
             },
             {
                 id: "l7_ws1_2",
@@ -888,13 +835,13 @@ Read each scenario and check the box for the correct choice:
                 markdown: `### Task: Hands-on Video Call Run-Through
 Your instructor will send a mock invitation link to your email address. Follow the instructions below to access the session and practice using active controls.
 
-*   [ ] **Open Your Email:** Log into your personal inbox and find the email from your instructor with the subject containing \`Meeting Invite\`.
-*   [ ] **Click the Link:** Locate the web link (URL) inside the email body and click it once.
-*   [ ] **Choose Your Connection:** If prompted, choose "Join on the web" or "Open App."
-*   [ ] **Type Your Name:** Enter your real name clearly so the host knows who you are in the waiting room.
-*   [ ] **Check Your Camera/Mic:** Make sure your camera preview is working, then click **Join Now**.
-*   [ ] **Practice Muting:** Once inside the call, locate the microphone icon. Click it to **Mute**, wait 5 seconds, and click it again to **Unmute**.
-*   [ ] **Open the Chat Pane:** Click on the **Chat** bubble. Type \`"Hello, this is Mordechai!"\` and press Enter to send it.`
+* [ ] **Open Your Email:** Log into your personal inbox and find the email from your instructor with the subject containing \`Meeting Invite\`.
+* [ ] **Click the Link:** Locate the web link (URL) inside the email body and click it once.
+* [ ] **Choose Your Connection:** If prompted, choose "Join on the web" or "Open App."
+* [ ] **Type Your Name:** Enter your real name clearly so the host knows who you are in the waiting room.
+* [ ] **Check Your Camera/Mic:** Make sure your camera preview is working, then click **Join Now**.
+* [ ] **Practice Muting:** Once inside the call, locate the microphone icon. Click it to **Mute**, wait 5 seconds, and click it again to **Unmute**.
+* [ ] **Open the Chat Pane:** Click on the **Chat** bubble. Type \`"Hello, this is Mordechai!"\` and press Enter to send it.`
             },
             {
                 id: "l7_ws2_1",
@@ -904,19 +851,15 @@ Imagine you are at home joining a video call with your family or an online class
 
 #### Scenario A: "No One Can Hear Me!"
 You are talking during your video call, but the other participants are waving their hands and pointing to their ears, indicating they cannot hear you.
-1. **What is the first, most common visual indicator you should look for on your computer screen?**  
-   *Answer:* __________________________________________________________________________________
+1. **What is the first, most common visual indicator you should look for on your computer screen?** *Answer:* __________________________________________________________________________________
 
-2. **What physical connection should you check if you are using an external microphone or headset?**  
-   *Answer:* __________________________________________________________________________________
+2. **What physical connection should you check if you are using an external microphone or headset?** *Answer:* __________________________________________________________________________________
 
 #### Scenario B: "The Video is Freezing!"
 The people on your screen are moving in slow motion, their voices are cutting in and out, and a notification says "Your internet connection is unstable."
-1. **What is a quick action you can take regarding your own camera to help save internet bandwidth?**  
-   *Answer:* __________________________________________________________________________________
+1. **What is a quick action you can take regarding your own camera to help save internet bandwidth?** *Answer:* __________________________________________________________________________________
 
-2. **If your connection remains completely frozen, what is the best "restart" action to take?**  
-   *Answer:* __________________________________________________________________________________`
+2. **If your connection remains completely frozen, what is the best "restart" action to take?** *Answer:* __________________________________________________________________________________`
             },
             {
                 id: "l7_ws2_2",
@@ -924,24 +867,21 @@ The people on your screen are moving in slow motion, their voices are cutting in
                 markdown: `### Task 1: Software Installation Walkthrough
 Prepare your personal computer or laptop for future online calls. Follow these steps and mark them complete:
 
-*   [ ] Open your web browser and navigate to: \`www.zoom.us/download\` (or the download site for your chosen app).
-*   [ ] Click the download button for the software client.
-*   [ ] Locate the downloaded installer file (usually in your **Downloads** folder) and run it to install the application.
-*   [ ] Launch the application on your computer and verify that it opens to a login screen.
+* [ ] Open your web browser and navigate to: \`www.zoom.us/download\` (or the download site for your chosen app).
+* [ ] Click the download button for the software client.
+* [ ] Locate the downloaded installer file (usually in your **Downloads** folder) and run it to install the application.
+* [ ] Launch the application on your computer and verify that it opens to a login screen.
 
 ---
 
 ### Task 2: Video Call True or False
 Read the statements below and write **True** or **False** in the space provided.
 
-1. **You should always set up your video calling area with a bright window directly behind your back.**  
-   *Answer:* _________________________
+1. **You should always set up your video calling area with a bright window directly behind your back.** *Answer:* _________________________
 
-2. **It is considered polite to test your microphone and speakers a few minutes before an important call starts.**  
-   *Answer:* _________________________
+2. **It is considered polite to test your microphone and speakers a few minutes before an important call starts.** *Answer:* _________________________
 
-3. **Once you join a video meeting, your camera and microphone cannot be adjusted or turned off.**  
-   *Answer:* _________________________`
+3. **Once you join a video meeting, your camera and microphone cannot be adjusted or turned off.** *Answer:* _________________________`
             }
         ]
     },
@@ -969,10 +909,10 @@ Open your presentation software (e.g., Microsoft PowerPoint or Google Slides) to
 ---
 
 ### Task 2: Theme & Layout Selection Checklist
-*   [ ] Click on the **Design** or **Theme** tab on the top menu toolbar.
-*   [ ] Browse the pre-made designs and select one that has light, easily readable backgrounds.
-*   [ ] Click on the drop-down menu labeled **Layout** (under the Home or Slide tab).
-*   [ ] Select the **Title Slide** layout for your opening slide.`
+* [ ] Click on the **Design** or **Theme** tab on the top menu toolbar.
+* [ ] Browse the pre-made designs and select one that has light, easily readable backgrounds.
+* [ ] Click on the drop-down menu labeled **Layout** (under the Home or Slide tab).
+* [ ] Select the **Title Slide** layout for your opening slide.`
             },
             {
                 id: "l8_ws1_2",
@@ -980,18 +920,18 @@ Open your presentation software (e.g., Microsoft PowerPoint or Google Slides) to
                 markdown: `### Task: Hands-on Presentation Construction
 Create a simple 3-slide presentation on your computer about a holiday destination you would like to visit (or have visited). Follow these exact steps:
 
-*   [ ] **Slide 1 (Title Slide):**
-    *   Click inside the box labeled *"Click to add title"* and type: \`My Holiday to [Destination]\`.
-    *   Click inside the subtitle box and type: \`By [Your Name]\`.
-*   [ ] **Slide 2 (Bullet Point Details):**
-    *   Click **New Slide** on the toolbar and choose the **Title and Content** layout.
-    *   Type the title: \`Why I Want to Visit\`.
-    *   Type at least three distinct reasons in a **bulleted list** (e.g., beautiful beaches, history, good food).
-*   [ ] **Slide 3 (Visual Layout):**
-    *   Create another **New Slide** with a layout that supports an image.
-    *   Use the **Insert -> Pictures** tool to insert a sample picture of your destination.
-    *   Resize the picture by clicking and dragging its corners so it fits neatly.
-*   [ ] **Save Your File:** Save this presentation to your \`IT Coursework\` folder with the file name \`My Holiday\`.`
+* [ ] **Slide 1 (Title Slide):**
+    * Click inside the box labeled *"Click to add title"* and type: \`My Holiday to [Destination]\`.
+    * Click inside the subtitle box and type: \`By [Your Name]\`.
+* [ ] **Slide 2 (Bullet Point Details):**
+    * Click **New Slide** on the toolbar and choose the **Title and Content** layout.
+    * Type the title: \`Why I Want to Visit\`.
+    * Type at least three distinct reasons in a **bulleted list** (e.g., beautiful beaches, history, good food).
+* [ ] **Slide 3 (Visual Layout):**
+    * Create another **New Slide** with a layout that supports an image.
+    * Use the **Insert -> Pictures** tool to insert a sample picture of your destination.
+    * Resize the picture by clicking and dragging its corners so it fits neatly.
+* [ ] **Save Your File:** Save this presentation to your \`IT Coursework\` folder with the file name \`My Holiday\`.`
             },
             {
                 id: "l8_ws2_1",
@@ -1000,20 +940,16 @@ Create a simple 3-slide presentation on your computer about a holiday destinatio
 It is helpful to plan your presentations on paper before building them on screen. Imagine you are adding two more slides to your "My Holiday" presentation. Sketch out your planned text layout below.
 
 #### Slide 4: Travel Plans
-1. **What will you write as the Slide Title?**  
-   *Answer:* __________________________________________________________________________________
+1. **What will you write as the Slide Title?** *Answer:* __________________________________________________________________________________
 
-2. **Draft three brief, readable bullet points detailing how you will get there and where you will stay:**  
-   *   ________________________________________________________________________________________
-   *   ________________________________________________________________________________________
-   *   ________________________________________________________________________________________
+2. **Draft three brief, readable bullet points detailing how you will get there and where you will stay:** * ________________________________________________________________________________________
+   * ________________________________________________________________________________________
+   * ________________________________________________________________________________________
 
 #### Slide 5: Fun Facts
-1. **What will you write as the Slide Title?**  
-   *Answer:* __________________________________________________________________________________
+1. **What will you write as the Slide Title?** *Answer:* __________________________________________________________________________________
 
-2. **Draft a single, interesting fact about your destination in one short sentence:**  
-   *Answer:* __________________________________________________________________________________`
+2. **Draft a single, interesting fact about your destination in one short sentence:** *Answer:* __________________________________________________________________________________`
             },
             {
                 id: "l8_ws2_2",
@@ -1021,15 +957,12 @@ It is helpful to plan your presentations on paper before building them on screen
                 markdown: `### Task: Readability and Shortcut Keys
 Answer the following review questions based on best practices for designing slides.
 
-1. **Why is it a bad design choice to write long, heavy paragraphs of tiny text on a slide?**  
-   *Answer:* __________________________________________________________________________________
+1. **Why is it a bad design choice to write long, heavy paragraphs of tiny text on a slide?** *Answer:* __________________________________________________________________________________
    ___________________________________________________________________________________________
 
-2. **If you want to view your presentation full-screen from the very first slide, what keyboard shortcut button at the top of your keyboard can you press? (Hint: It is a function key).**  
-   *Answer:* The _________________________ key.
+2. **If you want to view your presentation full-screen from the very first slide, what keyboard shortcut button at the top of your keyboard can you press? (Hint: It is a function key).** *Answer:* The _________________________ key.
 
-3. **If you are in the middle of a full-screen slideshow and need to exit immediately to make an edit, what keyboard key do you press?**  
-   *Answer:* The _________________________ key.`
+3. **If you are in the middle of a full-screen slideshow and need to exit immediately to make an edit, what keyboard key do you press?** *Answer:* The _________________________ key.`
             }
         ]
     },
@@ -1069,21 +1002,17 @@ Open your web browser and navigate to www.youtube.com. Open any educational vide
                 markdown: `### Task 1: Understanding Catch-up TV (e.g., BBC iPlayer)
 Navigate your web browser to the BBC iPlayer website (www.bbc.co.uk/iplayer). Answer the following questions:
 
-1. **When you try to click and watch a television program on BBC iPlayer, what security action does the website require you to complete first?**  
-   *Answer:* You must **Register** or ____________________________________________________________
+1. **When you try to click and watch a television program on BBC iPlayer, what security action does the website require you to complete first?** *Answer:* You must **Register** or ____________________________________________________________
 
-2. **In the UK, what legal requirement must you possess to watch live or catch-up TV on any device?**  
-   *Answer:* A _______________________________________________________________________________
+2. **In the UK, what legal requirement must you possess to watch live or catch-up TV on any device?** *Answer:* A _______________________________________________________________________________
 
 ---
 
 ### Task 2: Sorting Photo Storage Formats
 Identify if the following photo storage concepts represent **Local Storage** (saved physically on your computer) or **Cloud Storage** (saved securely over the internet).
 
-1. **A folder of images on your desktop computer's internal hard drive:**  
-   *Answer:* _________________________ Storage.
-2. **Photos automatically backed up to Google Drive, iCloud, or OneDrive:**  
-   *Answer:* _________________________ Storage.`
+1. **A folder of images on your desktop computer's internal hard drive:** *Answer:* _________________________ Storage.
+2. **Photos automatically backed up to Google Drive, iCloud, or OneDrive:** *Answer:* _________________________ Storage.`
             },
             {
                 id: "l9_ws2_1",
@@ -1091,16 +1020,13 @@ Identify if the following photo storage concepts represent **Local Storage** (sa
                 markdown: `### Task: Active Watching Exercise
 Use a computer or smartphone at home to find an educational video on a hobby or interest of yours. Watch it carefully with the subtitles turned on, and fill out this review card.
 
-1. **What is the title of the video you watched?**  
-   *Answer:* __________________________________________________________________________________
+1. **What is the title of the video you watched?** *Answer:* __________________________________________________________________________________
 
-2. **What is the exact URL (web address) of the video?**  
-   *Answer:* \`https://www.youtube.com/watch?v=___________________________________________________\`
+2. **What is the exact URL (web address) of the video?** *Answer:* \`https://www.youtube.com/watch?v=___________________________________________________\`
 
-3. **Using the subtitles to help you, write down three facts or instructions you learned from this video:**  
-   *   *Fact 1:* ________________________________________________________________________________
-   *   *Fact 2:* ________________________________________________________________________________
-   *   *Fact 3:* ________________________________________________________________________________`
+3. **Using the subtitles to help you, write down three facts or instructions you learned from this video:** * *Fact 1:* ________________________________________________________________________________
+   * *Fact 2:* ________________________________________________________________________________
+   * *Fact 3:* ________________________________________________________________________________`
             },
             {
                 id: "l9_ws2_2",
@@ -1109,22 +1035,22 @@ Use a computer or smartphone at home to find an educational video on a hobby or 
 Select the best answer for each question regarding online entertainment safety.
 
 1. **You are watching a video on a free media website and a flashing box pops up saying "Warning: Your computer has 10 viruses! Click here to download cleaner." What should you do?**
-   *   [ ] Click it immediately to protect your computer.
-   *   [ ] Close the web browser window safely and ignore the pop-up (it is a malicious advertisement).
-   *   [ ] Restart your computer and call the phone number on the warning screen.
+   * [ ] Click it immediately to protect your computer.
+   * [ ] Close the web browser window safely and ignore the pop-up (it is a malicious advertisement).
+   * [ ] Restart your computer and call the phone number on the warning screen.
 
 2. **What is the primary benefit of saving your personal photos to "Cloud Storage" rather than keeping them only on your smartphone?**
-   *   [ ] The cloud makes the photos look clearer.
-   *   [ ] If you lose your physical phone, you can still access all your photos from any other computer.
-   *   [ ] Cloud storage is completely free of any storage limits.
+   * [ ] The cloud makes the photos look clearer.
+   * [ ] If you lose your physical phone, you can still access all your photos from any other computer.
+   * [ ] Cloud storage is completely free of any storage limits.
 
 ---
 
 ### Task 2: Digital Media Verification Checklist
 Suppose you want to share a family video with a relative who lives in another country. Under what conditions is it safest to do so?
-*   [ ] Send it via a secure, password-protected cloud link (like OneDrive or Google Drive).
-*   [ ] Post it publicly on a global website with no privacy restrictions.
-*   [ ] Email it directly to their personal email address as a secure attachment.`
+* [ ] Send it via a secure, password-protected cloud link (like OneDrive or Google Drive).
+* [ ] Post it publicly on a global website with no privacy restrictions.
+* [ ] Email it directly to their personal email address as a secure attachment.`
             }
         ]
     },
@@ -1146,19 +1072,19 @@ Open your web browser and a blank word processing document. You are going to res
 1. **Find Information:** Open a search engine and search for: **"Ordsall Hall Salford history"**.
 2. **Draft Your Report:** In your word processor, type out a short, three-sentence summary of what Ordsall Hall is and when it was built.
 3. **Format Your Text:**
-   *   Create a title at the top: \`Ordsall Hall Historical Report\`.
-   *   Make the title **Bold**, **Centred**, and size **16**.
-   *   Underline the name **Ordsall Hall** every time it appears in your paragraph.
-   *   Set the font of your summary paragraph to **Arial** or **Calibri**, size **12**.
+   * Create a title at the top: \`Ordsall Hall Historical Report\`.
+   * Make the title **Bold**, **Centred**, and size **16**.
+   * Underline the name **Ordsall Hall** every time it appears in your paragraph.
+   * Set the font of your summary paragraph to **Arial** or **Calibri**, size **12**.
 
 ---
 
 ### Task Check-Off
 Show your instructor your document on the screen and check off when verified:
-*   [ ] Centred, Bold Title (Size 16)
-*   [ ] Three-sentence informative paragraph
-*   [ ] Proper underlining of "Ordsall Hall"
-*   [ ] Correct font and body text size (Size 12)`
+* [ ] Centred, Bold Title (Size 16)
+* [ ] Three-sentence informative paragraph
+* [ ] Proper underlining of "Ordsall Hall"
+* [ ] Correct font and body text size (Size 12)`
             },
             {
                 id: "l10_ws1_2",
@@ -1168,21 +1094,18 @@ Now, you will add a picture to the Ordsall Hall report you created in Worksheet 
 
 1. **Search for an Image:** Go back to your web browser and select the **Images** tab on your search engine. Look for a clear photo of Ordsall Hall.
 2. **Save the Image:** Right-click on the image, select **Save Image As...**, and save it into your \`Desktop -> IT Coursework -> Word Documents\` folder. Name the file \`ordsall_hall_photo\`.
-3. **Insert the Image:** 
-   *   Go back to your open Word document.
-   *   Place your flashing text cursor *below* your typed paragraph.
-   *   Click **Insert -> Pictures**.
-   *   Select \`ordsall_hall_photo\`, and click **Insert**.
+3. **Insert the Image:** * Go back to your open Word document.
+   * Place your flashing text cursor *below* your typed paragraph.
+   * Click **Insert -> Pictures**.
+   * Select \`ordsall_hall_photo\`, and click **Insert**.
 4. **Resize:** Click on the image. Drag the small corner handles inward to shrink the picture so it fits neatly below your text without spilling onto a second page.
 
 ---
 
 ### Integration Check Questions
-1. **Why is it better to drag the *corner* handles of an image to resize it instead of the side handles?**  
-   *Answer:* __________________________________________________________________________________
+1. **Why is it better to drag the *corner* handles of an image to resize it instead of the side handles?** *Answer:* __________________________________________________________________________________
 
-2. **Write down the full name of the folder where you saved your image before inserting it:**  
-   *Answer:* __________________________________________________________________________________`
+2. **Write down the full name of the folder where you saved your image before inserting it:** *Answer:* __________________________________________________________________________________`
             },
             {
                 id: "l10_ws2_1",
@@ -1192,17 +1115,16 @@ You have finished your integrated Ordsall Hall document! Now you must email it d
 
 Write down the numbers (**1** to **5**) in the blanks to show the correct order of actions required to email a file:
 
-*   [ ] Click the **Attach** button (usually shaped like a paperclip).
-*   [ ] Type your instructor's email address in the **"To"** line and \`"My Salford Report"\` in the **"Subject"** line.
-*   [ ] Open your web browser, log into your email account, and click **Compose**.
-*   [ ] Locate your file (\`Ordsall Hall Report.docx\`) inside your folders and click **Open**.
-*   [ ] Type a polite, brief greeting in the main message box and click **Send**.
+* [ ] Click the **Attach** button (usually shaped like a paperclip).
+* [ ] Type your instructor's email address in the **"To"** line and \`"My Salford Report"\` in the **"Subject"** line.
+* [ ] Open your web browser, log into your email account, and click **Compose**.
+* [ ] Locate your file (\`Ordsall Hall Report.docx\`) inside your folders and click **Open**.
+* [ ] Type a polite, brief greeting in the main message box and click **Send**.
 
 ---
 
 ### Reflection Question
-1. **What is the difference between typing your report directly into the email box versus sending it as an attachment? When would you use an attachment?**  
-   *Answer:* __________________________________________________________________________________`
+1. **What is the difference between typing your report directly into the email box versus sending it as an attachment? When would you use an attachment?** *Answer:* __________________________________________________________________________________`
             },
             {
                 id: "l10_ws2_2",
@@ -1220,17 +1142,15 @@ A file's extension tells the computer which program is needed to open it. Match 
 
 ### Task 2: File Size Comprehension
 Computer storage space is measured in bytes. As a rule:
-*   **Kilobytes (KB)** are very small.
-*   **Megabytes (MB)** are larger (like pictures, songs, or short videos).
-*   **Gigabytes (GB)** are extremely large (like full-length movies).
+* **Kilobytes (KB)** are very small.
+* **Megabytes (MB)** are larger (like pictures, songs, or short videos).
+* **Gigabytes (GB)** are extremely large (like full-length movies).
 
 Read the scenarios and answer the questions:
 
-1. **You have two files: \`note.txt\` (15 KB) and \`holiday_video.mp4\` (450 MB). Which of these files will take longer to download and send over an email?**  
-   *Answer:* _________________________
+1. **You have two files: \`note.txt\` (15 KB) and \`holiday_video.mp4\` (450 MB). Which of these files will take longer to download and send over an email?** *Answer:* _________________________
 
-2. **If your email account has a strict attachment size limit of 25 MB, will you be able to attach the 450 MB video file?**  
-   *Answer:* _________________________`
+2. **If your email account has a strict attachment size limit of 25 MB, will you be able to attach the 450 MB video file?** *Answer:* _________________________`
             }
         ]
     },
@@ -1274,15 +1194,15 @@ When a computer displays an error message, you can often solve the problem yours
 Use Google to search for the quick solutions for these common digital errors:
 
 1. **Search Query:** Type \`"How to unfreeze a frozen Google Chrome tab"\` into your search bar.
-   *   What is the fastest keyboard shortcut listed to close a frozen tab on Windows?  
+   * What is the fastest keyboard shortcut listed to close a frozen tab on Windows?  
        *Answer:* _______________________________________________________________________________
 
 2. **Search Query:** Type \`"Why is my computer speaker icon showing a red X"\` into your search bar.
-   *   What is the most likely reason your sound is not playing?  
+   * What is the most likely reason your sound is not playing?  
        *Answer:* _______________________________________________________________________________
 
 3. **Search Query:** Type \`"How to zoom in on web page browser shortcut"\` into your search bar.
-   *   What keyboard shortcut allows you to make the text on a website look larger?  
+   * What keyboard shortcut allows you to make the text on a website look larger?  
        *Answer:* _______________________________________________________________________________`
             },
             {
@@ -1294,22 +1214,18 @@ Read the troubleshooting scenarios below. Write a brief advice note to help the 
 #### Case Study A: The Frozen Document
 > *“I have spent two hours typing a recipe on Microsoft Word. Suddenly, a spinning blue circle appeared, and I cannot click on anything or type any more letters. The screen says 'Not Responding' at the top.”*
 
-1. **Should the user pull the power plug out of the wall immediately to fix this? Why or why not?**  
-   *Answer:* __________________________________________________________________________________
+1. **Should the user pull the power plug out of the wall immediately to fix this? Why or why not?** *Answer:* __________________________________________________________________________________
    ___________________________________________________________________________________________
 
-2. **What is the safest, most logical next step they should take to try and save their typed work before closing the program?**  
-   *Answer:* __________________________________________________________________________________
+2. **What is the safest, most logical next step they should take to try and save their typed work before closing the program?** *Answer:* __________________________________________________________________________________
    ___________________________________________________________________________________________
 
 #### Case Study B: The Missing File
 > *“I downloaded an exciting photo of Salford Cathedral from my email yesterday. Today, I opened my computer, clicked on my 'Documents' folder, and it is empty! I don't know where my photo has gone.”*
 
-1. **Where does a computer usually save files downloaded from an email or a web browser by default?**  
-   *Answer:* The _________________________________________________ folder.
+1. **Where does a computer usually save files downloaded from an email or a web browser by default?** *Answer:* The _________________________________________________ folder.
 
-2. **What utility on the Desktop can they open to see if they accidentally deleted the file?**  
-   *Answer:* The _________________________________________________ bin.`
+2. **What utility on the Desktop can they open to see if they accidentally deleted the file?** *Answer:* The _________________________________________________ bin.`
             },
             {
                 id: "l11_ws2_2",
@@ -1317,20 +1233,15 @@ Read the troubleshooting scenarios below. Write a brief advice note to help the 
                 markdown: `### Task: True or False Diagnostic Check
 Read the statements below. Write **True** if the statement is a safe, helpful troubleshooting practice, or **False** if it is incorrect or dangerous.
 
-1. **"If your computer screen freezes, you should repeatedly hit the keyboard and shake the monitor."**  
-   *Answer:* _________________________
+1. **"If your computer screen freezes, you should repeatedly hit the keyboard and shake the monitor."** *Answer:* _________________________
 
-2. **"Restarting your computer clears the temporary memory and resolves a huge portion of basic computer glitches."**  
-   *Answer:* _________________________
+2. **"Restarting your computer clears the temporary memory and resolves a huge portion of basic computer glitches."** *Answer:* _________________________
 
-3. **"If a website tells you that your computer is infected with 100 viruses and you must call a premium phone number immediately, this is always a scam."**  
-   *Answer:* _________________________
+3. **"If a website tells you that your computer is infected with 100 viruses and you must call a premium phone number immediately, this is always a scam."** *Answer:* _________________________
 
-4. **"It is safe to unplug USB cords and power cables from the computer while the system is actively saving a file."**  
-   *Answer:* _________________________
+4. **"It is safe to unplug USB cords and power cables from the computer while the system is actively saving a file."** *Answer:* _________________________
 
-5. **"Checking that all physical cables are firmly pushed into their ports is one of the first diagnostic steps you should take."**  
-   *Answer:* _________________________`
+5. **"Checking that all physical cables are firmly pushed into their ports is one of the first diagnostic steps you should take."** *Answer:* _________________________`
             }
         ]
     },
@@ -1372,10 +1283,14 @@ Open your word processor and create a new blank document. Type and format the fo
 
 ### Phase 1 Student Check-Off
 Mark these steps as completed under your instructor's guidance:
-*   [ ] Word Processor is open with a styled title and sub-heading.
-*   [ ] Bulleted list details are accurate.
-*   [ ] Tea cup image is inserted and resized properly.
-*   [ ] Document is saved to \`Desktop -> IT Coursework -> Word Documents -> Tea Morning Flyer.docx\`.`
+* [ ] Word Processor is open with a styled title and sub-heading.
+* [ ] Bulleted list details are accurate.
+* [ ] Tea cup image is inserted and resized properly.
+* [ ] Document is saved to \`Desktop -> IT Coursework -> Word Documents -> Tea Morning Flyer.docx\`.
+
+<div style="display: flex; justify-content: center; width: 100%; margin-top: 2rem; margin-bottom: 2rem;" class="no-print">
+<iframe width="640px" height="480px" src="https://forms.office.com/e/4s1j4dRs70?embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+</div>`
             },
             {
                 id: "l12_ws1_2",
@@ -1415,7 +1330,11 @@ To complete your course, you must email your final flyer and budget files to you
 4. **Message:** Write a short greeting and sign off.
 5. **Send:** Click **Send**!
 
-*   [ ] Check this box once both files have been sent successfully.`
+* [ ] Check this box once both files have been sent successfully.
+
+<div style="display: flex; justify-content: center; width: 100%; margin-top: 2rem; margin-bottom: 2rem;" class="no-print">
+<iframe width="640px" height="480px" src="https://forms.office.com/e/Ta6EAU6H77?embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+</div>`
             },
             {
                 id: "l12_ws2_1",
@@ -1423,17 +1342,18 @@ To complete your course, you must email your final flyer and budget files to you
                 markdown: `### Task: Reflecting on Your 12-Lesson Journey
 Congratulations on completing all 12 lessons! Take a moment to think about your progress from starting with zero computer skills to completing a full digital project.
 
-1. **Which digital skill that you learned in this course are you most proud of, and why?**  
-   *Answer:* _________________________________________________________________________________
+1. **Which digital skill that you learned in this course are you most proud of, and why?** *Answer:* _________________________________________________________________________________
    ___________________________________________________________________________________________
 
-2. **Which topic did you find the most challenging, and how did you overcome it?**  
-   *Answer:* _________________________________________________________________________________
+2. **Which topic did you find the most challenging, and how did you overcome it?** *Answer:* _________________________________________________________________________________
    ___________________________________________________________________________________________
 
-3. **How do you plan to use your new computer skills in your daily life going forward? (e.g., emailing family, searching the web, keeping personal budgets).**  
-   *Answer:* _________________________________________________________________________________
-   ___________________________________________________________________________________________`
+3. **How do you plan to use your new computer skills in your daily life going forward? (e.g., emailing family, searching the web, keeping personal budgets).** *Answer:* _________________________________________________________________________________
+   ___________________________________________________________________________________________
+
+<div style="display: flex; justify-content: center; width: 100%; margin-top: 2rem; margin-bottom: 2rem;" class="no-print">
+<iframe width="640px" height="480px" src="https://forms.office.com/e/UqrSMtdccX?embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+</div>`
             },
             {
                 id: "l12_ws2_2",
@@ -1442,29 +1362,33 @@ Congratulations on completing all 12 lessons! Take a moment to think about your 
 Select the best answer for each question to show you are ready to use computers independently!
 
 1. **If you receive an email from your utility provider saying "Payment failed, click this link immediately or your power will be cut off," what should you check first to verify if it is phishing?**
-   *   [ ] A. The color of the email background.
-   *   [ ] B. The sender's actual email address domain and look for suspicious link names.
-   *   [ ] C. If there are images of lightbulbs in the email.
+   * [ ] A. The color of the email background.
+   * [ ] B. The sender's actual email address domain and look for suspicious link names.
+   * [ ] C. If there are images of lightbulbs in the email.
 
 2. **You want to move a file from your "Downloads" folder into a personal folder on your "Desktop". What is the standard action to perform with your mouse?**
-   *   [ ] A. Double-click the file and turn off the computer.
-   *   [ ] B. Left-click the file, drag it across the screen, and drop it into the destination folder.
-   *   [ ] C. Right-click the folder and click delete.
+   * [ ] A. Double-click the file and turn off the computer.
+   * [ ] B. Left-click the file, drag it across the screen, and drop it into the destination folder.
+   * [ ] C. Right-click the folder and click delete.
 
 3. **What does the small padlock icon next to a website address in your web browser mean?**
-   *   [ ] A. The website is locked and you cannot read it.
-   *   [ ] B. Your connection is encrypted and secure (HTTPS).
-   *   [ ] C. The website is safe from all viruses.
+   * [ ] A. The website is locked and you cannot read it.
+   * [ ] B. Your connection is encrypted and secure (HTTPS).
+   * [ ] C. The website is safe from all viruses.
 
 4. **In a spreadsheet, what symbol must you always type first before writing any calculation formula?**
-   *   [ ] A. An addition sign ($+$)
-   *   [ ] B. A question mark ($?$)
-   *   [ ] C. An equals sign ($=$)
+   * [ ] A. An addition sign ($+$)
+   * [ ] B. A question mark ($?$)
+   * [ ] C. An equals sign ($=$)
 
 5. **If you are in a Zoom video call and the other participants can see you but cannot hear you, which button should you look for on your video calling toolbar?**
-   *   [ ] A. The virtual chat bubble.
-   *   [ ] B. The microphone mute/unmute button.
-   *   [ ] C. The "Leave Meeting" button.`
+   * [ ] A. The virtual chat bubble.
+   * [ ] B. The microphone mute/unmute button.
+   * [ ] C. The "Leave Meeting" button.
+
+<div style="display: flex; justify-content: center; width: 100%; margin-top: 2rem; margin-bottom: 2rem;" class="no-print">
+<iframe width="640px" height="480px" src="https://forms.office.com/e/0Qp7zuByFd?embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+</div>`
             }
         ]
     }
@@ -1753,7 +1677,7 @@ function parseMarkdownToFillableForm(md, wsId) {
         }
 
         // Checklists, bullet lists
-        if (line.startsWith("*   [ ]") || line.startsWith("-   [ ]") || line.startsWith("* [ ]") || line.startsWith("- [ ]")) {
+        if (line.startsWith("* [ ]") || line.startsWith("-   [ ]") || line.startsWith("* [ ]") || line.startsWith("- [ ]")) {
             let label = line.replace(/^\*\s*\[\s*\]\s*/, "").replace(/^-\s*\[\s*\]\s*/, "");
             let cleanLabel = inlineMarkdownReplacements(label);
             html.push(`
@@ -2069,12 +1993,12 @@ function compileWorksheetMarkdown(wsId, activeSheet) {
         let trimmed = line.trim();
 
         // Checklists
-        if (trimmed.startsWith("*   [ ]") || trimmed.startsWith("-   [ ]") || trimmed.startsWith("* [ ]") || trimmed.startsWith("- [ ]")) {
+        if (trimmed.startsWith("* [ ]") || trimmed.startsWith("-   [ ]") || trimmed.startsWith("* [ ]") || trimmed.startsWith("- [ ]")) {
             const chkRec = records.find(r => r.type === "checkbox" && r.index === checkboxIdx);
             let checkChar = (chkRec && chkRec.value) ? "x" : " ";
             
             let label = trimmed.replace(/^\*\s*\[\s*\]\s*/, "").replace(/^-\s*\[\s*\]\s*/, "");
-            output.push(`*   [${checkChar}] ${label}`);
+            output.push(`* [${checkChar}] ${label}`);
             checkboxIdx++;
             continue;
         }
